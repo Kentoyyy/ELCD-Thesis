@@ -13,7 +13,7 @@ const Login = () => {
 
     useEffect(() => {
         if (sessionStatus === "authenticated") {
-            router.replace("/dashboard");
+            router.replace("/");
         }
     }, [sessionStatus, router]);
    
@@ -46,7 +46,7 @@ const Login = () => {
  
         if (res?.error) {
             setError("Invalid email or password");
-            if (res?.url) router.replace("/dashboard");
+            if (res?.url) router.replace("/");
         } else {
             setError("");
         }
@@ -88,7 +88,7 @@ const Login = () => {
             </form>
                 <Link
                     className="block text-center text-blue-500 hover:underline mt-2"
-                    href="/register"
+                    href="register"
                  >
                 Register Here
                 </Link>
