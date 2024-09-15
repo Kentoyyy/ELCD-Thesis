@@ -9,7 +9,7 @@ import ai from '../public/images/mattersimage.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLightbulb, faHandsHelping, faUsers, faChartBar } from '@fortawesome/free-solid-svg-icons';
 import { Metadata } from 'next';
-
+import Footer from '../app/components/Footer';
 export const metadata: Metadata = {
   title: "EarlyEdge - Home",
   icons: {
@@ -20,7 +20,6 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-    
       <main className="flex flex-col items-center justify-center min-h-screen px-4 py-8 md:py-16 lg:px-16 bg-white">
         <div className="text-center max-w-lg">
           <h1 className="text-4xl md:text-5xl font-robotoserif font-extrabold text-primary-color leading-tight mb-1">
@@ -166,6 +165,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <Footer /> {/* Footer at the bottom */}
 
     
     </>

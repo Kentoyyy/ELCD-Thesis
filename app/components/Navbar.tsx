@@ -20,9 +20,11 @@ const Navbar: React.FC = () => {
 
     const linkClassNames = (path: string) =>
         `text-sm font-medium ${pathname === path
-            ? 'text-primary underline underline-offset-4 decoration-primary'
+            ? 'text-[#0D7C66] underline underline-offset-4 decoration-[#0D7C66]' // Active link gets the green color and underline
             : 'text-gray-800'
-        } hover:text-primary transition duration-300`;
+        } hover:text-[#0D7C66] hover:underline hover:decoration-[#0D7C66] focus:text-[#0D7C66] focus:underline focus:decoration-[#0D7C66] transition duration-300`;
+    
+    
 
     return (
         <nav className="sticky top-0 z-50 bg-white shadow-md">
@@ -43,6 +45,7 @@ const Navbar: React.FC = () => {
                         Home
                     </Link>
                     <Link href="/about" className={linkClassNames('/about')}>
+
                         About
                     </Link>
                     <Link href="/disabilities" className={linkClassNames('/disabilities')}>

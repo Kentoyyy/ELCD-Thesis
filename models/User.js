@@ -1,8 +1,7 @@
-//models\User.js
 import mongoose from "mongoose";
- 
+
 const { Schema } = mongoose;
- 
+
 const userSchema = new Schema(
     {
         name: {
@@ -16,10 +15,22 @@ const userSchema = new Schema(
         },
         password: {
             type: String,
-            required: false,
+            required: true,
+        },
+        parentName: {
+            type: String,
+            required: true,
+        },
+        childName: {
+            type: String,
+            required: true,
+        },
+        childAge: {
+            type: Number,
+            required: true,
         },
     },
     { timestamps: true }
 );
- 
+
 export default mongoose.models.User || mongoose.model("User", userSchema);
