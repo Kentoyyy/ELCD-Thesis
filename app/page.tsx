@@ -20,6 +20,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
+    
       <main className="flex flex-col items-center justify-center min-h-screen px-4 py-8 md:py-16 lg:px-16 bg-white">
         <div className="text-center max-w-lg">
           <h1 className="text-4xl md:text-5xl font-robotoserif font-extrabold text-primary-color leading-tight mb-1">
