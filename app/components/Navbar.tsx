@@ -12,7 +12,7 @@ import avatar from '../../public/images/avatar.png';
 const Navbar: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
-    const { data: session }: any = useSession();
+    const { data: session, update: updateSession }: any = useSession();  // Added updateSession
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
