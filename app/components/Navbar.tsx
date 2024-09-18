@@ -2,17 +2,18 @@
 "use client";
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation'; // Import useRouter
 import { HiOutlineMenu, HiOutlineX } from 'react-icons/hi';
 import Image from 'next/image';
 import { useSession, signOut } from 'next-auth/react';
 import logo from '../../public/images/logoelcdl.png';
-import avatar from '../../public/images/avatar.png';
+import avatarFallback from '../../public/images/avatar.png'; // Fallback avatar
 
 const Navbar: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
-    const { data: session, update: updateSession }: any = useSession();  // Added updateSession
+    const { data: session }: any = useSession(); // Get session data
+    const router = useRouter(); // Initialize useRouter
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -23,6 +24,10 @@ const Navbar: React.FC = () => {
             ? 'text-[#0D7C66] underline underline-offset-4 decoration-[#0D7C66]' // Active link gets the green color and underline
             : 'text-gray-800'
         } hover:text-[#0D7C66] hover:underline hover:decoration-[#0D7C66] focus:text-[#0D7C66] focus:underline focus:decoration-[#0D7C66] transition duration-300`;
+
+    const handleSignOut = () => {
+        signOut({ callbackUrl: '/login' }); // Redirect to login page after sign out
+    };
 
     return (
         <nav className="sticky top-0 z-50 bg-white shadow-md">
@@ -46,48 +51,44 @@ const Navbar: React.FC = () => {
                     <Link href="/resources" className={linkClassNames('/resources')}>Resources</Link>
                     <Link href="/contact" className={linkClassNames('/contact')}>Contact</Link>
                     {!session ? (
-                        <>
-                            <Link href="/login" className={linkClassNames('/login')}>Login</Link>
-                        </>
+                        <Link href="/login" className={linkClassNames('/login')}>Login</Link>
                     ) : (
-                        <>
-                            <div className="flex items-center space-x-2">
-                                <span className="text-black">Hi {session.user?.name || 'User'}!</span>
-                                <div className="dropdown dropdown-end">
-                                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                                        <div className="w-10 rounded-full">
-                                            <Image
-                                                alt="User Avatar"
-                                                src={session.user?.image || avatar} // If session has image, use it, otherwise use the imported fallback avatar
-                                                width={40}
-                                                height={40}
-                                                className="rounded-full"
-                                            />
-                                        </div>
+                        <div className="flex items-center space-x-2">
+                            <span className="text-black">Hi {session.user?.name || 'User'}!</span>
+                            <div className="dropdown dropdown-end">
+                                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                    <div className="w-10 rounded-full">
+                                        <Image
+                                            alt="User Avatar"
+                                            src={session.user?.image || avatarFallback} // Use session avatar or fallback
+                                            width={40}
+                                            height={40}
+                                            className="rounded-full"
+                                        />
                                     </div>
-                                    <ul tabIndex={0} className="menu menu-sm dropdown-content mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-md">
-                                        <li>
-                                            <Link href="/profile" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md">
-                                                Profile
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/settings" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md">
-                                                Settings
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <button
-                                                onClick={() => signOut()}
-                                                className="w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md"
-                                            >
-                                                Logout
-                                            </button>
-                                        </li>
-                                    </ul>
                                 </div>
+                                <ul tabIndex={0} className="menu menu-sm dropdown-content mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-md">
+                                    <li>
+                                        <Link href="/profile" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md">
+                                            Profile
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href="/settings" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md">
+                                            Settings
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <button
+                                            onClick={handleSignOut} // Use the new handler
+                                            className="w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md"
+                                        >
+                                            Logout
+                                        </button>
+                                    </li>
+                                </ul>
                             </div>
-                        </>
+                        </div>
                     )}
                 </div>
             </div>
@@ -114,7 +115,7 @@ const Navbar: React.FC = () => {
                             <button
                                 onClick={() => {
                                     toggleMenu();
-                                    signOut();
+                                    handleSignOut(); // Use the new handler
                                 }}
                                 className="text-left"
                             >

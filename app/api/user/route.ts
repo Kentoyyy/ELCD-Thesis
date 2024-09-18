@@ -33,20 +33,25 @@ export async function PUT(request: Request) {
         return NextResponse.redirect('/login');
     }
 
-    const { name, parentName, childName, childAge } = await request.json();
+    // Parse the incoming request body for the updated fields
+    const { name, parentName, childName, childAge, avatar } = await request.json();
 
     await connect();
 
-    // Find and update the user
+    // Find and update the user with the new details
     const user = await User.findOneAndUpdate(
         { email: session.user.email },
-        { name, parentName, childName, childAge },
-        { new: true } // This option returns the updated document
+        { name, parentName, childName, childAge, avatar },  // Include avatar field in the update
+        { new: true }  // Return the updated document
     );
 
     if (!user) {
         return NextResponse.error();
     }
 
+    // Update session's user object with new avatar
+    session.user.image = user.avatar;  // Update the session with the new avatar
+
+    // Return the updated user data
     return NextResponse.json(user);
 }
