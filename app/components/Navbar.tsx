@@ -1,4 +1,3 @@
-// components/Navbar.jsx
 "use client";
 import Link from 'next/link';
 import React, { useState } from 'react';
@@ -21,7 +20,7 @@ const Navbar: React.FC = () => {
 
     const linkClassNames = (path: string) =>
         `text-sm font-medium ${pathname === path
-            ? 'text-[#0D7C66] underline underline-offset-4 decoration-[#0D7C66]' // Active link gets the green color and underline
+            ? 'text-[#0D7C66] underline underline-offset-4 decoration-[#0D7C66]' 
             : 'text-gray-800'
         } hover:text-[#0D7C66] hover:underline hover:decoration-[#0D7C66] focus:text-[#0D7C66] focus:underline focus:decoration-[#0D7C66] transition duration-300`;
 
@@ -51,7 +50,17 @@ const Navbar: React.FC = () => {
                     <Link href="/resources" className={linkClassNames('/resources')}>Resources</Link>
                     <Link href="/contact" className={linkClassNames('/contact')}>Contact</Link>
                     {!session ? (
-                        <Link href="/login" className={linkClassNames('/login')}>Login</Link>
+                        <>
+                            <Link href="/login" className={linkClassNames('/login')}>Login</Link>
+                            <Link
+                                href="/register"
+                                className={`border border-[#0D7C66] rounded-lg px-4 py-2 text-sm font-medium text-gray-800 
+                                ${pathname === '/register' ? 'bg-[#0D7C66] text-white' : 'hover:bg-[#0D7C66] hover:text-white'} 
+                                transition duration-300`}
+                            >
+                                Sign Up
+                            </Link>
+                        </>
                     ) : (
                         <div className="flex items-center space-x-2">
                             <span className="text-black">Hi {session.user?.name || 'User'}!</span>
@@ -107,7 +116,15 @@ const Navbar: React.FC = () => {
                     {!session ? (
                         <>
                             <Link href="/login" onClick={toggleMenu} className={linkClassNames('/login')}>Login</Link>
-                            <Link href="/register" onClick={toggleMenu} className={linkClassNames('/register')}>Register</Link>
+                            <Link
+                                href="/register"
+                                onClick={toggleMenu}
+                                className={`border border-[#0D7C66] rounded-lg px-4 py-2 text-sm font-medium text-gray-800 
+                                ${pathname === '/register' ? 'bg-[#0D7C66] text-white' : 'hover:bg-[#0D7C66] hover:text-white'} 
+                                transition duration-300`}
+                            >
+                                Sign Up
+                            </Link>
                         </>
                     ) : (
                         <>
@@ -115,7 +132,7 @@ const Navbar: React.FC = () => {
                             <button
                                 onClick={() => {
                                     toggleMenu();
-                                    handleSignOut(); // Use the new handler
+                                    handleSignOut();
                                 }}
                                 className="text-left"
                             >
