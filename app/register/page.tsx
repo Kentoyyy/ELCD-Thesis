@@ -73,71 +73,32 @@ const Register = () => {
     return (
         sessionStatus !== "authenticated" && (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
-                <div className="flex bg-white shadow-lg rounded-lg w-full max-w-4xl">
+                <div className="flex bg-white shadow-lg rounded-lg w-full max-w-4xl overflow-hidden">
                     {/* Left: Form Section */}
                     <div className="w-2/3 p-8">
-                        <h2 className="text-2xl font-semibold text-gray-800 mb-6">Register</h2>
+                        <h2 className="text-2xl font-semibold text-gray-800 mb-6">Create an Account</h2>
                         <form onSubmit={handleSubmit} className="space-y-4">
-                            <div>
-                                <label htmlFor="parentName" className="block text-sm font-medium text-gray-600 mb-1">Parent's Full Name</label>
-                                <input
-                                    id="parentName"
-                                    type="text"
-                                    placeholder="Parent's Full Name"
-                                    required
-                                    className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="childName" className="block text-sm font-medium text-gray-600 mb-1">Child's Name</label>
-                                <input
-                                    id="childName"
-                                    type="text"
-                                    placeholder="Child's Name"
-                                    required
-                                    className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="childAge" className="block text-sm font-medium text-gray-600 mb-1">Child's Age</label>
-                                <input
-                                    id="childAge"
-                                    type="number"
-                                    placeholder="Child's Age"
-                                    required
-                                    className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="accountName" className="block text-sm font-medium text-gray-600 mb-1">Name</label>
-                                <input
-                                    id="accountName"
-                                    type="text"
-                                    placeholder="Name"
-                                    required
-                                    className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="email" className="block text-sm font-medium text-gray-600 mb-1">Email</label>
-                                <input
-                                    id="email"
-                                    type="email"
-                                    placeholder="Email Address"
-                                    required
-                                    className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="password" className="block text-sm font-medium text-gray-600 mb-1">Password</label>
-                                <input
-                                    id="password"
-                                    type="password"
-                                    placeholder="Enter Password"
-                                    required
-                                    className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
-                            </div>
+                            {[
+                                { label: "Parent's Full Name", type: "text", placeholder: "Enter Parent's Name" },
+                                { label: "Child's Name", type: "text", placeholder: "Enter Child's Name" },
+                                { label: "Child's Age", type: "number", placeholder: "Enter Child's Age" },
+                                { label: "Name", type: "text", placeholder: "Enter Your Name" },
+                                { label: "Email", type: "email", placeholder: "Enter Email Address" },
+                                { label: "Password", type: "password", placeholder: "Enter Password" },
+                            ].map((field, index) => (
+                                <div key={index}>
+                                    <label htmlFor={field.label} className="block text-sm font-medium text-gray-600 mb-1">
+                                        {field.label}
+                                    </label>
+                                    <input
+                                        id={field.label}
+                                        type={field.type}
+                                        placeholder={field.placeholder}
+                                        required
+                                        className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                            ))}
                             <button
                                 type="submit"
                                 className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -151,20 +112,13 @@ const Register = () => {
                         </div>
                     </div>
                     {/* Right: Social Logins Section */}
-                    <div className="w-1/3 bg-gray-50 p-8 flex flex-col justify-center">
+                    <div className="w-1/3 bg-slate-100 p-8 flex flex-col justify-center">
                         <h2 className="text-center text-gray-700 mb-4">- OR -</h2>
-                        <button className="w-full px-4 py-2 mb-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400">
-                            Continue with Google
-                        </button>
-                        <button className="w-full px-4 py-2 mb-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400">
-                            Continue with Facebook
-                        </button>
-                        <button className="w-full px-4 py-2 mb-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400">
-                            Continue with Outlook
-                        </button>
-                        <button className="w-full px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400">
-                            Continue with Twitter
-                        </button>
+                        {["Google", "Facebook", "Outlook", "Twitter"].map((platform) => (
+                            <button key={platform} className="w-full px-4 py-2 mb-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400">
+                                Continue with {platform}
+                            </button>
+                        ))}
                     </div>
                 </div>
             </div>

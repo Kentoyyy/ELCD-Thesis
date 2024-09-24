@@ -11,7 +11,7 @@ import avatarFallback from '../../public/images/avatar.png'; // Fallback avatar
 const Navbar: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
-    const { data: session }: any = useSession(); // Get session data
+    const { data: session, status }: any = useSession(); // Get session data and status
     const router = useRouter(); // Initialize useRouter
 
     const toggleMenu = () => {
@@ -49,7 +49,10 @@ const Navbar: React.FC = () => {
                     <Link href="/machinemodel" className={linkClassNames('/machinemodel')}>ML Model</Link>
                     <Link href="/resources" className={linkClassNames('/resources')}>Resources</Link>
                     <Link href="/contact" className={linkClassNames('/contact')}>Contact</Link>
-                    {!session ? (
+
+                    {status === 'loading' ? (
+                        <p>Loading...</p>
+                    ) : !session ? (
                         <>
                             <Link href="/login" className={linkClassNames('/login')}>Login</Link>
                             <Link

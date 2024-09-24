@@ -29,6 +29,12 @@ const userSchema = new Schema(
             type: Number,
             required: true,
         },
+        resetToken: {
+            type: String,   // This will store the reset token for password reset
+        },
+        resetTokenExpiry: {
+            type: Date,   // This will store the expiry time of the reset token
+        },
     },
     { timestamps: true }
 );
