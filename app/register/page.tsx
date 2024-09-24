@@ -73,11 +73,14 @@ const Register = () => {
     return (
         sessionStatus !== "authenticated" && (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
-                <div className="flex bg-white shadow-lg rounded-lg w-full max-w-4xl overflow-hidden">
-                    {/* Left: Form Section */}
-                    <div className="w-2/3 p-8">
-                        <h2 className="text-2xl font-semibold text-gray-800 mb-6">Create an Account</h2>
-                        <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="flex bg-white shadow-lg rounded-lg w-full max-w-6xl h-auto">
+                    {/* Left side - Form */}
+                    <div className="w-1/2 p-8">
+                        <h2 className="text-3xl font-semibold text-gray-800 mb-4 text-center">Create Your Account</h2>
+                        <button className="w-full px-4 py-2 mb-4 bg-gray-100 border border-gray-300 text-gray-600 rounded-md hover:bg-gray-200">
+                            Sign up with Google
+                        </button>
+                        <form onSubmit={handleSubmit} className="space-y-3">
                             {[
                                 { label: "Parent's Full Name", type: "text", placeholder: "Enter Parent's Name" },
                                 { label: "Child's Name", type: "text", placeholder: "Enter Child's Name" },
@@ -87,7 +90,7 @@ const Register = () => {
                                 { label: "Password", type: "password", placeholder: "Enter Password" },
                             ].map((field, index) => (
                                 <div key={index}>
-                                    <label htmlFor={field.label} className="block text-sm font-medium text-gray-600 mb-1">
+                                    <label htmlFor={field.label} className="block text-sm font-medium text-gray-700 mb-1">
                                         {field.label}
                                     </label>
                                     <input
@@ -95,30 +98,37 @@ const Register = () => {
                                         type={field.type}
                                         placeholder={field.placeholder}
                                         required
-                                        className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full px-4 py-2 bg-gray-50 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 transition duration-200"
                                     />
                                 </div>
                             ))}
                             <button
                                 type="submit"
-                                className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
                             >
                                 Register
                             </button>
-                            {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
+                            {error && <p className="text-red-600 text-sm mt-2 text-center">{error}</p>}
                         </form>
-                        <div className="text-center mt-6">
-                            <Link href="/login" className="text-sm text-blue-500 hover:underline">Already have an account? Login</Link>
+                        <div className="text-center mt-4">
+                            <Link href="/login" className="text-sm text-blue-500 hover:underline">
+                                Already have an account? Login
+                            </Link>
                         </div>
                     </div>
-                    {/* Right: Social Logins Section */}
-                    <div className="w-1/3 bg-slate-100 p-8 flex flex-col justify-center">
-                        <h2 className="text-center text-gray-700 mb-4">- OR -</h2>
-                        {["Google", "Facebook", "Outlook", "Twitter"].map((platform) => (
-                            <button key={platform} className="w-full px-4 py-2 mb-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400">
-                                Continue with {platform}
-                            </button>
-                        ))}
+
+                    {/* Right side - Welcome and chart */}
+                    <div className="w-1/2 bg-gray-900 text-white p-8 flex flex-col justify-center items-center">
+                        <h2 className="text-3xl font-bold mb-2 text-center">
+                            Welcome To FillQuick Pay!
+                        </h2>
+                        <p className="text-gray-400 mb-6 text-center">
+                            Join now for seamless payments. Lorem ipsum dolor sit amet consectetur adipiscing elit.
+                        </p>
+                        {/* Placeholder for chart */}
+                        <div className="bg-gray-800 rounded-lg p-4 w-full h-48 flex justify-center items-center">
+                            <p className="text-gray-400">[Sales Report Chart Placeholder]</p>
+                        </div>
                     </div>
                 </div>
             </div>
