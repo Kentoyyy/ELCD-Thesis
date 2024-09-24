@@ -4,23 +4,26 @@ import User from '@/models/User';  // Adjust path if needed
 import connect from '@/utils/db';  // Adjust path if needed
 
 export async function POST(request: Request) {
-  const { email } = await request.json();
-
-  await connect();
-
-  const user = await User.findOne({ email });
-
-  if (!user) {
-    return NextResponse.json({ error: 'User not found' }, { status: 404 });
-  }
-
-  // Send reset email
   try {
+    const { email } = await request.json();  // Ensure email is received from the request body
+    if (!email) {
+      return NextResponse.json({ error: 'Email is required' }, { status: 400 });
+    }
+
+    await connect();  // Ensure the DB is connected before proceeding
+
+    const user = await User.findOne({ email });  // Find user with the given email
+
+    if (!user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
+    // Send reset email
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
+        user: process.env.SMTP_USER,  // Ensure environment variable is correctly set
+        pass: process.env.SMTP_PASS,  // Ensure the app password is set
       },
     });
 
@@ -31,10 +34,17 @@ export async function POST(request: Request) {
       text: `Please click the following link to reset your password: ${process.env.BASE_URL}/reset-password/${user._id}`,
     };
 
+    // Send the email
     await transporter.sendMail(mailOptions);
+
     return NextResponse.json({ message: 'Password reset email sent successfully' });
-  } catch (error) {
-    console.error('Nodemailer error:', error);  // Log the error
-    return NextResponse.json({ error: 'Failed to send email', details: error.message }, { status: 500 });
+  } catch (error: any) {
+    // More detailed logging to identify the issue
+    console.error('Error while sending password reset email:', error);
+
+    return NextResponse.json({
+      error: 'Failed to send email',
+      details: error.message || 'Unknown error'
+    }, { status: 500 });
   }
 }
