@@ -16,72 +16,70 @@ const ResetPasswordPage = () => {
 
     try {
       // Sending POST request with the email
-      const response = await axios.post("/api/auth/reset-password", { email });
+      await axios.post("/api/auth/reset-password", { email });
       // Set success message if the request is successful
       setMessage("Password reset link sent to your email.");
     } catch (error) {
-      // Log the entire error object to understand what went wrong
       console.error("Error sending password reset link:", error);
-
-      // Handle different types of errors for better user feedback
-      if (axios.isAxiosError(error)) {
-        // Extract error message from the response if available
-        const errorMessage =
-          error.response?.data?.error || "Failed to send password reset link.";
-        setMessage(errorMessage); // Set the error message to be displayed
-      } else {
-        setMessage("An unexpected error occurred. Please try again later."); // General error message
-      }
+      const errorMessage =
+        axios.isAxiosError(error) && error.response?.data?.error
+          ? error.response.data.error
+          : "An unexpected error occurred. Please try again later.";
+      setMessage(errorMessage); // Set the error message to be displayed
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50">
-      <div className="bg-white p-10 rounded-lg shadow-lg w-full max-w-md">
-        <div className="text-center mb-6">
-          <h2 className="text-3xl font-semibold text-blue-600">Reset Password</h2>
-          <p className="mt-2 text-gray-500">Enter the email address associated with your account and we’ll send you a link to reset your password.</p>
-        </div>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              value={email} // Bind the input value to the email state
-              onChange={(e) => setEmail(e.target.value)} // Update email state on input change
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-              placeholder="you@example.com"
-            />
+    <div className="flex flex-col min-h-screen bg-gray-100">
+      <div className="flex-grow flex justify-center items-center">
+        <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold text-gray-800">Reset Password</h2>
+            <p className="mt-2 text-gray-600">Enter your email address and we’ll send you a link to reset your password.</p>
           </div>
-          <button
-            type="submit"
-            className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            Continue
-          </button>
-        </form>
-        {message && (
-          <p className="mt-4 text-center text-green-500">{message}</p>
-        )}
-        <div className="text-center mt-6">
-          <p className="text-gray-500">
-            Don't have an account?{" "}
-            <a href="/register" className="text-blue-600 hover:underline">
-              Sign up
-            </a>
-          </p>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                value={email} // Bind the input value to the email state
+                onChange={(e) => setEmail(e.target.value)} // Update email state on input change
+                required
+               className="w-full px-3 py-2 bg-transparent border-b-2 border-gray-300 text-sm focus:outline-none focus:border-blue-500 transition duration-200"
+                placeholder="example@gmail.com"
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full py-3 bg-secondary-color text-white rounded-lg hover:bg-primary-color transition-colors"
+            >
+              Continue
+            </button>
+          </form>
+          {message && (
+            <p className={`mt-4 text-center ${message.includes('link sent') ? 'text-primary-color' : 'text-red-600'}`}>
+              {message}
+            </p>
+          )}
+          <div className="text-center mt-6">
+            <p className="text-gray-600 text-base">
+              Don't have an account?{" "}
+              <a href="/register" className="text-primary-color hover:underline">
+                Sign up
+              </a>
+            </p>
+          </div>
         </div>
       </div>
-
-      {/* Place the Footer here inside the return block */}
-      <Footer />
+      
+      {/* Footer placed here to ensure it stays at the bottom */}
+    
     </div>
   );
 };

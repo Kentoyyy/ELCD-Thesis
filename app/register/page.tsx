@@ -72,14 +72,13 @@ const Register = () => {
 
     return (
         sessionStatus !== "authenticated" && (
-            <div className="min-h-screen flex items-center justify-center bg-gray-50">
-                <div className="flex bg-white shadow-lg rounded-lg w-full max-w-6xl h-auto">
+            <div className="min-h-screen flex items-center justify-center bg-gray-100">
+                <div className="flex flex-col md:flex-row bg-white shadow-2xl rounded-xl w-full max-w-6xl overflow-hidden">
                     {/* Left side - Form */}
-                    <div className="w-1/2 p-8">
-                        <h2 className="text-3xl font-semibold text-gray-800 mb-4 text-center">Create Your Account</h2>
-                        <button className="w-full px-4 py-2 mb-4 bg-gray-100 border border-gray-300 text-gray-600 rounded-md hover:bg-gray-200">
-                            Sign up with Google
-                        </button>
+                    <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-center">
+                        <h2 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
+                            Create Your Account<br></br>
+                        </h2>
                         <form onSubmit={handleSubmit} className="space-y-3">
                             {[
                                 { label: "Parent's Full Name", type: "text", placeholder: "Enter Parent's Name" },
@@ -90,7 +89,7 @@ const Register = () => {
                                 { label: "Password", type: "password", placeholder: "Enter Password" },
                             ].map((field, index) => (
                                 <div key={index}>
-                                    <label htmlFor={field.label} className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor={field.label} className="block text-xs font-medium text-gray-600 mb-1">
                                         {field.label}
                                     </label>
                                     <input
@@ -98,37 +97,32 @@ const Register = () => {
                                         type={field.type}
                                         placeholder={field.placeholder}
                                         required
-                                        className="w-full px-4 py-2 bg-gray-50 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 transition duration-200"
+                                        className="w-full px-3 py-2 bg-transparent border-b-2 border-gray-300 text-sm focus:outline-none focus:border-blue-500 transition duration-200"
                                     />
                                 </div>
                             ))}
                             <button
                                 type="submit"
-                                className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+                                className="w-full px-3 py-2 bg-primary-color text-white text-sm rounded-md hover:bg-secondary-color focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200"
                             >
                                 Register
                             </button>
-                            {error && <p className="text-red-600 text-sm mt-2 text-center">{error}</p>}
+                            {error && <p className="text-red-600 text-xs mt-2 text-center">{error}</p>}
                         </form>
                         <div className="text-center mt-4">
-                            <Link href="/login" className="text-sm text-blue-500 hover:underline">
+                            <Link href="/login" className="text-xs text-primary-color hover:underline">
                                 Already have an account? Login
                             </Link>
                         </div>
                     </div>
 
-                    {/* Right side - Welcome and chart */}
-                    <div className="w-1/2 bg-gray-900 text-white p-8 flex flex-col justify-center items-center">
-                        <h2 className="text-3xl font-bold mb-2 text-center">
-                            Welcome To FillQuick Pay!
-                        </h2>
-                        <p className="text-gray-400 mb-6 text-center">
-                            Join now for seamless payments. Lorem ipsum dolor sit amet consectetur adipiscing elit.
-                        </p>
-                        {/* Placeholder for chart */}
-                        <div className="bg-gray-800 rounded-lg p-4 w-full h-48 flex justify-center items-center">
-                            <p className="text-gray-400">[Sales Report Chart Placeholder]</p>
-                        </div>
+                   
+                    <div className="w-full md:w-1/2 h-[250px] md:h-auto relative overflow-hidden">
+                        <img
+                            src="/images/kidlogin.png" 
+                            alt="Welcome Image"
+                            className="object-contain w-full h-full rounded-r-xl"
+                        />
                     </div>
                 </div>
             </div>
