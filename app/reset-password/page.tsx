@@ -1,68 +1,84 @@
-"use client"; // Ensure this page runs on the client side
+"use client";
 
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
+import Footer from '../../app/components/Footer';
 
 const ResetPasswordPage = () => {
-  const [email, setEmail] = useState(''); // State for the email input
-  const [message, setMessage] = useState(''); // State for the response message
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent default form submission behavior
-
-    // Clear previous messages
-    setMessage('');
+    e.preventDefault();
+    setMessage("");
 
     try {
-      // Sending POST request with the email
-      const response = await axios.post('/api/auth/reset-password', { email });
-      // Set success message if the request is successful
-      setMessage('Password reset link sent to your email.');
+      const response = await axios.post("/api/auth/reset-password", { email });
+      setMessage("Password reset link sent to your email.");
     } catch (error) {
-      // Log the entire error object to understand what went wrong
-      console.error('Error sending password reset link:', error);
+      console.error("Error sending password reset link:", error);
 
-      // Handle different types of errors for better user feedback
       if (axios.isAxiosError(error)) {
-        // Extract error message from the response if available
-        const errorMessage = error.response?.data?.error || 'Failed to send password reset link.';
-        setMessage(errorMessage); // Set the error message to be displayed
+        const errorMessage =
+          error.response?.data?.error || "Failed to send password reset link.";
+        setMessage(errorMessage);
       } else {
-        setMessage('An unexpected error occurred. Please try again later.'); // General error message
+        setMessage("An unexpected error occurred. Please try again later.");
       }
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-semibold mb-6">Reset Password</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Enter your email address
-            </label>
-            <input
-              id="email"
-              type="email"
-              value={email} // Bind the input value to the email state
-              onChange={(e) => setEmail(e.target.value)} // Update email state on input change
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-              placeholder="you@example.com"
-            />
+    <div className="flex flex-col justify-between min-h-screen bg-gray-50">
+      <div className="flex justify-center items-center flex-grow">
+        <div className="bg-white p-10 rounded-lg shadow-lg w-full max-w-md">
+          <div className="text-center mb-6">
+            <h2 className="text-3xl font-semibold text-primary-color">Reset Password</h2>
+            <p className="mt-2 text-gray-500">
+              Enter the email address associated with your account and we’ll send you a link to reset your password.
+            </p>
           </div>
-          <button
-            type="submit"
-            className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-          >
-            Reset Password
-          </button>
-        </form>
-        {message && <p className="mt-4 text-center text-green-500">{message}</p>} {/* Display message if it exists */}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                  className="w-full border-b-2 border-gray-300 focus:outline-none focus:border-primary-color transition duration-300 p-2 bg-transparent"
+                placeholder="example@gmail.com"
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full py-3 bg-primary-color text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Continue
+            </button>
+          </form>
+          {message && (
+            <p className="mt-4 text-center text-green-500">{message}</p>
+          )}
+          <div className="text-center mt-6">
+            <p className="text-gray-500">
+              Don't have an account?{" "}
+              <a href="/sign-up" className="text-primary-color hover:underline">
+                Sign up
+              </a>
+            </p>
+          </div>
+        </div>
       </div>
+      <Footer />
     </div>
   );
-}
+};
 
 export default ResetPasswordPage;
