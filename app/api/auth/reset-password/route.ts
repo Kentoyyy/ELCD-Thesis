@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import User from '@/models/User';  // Adjust path if needed
 import connect from '@/utils/db';  // Adjust path if needed
+import crypto from 'crypto';
 
 export async function POST(request: Request) {
   try {
@@ -18,6 +19,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
+    // Generate a unique token
+    const token = crypto.randomBytes(32).toString('hex');
+    user.resetToken = token;
+    user.resetTokenExpiry = Date.now() + 3600000; // 1 hour from now
+    await user.save();
+
     // Send reset email
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -31,7 +38,7 @@ export async function POST(request: Request) {
       from: process.env.SMTP_USER,
       to: email,
       subject: 'Password Reset',
-      text: `Please click the following link to reset your password: ${process.env.BASE_URL}/reset-password/${user._id}`,
+      text: `Please click the following link to reset your password: ${process.env.NEXT_PUBLIC_BASE_URL}/reset-password/${token}`,
     };
 
     // Send the email

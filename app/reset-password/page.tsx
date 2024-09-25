@@ -51,7 +51,7 @@ const ResetPasswordPage = () => {
                 value={email} // Bind the input value to the email state
                 onChange={(e) => setEmail(e.target.value)} // Update email state on input change
                 required
-               className="w-full px-3 py-2 bg-transparent border-b-2 border-gray-300 text-sm focus:outline-none focus:border-blue-500 transition duration-200"
+               className="w-full px-3 py-2 bg-transparent border-b-2 text-sm focus:outline-none focus:border-blue-500 transition duration-200"
                 placeholder="example@gmail.com"
               />
             </div>
