@@ -14,26 +14,26 @@ const ResetPassword = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
+      
         if (password !== confirmPassword) {
-            setMessage("Passwords do not match");
-            return;
+          setMessage("Passwords do not match");
+          return;
         }
-
+      
         try {
-            const response = await axios.post('/api/auth/reset-password/new', {
-                token,
-                password,
-            });
-            setMessage(response.data.message); // Use the response message
+          const response = await axios.post('/api/auth/reset-password/new', {
+            token,  // Ensure the token is being sent
+            password,
+          });
+          setMessage(response.data.message);  // Use the response message
         } catch (error) {
-            const errorMessage = axios.isAxiosError(error) && error.response?.data?.error
-                ? error.response.data.error
-                : "Failed to reset password. Please try again.";
-            setMessage(errorMessage);
+          const errorMessage = axios.isAxiosError(error) && error.response?.data?.error
+            ? error.response.data.error
+            : "Failed to reset password. Please try again.";
+          setMessage(errorMessage);
         }
-    };
-
+      };
+      
     return (
         <div className="flex flex-col min-h-screen bg-gray-100">
             <div className="flex-grow flex justify-center items-center">

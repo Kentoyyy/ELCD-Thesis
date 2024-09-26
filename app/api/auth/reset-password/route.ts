@@ -38,8 +38,9 @@ export async function POST(request: Request) {
       from: process.env.SMTP_USER,
       to: email,
       subject: 'Password Reset',
-      text: `Please click the following link to reset your password: ${process.env.NEXT_PUBLIC_BASE_URL}/reset-password/${token}`,
-    };
+      text: `Please click the following link to reset your password: ${process.env.BASE_URL}/reset-password/${token}`,
+  };
+  
 
     // Send the email
     await transporter.sendMail(mailOptions);
