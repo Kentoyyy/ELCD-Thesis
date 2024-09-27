@@ -1,6 +1,3 @@
-// app/page.tsx
-import React from 'react';
-
 import Image from 'next/image';
 import data from '../public/images/data.png';
 import model from '../public/images/modeltraning.png';
