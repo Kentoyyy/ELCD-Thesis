@@ -22,7 +22,7 @@ const ResetPassword = () => {
       
         try {
           const response = await axios.post('/api/auth/reset-password/new', {
-            token,  // Ensure the token is being sent
+            token,  // Ensure the token is be ing sent
             password,
           });
           setMessage(response.data.message);  // Use the response message

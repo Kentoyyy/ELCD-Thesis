@@ -28,6 +28,6 @@ const config: Config = {
       }
     },
   },
-  plugins: [require('daisyui')], //https://www.npmjs.com/package/react-daisyui
+  plugins: [require('daisyui')],
 }
 export default config
