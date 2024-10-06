@@ -1,8 +1,9 @@
-import Navbar from "@/app/components/Navbar";
+// app/RootLayout.tsx (Server Component)
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import AuthProvider from "@/utils/SessionProvider"; // Use your custom provider
+import AuthProvider from "@/utils/SessionProvider"; // Your custom provider
+import Navbar from "@/app/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-gray-100`}>
-        <AuthProvider> {/* Use your custom AuthProvider */}
+        <AuthProvider>
           <div className="w-full">
             <Navbar />
             {children}
