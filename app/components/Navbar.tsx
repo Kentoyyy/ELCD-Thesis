@@ -10,6 +10,8 @@ import avatarFallback from '../../public/images/avatar.png'; // Fallback avatar
 
 const Navbar: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [dropdownOpen, setDropdownOpen] = useState(false); // Dropdown state
+    const [conceptDropdownOpen, setConceptDropdownOpen] = useState(false); // Separate dropdown for Concepts
     const pathname = usePathname();
     const { data: session, status }: any = useSession(); // Get session data and status
     const router = useRouter(); // Initialize useRouter
@@ -18,9 +20,19 @@ const Navbar: React.FC = () => {
         setIsOpen(!isOpen);
     };
 
+    const toggleDropdown = () => {
+        setDropdownOpen(!dropdownOpen);
+        setConceptDropdownOpen(false); // Close Concepts dropdown when Assessments is opened
+    };
+
+    const toggleConceptDropdown = () => {
+        setConceptDropdownOpen(!conceptDropdownOpen);
+        setDropdownOpen(false); // Close Assessments dropdown when Concepts is opened
+    };
+
     const linkClassNames = (path: string) =>
         `text-sm font-medium ${pathname === path
-            ? 'text-[#0D7C66] underline underline-offset-4 decoration-[#0D7C66]' 
+            ? 'text-[#0D7C66] underline underline-offset-4 decoration-[#0D7C66]'
             : 'text-gray-800'
         } hover:text-[#0D7C66] hover:underline hover:decoration-[#0D7C66] focus:text-[#0D7C66] focus:underline focus:decoration-[#0D7C66] transition duration-300`;
 
@@ -45,9 +57,58 @@ const Navbar: React.FC = () => {
                 <div className="hidden md:flex space-x-8 items-center">
                     <Link href="/" className={linkClassNames('/')}>Home</Link>
                     <Link href="/about" className={linkClassNames('/about')}>About</Link>
-                    <Link href="/disabilities" className={linkClassNames('/disabilities')}>Detection Test</Link>
-                    <Link href="/machinemodel" className={linkClassNames('/machinemodel')}>ML Model</Link>
-                    <Link href="/resources" className={linkClassNames('/resources')}>Resources</Link>
+                    <div className="relative">
+                        <button onClick={toggleDropdown} className={linkClassNames('/assessment')}>
+                            Assessment
+                        </button>
+                        {dropdownOpen && (
+                            <ul className="absolute mt-2 py-2 w-64 bg-white border border-gray-300 shadow-lg rounded-lg z-10">
+                                <li>
+                                    <Link href="/dyslexia" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                                        Dyslexia
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/dysgraphia" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                                        Dysgraphia
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/dyscalculia" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                                        Dyscalculia
+                                    </Link>
+                                </li>
+                            </ul>
+                        )}
+                    </div>
+
+                    {/* Dropdown for Concepts */}
+                    <div className="relative">
+                        <button onClick={toggleConceptDropdown} className={linkClassNames('/machinemodel')}>
+                            Concepts
+                        </button>
+                        {conceptDropdownOpen && (
+                            <ul className="absolute mt-2 py-2 w-64 bg-white border border-gray-300 shadow-lg rounded-lg z-10">
+                                <li>
+                                    <Link href="/cognitive-skills" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                                        What cognitive skills do we assess?
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/training-children" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                                        Training for Children
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/training-adults" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                                        Training for Adults
+                                    </Link>
+                                </li>
+                            </ul>
+                        )}
+                    </div>
+
+                    <Link href="/articles" className={linkClassNames('/resources')}>Articles</Link>
                     <Link href="/contact" className={linkClassNames('/contact')}>Contact</Link>
 
                     {status === 'loading' ? (
@@ -112,9 +173,9 @@ const Navbar: React.FC = () => {
                     </button>
                     <Link href="/" onClick={toggleMenu} className={linkClassNames('/')}>Home</Link>
                     <Link href="/about" onClick={toggleMenu} className={linkClassNames('/about')}>About</Link>
-                    <Link href="/disabilities" onClick={toggleMenu} className={linkClassNames('/disabilities')}>Detection Test</Link>
-                    <Link href="/machinemodel" onClick={toggleMenu} className={linkClassNames('/machinemodel')}>ML Model</Link>
-                    <Link href="/resources" onClick={toggleMenu} className={linkClassNames('/resources')}>Resources</Link>
+                    <Link href="/disabilities" onClick={toggleMenu} className={linkClassNames('/disabilities')}>Assessments</Link>
+                    <Link href="/machinemodel" onClick={toggleMenu} className={linkClassNames('/machinemodel')}> Concepts</Link>
+                    <Link href="/articles" onClick={toggleMenu} className={linkClassNames('/resources')}>Articles</Link>
                     <Link href="/contact" onClick={toggleMenu} className={linkClassNames('/contact')}>Contact</Link>
                     {!session ? (
                         <>
@@ -130,18 +191,9 @@ const Navbar: React.FC = () => {
                             </Link>
                         </>
                     ) : (
-                        <>
-                            <span>Hi {session.user?.name || 'User'}!</span>
-                            <button
-                                onClick={() => {
-                                    toggleMenu();
-                                    handleSignOut();
-                                }}
-                                className="text-left"
-                            >
-                                Logout
-                            </button>
-                        </>
+                        <button onClick={handleSignOut} className="w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md">
+                            Logout
+                        </button>
                     )}
                 </div>
             </div>
