@@ -13,7 +13,7 @@ const Login: React.FC = () => {
     if (sessionStatus === "authenticated") {
       console.log("Session: ", session); // Debugging to see session data
       if (session.user?.role === "admin") {
-        router.replace("/admin-panel"); // Redirect to admin panel for admin users
+        router.replace("/admin-panel/dashboard"); // Redirect to admin panel for admin users
       } else {
         router.replace("/"); // Redirect to home or user dashboard for regular users
       }
