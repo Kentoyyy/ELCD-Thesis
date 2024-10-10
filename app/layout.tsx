@@ -1,11 +1,9 @@
-// app/layout.tsx (Server Component)
+// app/layout.tsx
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import AuthProvider from "@/utils/SessionProvider"; // Your custom provider
-import Navbar from "@/app/components/Navbar";
-import { usePathname } from "next/navigation"; // Import the usePathname hook
-import ConditionalNavbar from "@/app/components/ConditionalNavbar"; // As previously suggested
+import ConditionalNavbar from "@/app/components/ConditionalNavbar"; // Conditional navbar
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +22,7 @@ export default function RootLayout({
       <body className={`${inter.className} bg-gray-100`}>
         <AuthProvider>
           <div className="w-full">
-            {/* Conditionally render the Navbar using the new client-side component */}
+            {/* Conditionally render the Navbar */}
             <ConditionalNavbar />
             {children}
           </div>
