@@ -18,10 +18,10 @@ export const authOptions: any = {
             },
             async authorize(credentials: any) {
                 // Hardcoded admin credentials
-                const adminEmail = "admin@earlychild.com";  // Set your admin email
-                const adminPassword = "adminpass";       // Set your admin password
+                const adminEmail = "admin@earlychild.com";  
+                const adminPassword = "adminpass";      
 
-                // Check for admin login
+              
                 if (credentials.email === adminEmail && credentials.password === adminPassword) {
                     // Return an admin user object
                     return {
@@ -32,14 +32,14 @@ export const authOptions: any = {
                     };
                 }
 
-                // Regular user login
+              
                 await connect();
                 try {
                     const user = await User.findOne({ email: credentials.email });
                     if (user) {
                         const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
                         if (isPasswordCorrect) {
-                            // Return the user object with additional fields
+                          
                             return {
                                 id: user._id,
                                 name: user.name,
@@ -48,7 +48,7 @@ export const authOptions: any = {
                                 childName: user.childName,
                                 childAge: user.childAge,
                                 image: user.image || null,
-                                role: "user",  // Mark them as a regular user
+                                role: "user",  
                             };
                         }
                     }
@@ -61,13 +61,13 @@ export const authOptions: any = {
     ],
     callbacks: {
         async session({ session, token }: { session: any; token: any }) {
-            // Attach user/admin data to the session
+           
             if (token) {
                 session.user = {
                     id: token.id,
                     name: token.name,
                     email: token.email,
-                    role: token.role,  // Role will either be 'admin' or 'user'
+                    role: token.role, 
                     parentName: token.parentName || null,
                     childName: token.childName || null,
                     childAge: token.childAge || null,
@@ -81,7 +81,7 @@ export const authOptions: any = {
                 token.id = user.id;
                 token.name = user.name;
                 token.email = user.email;
-                token.role = user.role;  // Ensure role is saved to token
+                token.role = user.role;  
                 token.parentName = user.parentName || null;
                 token.childName = user.childName || null;
                 token.childAge = user.childAge || null;
@@ -98,7 +98,7 @@ export const authOptions: any = {
     },
     pages: {
         signIn: '/login',
-        error: '/login',  // Redirect to login page on error
+        error: '/login',  
     },
 };
 
