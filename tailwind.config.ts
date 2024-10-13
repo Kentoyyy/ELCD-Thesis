@@ -1,6 +1,7 @@
 //edit tailwind.config.ts
 import type { Config } from 'tailwindcss'
 import { title } from "process";
+import { Montserrat } from 'next/font/google';
  
 const config: Config = {
   content: [
@@ -25,6 +26,7 @@ const config: Config = {
       fontFamily:{
         title:["Roboto", "sans-serif"],
         robotoserif:["Roboto Serf", "serif"],
+        Montserrat:["Montserrat", "sans-serif"],
       }
     },
   },
