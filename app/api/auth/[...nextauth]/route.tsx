@@ -1,10 +1,8 @@
-// pages/api/auth/[...nextauth].ts
-
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import User from "@/models/User";
-import connect from "@/utils/db";
+import dbConnect from "@/utils/db";
 
 export const authOptions: any = {
     secret: process.env.NEXTAUTH_SECRET,
@@ -21,7 +19,6 @@ export const authOptions: any = {
                 const adminEmail = "admin@earlychild.com";  
                 const adminPassword = "adminpass";      
 
-              
                 if (credentials.email === adminEmail && credentials.password === adminPassword) {
                     // Return an admin user object
                     return {
@@ -32,14 +29,13 @@ export const authOptions: any = {
                     };
                 }
 
-              
-                await connect();
+                // Connect to the database
+                await dbConnect();
                 try {
                     const user = await User.findOne({ email: credentials.email });
                     if (user) {
                         const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
                         if (isPasswordCorrect) {
-                          
                             return {
                                 id: user._id,
                                 name: user.name,
@@ -48,7 +44,7 @@ export const authOptions: any = {
                                 childName: user.childName,
                                 childAge: user.childAge,
                                 image: user.image || null,
-                                role: "user",  
+                                role: "user",
                             };
                         }
                     }
@@ -61,13 +57,12 @@ export const authOptions: any = {
     ],
     callbacks: {
         async session({ session, token }: { session: any; token: any }) {
-           
             if (token) {
                 session.user = {
                     id: token.id,
                     name: token.name,
                     email: token.email,
-                    role: token.role, 
+                    role: token.role,
                     parentName: token.parentName || null,
                     childName: token.childName || null,
                     childAge: token.childAge || null,
@@ -81,7 +76,7 @@ export const authOptions: any = {
                 token.id = user.id;
                 token.name = user.name;
                 token.email = user.email;
-                token.role = user.role;  
+                token.role = user.role;
                 token.parentName = user.parentName || null;
                 token.childName = user.childName || null;
                 token.childAge = user.childAge || null;
@@ -89,16 +84,31 @@ export const authOptions: any = {
             }
             return token;
         },
+        // Add this to update lastActive during sign in
         async signIn({ user, account }: { user: any; account: any }) {
             if (account?.provider === "credentials") {
-                return true;
+                try {
+                    // Connect to the database
+                    await dbConnect();
+
+                    // Update lastActive field to current time
+                    await User.findOneAndUpdate(
+                        { email: user.email },
+                        { lastActive: Date.now() }
+                    );
+
+                    return true;
+                } catch (err) {
+                    console.error("Error updating lastActive:", err);
+                    return false;
+                }
             }
             return false;
         },
     },
     pages: {
         signIn: '/login',
-        error: '/login',  
+        error: '/login',
     },
 };
 
