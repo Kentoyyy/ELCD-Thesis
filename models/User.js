@@ -1,4 +1,3 @@
-// models/User.js
 import mongoose from "mongoose";
 
 const { Schema } = mongoose;
@@ -32,14 +31,18 @@ const userSchema = new Schema(
     },
     role: {
       type: String,
-      enum: ["admin", "user"], // Define roles
+      enum: ["admin", "user"],
       default: "user",
       required: true,
     },
     resetToken: String,
     resetTokenExpiry: Date,
+    lastActive: {
+      type: Date,
+      default: Date.now, // Default to current time when created
+    },
   },
-  { timestamps: true }
+  { timestamps: true } // This automatically adds createdAt and updatedAt fields
 );
 
 export default mongoose.models.User || mongoose.model("User", userSchema);

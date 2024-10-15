@@ -65,7 +65,7 @@ const Login: React.FC = () => {
         <div className="flex flex-col lg:flex-row w-full max-w-6xl shadow-2xl min-h-[600px] bg-white rounded-lg overflow-hidden">
 
           <div className="w-full lg:w-1/2 p-10 flex flex-col justify-center">
-            <h1 className="text-3xl font-semibold text-gray-800 mb-2 font-robotoserif">
+            <h1 className="text-3xl font-extrabold text-gray-800 mb-2 font-robotoserif">
               Welcome back!<br />Log in to your profile.
             </h1>
             <p className="text-gray-600 mb-6">Enter your credentials to access your account.</p>
