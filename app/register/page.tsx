@@ -20,6 +20,15 @@ const Register = () => {
         return emailRegex.test(email);
     };
 
+    const validateAge = (e: any) => {
+        const age = e.target.value;
+        if (age < 2 || age > 7) {
+            setError("Child's age must be between 2 and 7");
+        } else {
+            setError("");
+        }
+    };
+
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         const parentName = e.target[0].value;
@@ -36,6 +45,11 @@ const Register = () => {
 
         if (!password || password.length < 8) {
             setError("Password is invalid");
+            return;
+        }
+
+        if (childAge < 2 || childAge > 7) {
+            setError("Child's age must be between 2 and 7");
             return;
         }
 
@@ -88,7 +102,7 @@ const Register = () => {
                                 { label: "Email", type: "email", placeholder: "Enter Email Address" },
                                 { label: "Password", type: "password", placeholder: "Enter Password" },
                             ].map((field, index) => (
-                                <div key={index}>
+                                <div key={index} className="relative flex flex-col">
                                     <label htmlFor={field.label} className="block text-xs font-medium text-gray-600 mb-1">
                                         {field.label}
                                     </label>
@@ -97,8 +111,16 @@ const Register = () => {
                                         type={field.type}
                                         placeholder={field.placeholder}
                                         required
-                                        className="w-full px-3 py-2 bg-transparent border-b-2 border-gray-300 text-sm focus:outline-none focus:border-blue-500 transition duration-200"
+                                        min={field.label === "Child's Age" ? 2 : undefined}
+                                        max={field.label === "Child's Age" ? 7 : undefined}
+                                        className={`w-full px-3 py-2 text-black bg-transparent border-b-2 border-gray-300 text-sm focus:outline-none focus:border-blue-500 transition duration-200`}
+                                        onBlur={field.label === "Child's Age" ? validateAge : undefined}
                                     />
+                                    {field.label === "Child's Age" && error && (
+                                        <span className="text-xs text-red-600 mt-1">
+                                            {error}
+                                        </span>
+                                    )}
                                 </div>
                             ))}
                             <button
@@ -116,10 +138,10 @@ const Register = () => {
                         </div>
                     </div>
 
-                   
+                    {/* Right side - Image */}
                     <div className="w-full md:w-1/2 h-[250px] md:h-auto relative overflow-hidden">
                         <img
-                            src="/images/kidlogin.png" 
+                            src="/images/kidlogin.png"
                             alt="Welcome Image"
                             className="object-contain w-full h-full rounded-r-xl"
                         />
