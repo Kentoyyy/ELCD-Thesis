@@ -11,11 +11,11 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     if (sessionStatus === "authenticated") {
-      console.log("Session: ", session); // Debugging to see session data
-      if (session.user?.role === "admin") {
-        router.replace("/admin-panel/dashboard"); // Redirect to admin panel for admin users
+      // Redirect users directly to the landing page after login based on their role
+      if (session?.user?.role === "admin") {
+        router.replace("/admin-panel/dashboard");
       } else {
-        router.replace("/"); // Redirect to home or user dashboard for regular users
+        router.replace("/welcome"); // Redirecting to the welcome page
       }
     }
   }, [sessionStatus, session, router]);
@@ -78,7 +78,7 @@ const Login: React.FC = () => {
                   type="email"
                   required
                   placeholder="Enter your email"
-                  className="w-full border-b-2 border-gray-300 focus:outline-none focus:border-primary-color transition duration-300 p-2 bg-transparent"
+                  className="w-full border-b-2  text-black border-gray-300 text-color: focus:outline-none focus:border-primary-color transition duration-300 p-2 bg-transparent"
                 />
               </div>
               <div>
@@ -89,7 +89,7 @@ const Login: React.FC = () => {
                   type="password"
                   required
                   placeholder="********"
-                  className="w-full border-b-2 border-gray-300 focus:outline-none focus:border-primary-color transition duration-300 p-2 bg-transparent"
+                  className="w-full border-b-2 text-black border-gray-300 focus:outline-none focus:border-primary-color transition duration-300 p-2 bg-transparent"
                 />
               </div>
               <div className="flex items-center justify-between">
@@ -107,12 +107,17 @@ const Login: React.FC = () => {
               </button>
               {error && <p className="text-red-600 text-center mt-2">{error}</p>}
             </form>
+
             <div className="flex items-center justify-center mt-6">
-              <button className="flex items-center justify-center w-full p-3 bg-gray-100 rounded-lg hover:bg-gray-200">
-                <img src="/images/google.png" alt="Google" className="w-5 h-5 mr-2" />
+              <button
+                onClick={() => signIn("google", { callbackUrl: "/" })} // Sign in with Google
+                className="flex items-center justify-center w-full p-3 bg-gray-300 rounded-lg hover:bg-gray-200 text-black"
+              >
+                <img src="/images/google.png" alt="Google" className="w-7 h-7 mr-2" />
                 Sign in with Google
               </button>
             </div>
+
             <div className="mt-6 text-center">
               <span className="text-gray-600">Don't have an account? </span>
               <Link href="/register" className="text-primary-color hover:underline">Sign up</Link>
@@ -120,7 +125,7 @@ const Login: React.FC = () => {
           </div>
 
           <div className="w-full lg:w-1/2 bg-slate-50 relative flex flex-col items-center justify-center">
-            <img src="/images/logoelcdl.png" alt="Logo" className="w-35 h-35" />
+            <img src="/images/logoooelcd.png" alt="Logo" className="w-35 h-35" />
             <p className="mt-4 text-center text-gray-600">Empowering Early Detection for Brighter Futures</p>
           </div>
 
