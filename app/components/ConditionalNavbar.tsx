@@ -1,20 +1,19 @@
-// app/components/ConditionalNavbar.tsx
-"use client"; // This is a client component
+"use client";
 
-import Navbar from "./Navbar"; // Import your Navbar component
+import Navbar from "./Navbar"; // Assuming you have a Navbar component
 import { usePathname } from "next/navigation";
 
 const ConditionalNavbar = () => {
   const pathname = usePathname();
 
-  // Hide the Navbar on admin routes
-  const shouldShowNavbar = !pathname.startsWith("/admin-panel");
+  // Hide the navbar on the "/admin-panel" and "/welcome" pages
+  const shouldShowNavbar = !pathname.startsWith("/admin-panel") && pathname !== "/welcome";
 
   if (!shouldShowNavbar) {
-    return null; // Don't render anything for admin pages
+    return null;
   }
 
-  return <Navbar />; // Render the Navbar on non-admin routes
+  return <Navbar />;
 };
 
 export default ConditionalNavbar;
