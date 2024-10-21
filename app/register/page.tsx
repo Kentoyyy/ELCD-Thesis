@@ -97,7 +97,7 @@ const Register = () => {
                             {[
                                 { label: "Parent's Full Name", type: "text", placeholder: "Enter Parent's Name" },
                                 { label: "Child's Name", type: "text", placeholder: "Enter Child's Name" },
-                                { label: "Child's Age", type: "number", placeholder: "Enter Child's Age" },
+                                { label: "Child's Age", type: "number", placeholder: "Age (2-7)" },
                                 { label: "Name", type: "text", placeholder: "Enter Your Name" },
                                 { label: "Email", type: "email", placeholder: "Enter Email Address" },
                                 { label: "Password", type: "password", placeholder: "Enter Password" },
@@ -115,9 +115,10 @@ const Register = () => {
                                         max={field.label === "Child's Age" ? 7 : undefined}
                                         className={`w-full px-3 py-2 text-black bg-transparent border-b-2 border-gray-300 text-sm focus:outline-none focus:border-blue-500 transition duration-200`}
                                         onBlur={field.label === "Child's Age" ? validateAge : undefined}
+                                        style={field.label === "Child's Age" && error ? { borderColor: "red" } : {}}
                                     />
                                     {field.label === "Child's Age" && error && (
-                                        <span className="text-xs text-red-600 mt-1">
+                                        <span className="absolute right-0 top-1 text-xs text-red-600">
                                             {error}
                                         </span>
                                     )}
