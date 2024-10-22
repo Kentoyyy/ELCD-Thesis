@@ -292,11 +292,17 @@ const UserManagement = () => {
                   type="number"
                   className="w-full px-4 py-2 border rounded-lg bg-transparent"
                   value={currentUser.childAge || ""}
-                  onChange={(e) =>
-                    setCurrentUser({ ...currentUser, childAge: parseInt(e.target.value) })
-                  }
+                  min={2}  // Set the minimum age to 2
+                  max={7}  // Set the maximum age to 7
+                  onChange={(e) => {
+                    const age = parseInt(e.target.value);
+                    if (age >= 2 && age <= 7) {  // Ensure the value is within the range
+                      setCurrentUser({ ...currentUser, childAge: age });
+                    }
+                  }}
                 />
               </div>
+
               <div className="flex justify-end space-x-2">
                 <button
                   type="button"
