@@ -64,17 +64,17 @@ const Navbar: React.FC = () => {
                         {dropdownOpen && (
                             <ul className="absolute mt-2 py-2 w-64 bg-white border border-gray-300 shadow-lg rounded-lg z-10">
                                 <li>
-                                    <Link href="/dyslexia" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                                    <Link href="/assessment/dyslexia" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
                                         Dyslexia
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/dysgraphia" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                                    <Link href="/assessment/dysgraphia" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
                                         Dysgraphia
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/dyscalculia" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                                    <Link href="/assessment/dyscalculia" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
                                         Dyscalculia
                                     </Link>
                                 </li>
