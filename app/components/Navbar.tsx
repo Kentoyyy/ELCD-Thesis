@@ -1,20 +1,20 @@
 "use client";
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation'; // Import useRouter
+import { usePathname, useRouter } from 'next/navigation';
 import { HiOutlineMenu, HiOutlineX } from 'react-icons/hi';
 import Image from 'next/image';
 import { useSession, signOut } from 'next-auth/react';
 import logo from '../../public/images/logoelcdl.png';
-import avatarFallback from '../../public/images/avatar.png'; // Fallback avatar
+import avatarFallback from '../../public/images/avatar.png';
 
 const Navbar: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [dropdownOpen, setDropdownOpen] = useState(false); // Dropdown state
-    const [conceptDropdownOpen, setConceptDropdownOpen] = useState(false); // Separate dropdown for Concepts
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [resourcesDropdownOpen, setResourcesDropdownOpen] = useState(false);
     const pathname = usePathname();
-    const { data: session, status }: any = useSession(); // Get session data and status
-    const router = useRouter(); // Initialize useRouter
+    const { data: session, status }: any = useSession();
+    const router = useRouter();
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -22,12 +22,12 @@ const Navbar: React.FC = () => {
 
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
-        setConceptDropdownOpen(false); // Close Concepts dropdown when Assessments is opened
+        setResourcesDropdownOpen(false);
     };
 
-    const toggleConceptDropdown = () => {
-        setConceptDropdownOpen(!conceptDropdownOpen);
-        setDropdownOpen(false); // Close Assessments dropdown when Concepts is opened
+    const toggleResourcesDropdown = () => {
+        setResourcesDropdownOpen(!resourcesDropdownOpen);
+        setDropdownOpen(false);
     };
 
     const linkClassNames = (path: string) =>
@@ -37,7 +37,7 @@ const Navbar: React.FC = () => {
         } hover:text-[#0D7C66] hover:underline hover:decoration-[#0D7C66] focus:text-[#0D7C66] focus:underline focus:decoration-[#0D7C66] transition duration-300`;
 
     const handleSignOut = () => {
-        signOut({ callbackUrl: '/login' }); // Redirect to login page after sign out
+        signOut({ callbackUrl: '/login' });
     };
 
     return (
@@ -54,9 +54,8 @@ const Navbar: React.FC = () => {
                         {isOpen ? <HiOutlineX className="text-2xl text-gray-800" /> : <HiOutlineMenu className="text-3xl text-gray-800" />}
                     </button>
                 </div>
-                <div className="hidden md:flex space-x-8 items-center">
-                    <Link href="/" className={linkClassNames('/')}>Home</Link>
-                    <Link href="/about" className={linkClassNames('/about')}>About</Link>
+                <div className="hidden md:flex flex-grow justify-center space-x-8">
+                    <Link href="/about" className={linkClassNames('/about')}>About us</Link>
                     <div className="relative">
                         <button onClick={toggleDropdown} className={linkClassNames('/assessment')}>
                             Assessment
@@ -81,36 +80,79 @@ const Navbar: React.FC = () => {
                             </ul>
                         )}
                     </div>
-
-                    {/* Dropdown for Concepts */}
                     <div className="relative">
-                        <button onClick={toggleConceptDropdown} className={linkClassNames('/machinemodel')}>
-                            Concepts
+                        <button onClick={toggleResourcesDropdown} className={linkClassNames('/resources')}>
+                            Explore Resources
                         </button>
-                        {conceptDropdownOpen && (
-                            <ul className="absolute mt-2 py-2 w-64 bg-white border border-gray-300 shadow-lg rounded-lg z-10">
-                                <li>
-                                    <Link href="/cognitive-skills" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
-                                        What cognitive skills do we assess?
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/training-children" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
-                                        Training for Children
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/training-adults" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
-                                        Training for Adults
-                                    </Link>
-                                </li>
+                        {resourcesDropdownOpen && (
+                            <ul className="absolute left-1/2 transform -translate-x-1/2 mt-2 py-4 w-[750px] bg-white border border-gray-200 shadow-lg rounded-lg z-10 grid grid-cols-3 gap-10 px-8">
+                                {/* Articles, Guides, and Tutorials Column */}
+                                <div>
+                                    <h3 className="text-sm font-medium text-gray-600 mb-2 px-2">Topics</h3>
+                                    <li>
+                                        <Link href="/resources/articles" className="block py-2 px-2 text-gray-700 text-sm hover:text-primary-color">
+                                            Articles
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href="/resources/guides" className="block py-2 px-2 text-gray-700 text-sm hover:text-primary-color">
+                                            Guides
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href="/resources/tutorials" className="block py-2 px-2 text-gray-700 text-sm hover:text-primary-color">
+                                            Tutorials
+                                        </Link>
+                                    </li>
+                                </div>
+
+                                {/* Cognitive Skills Assessment and Training Column */}
+                                <div>
+                                    <h3 className="text-sm font-medium text-gray-600 mb-2">Cognitive Skills and Training</h3>
+                                    <li>
+                                        <Link href="/cognitive-skills" className="block py-2 px-2 text-gray-700 text-sm hover:text-primary-color">
+                                            What Cognitive Skills Do We Assess?
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href="/training-children" className="block py-2 px-2 text-gray-700 text-sm hover:text-primary-color">
+                                            Training for Children
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href="/training-adults" className="block py-2 px-2 text-gray-700 text-sm hover:text-primary-color">
+                                            Training for Adults
+                                        </Link>
+                                    </li>
+                                </div>
+
+                                {/* Learning Disabilities Information Column */}
+                                <div>
+                                    <h3 className="text-sm font-medium text-gray-600 mb-2 px-5">Learning Disabilities Information</h3>
+                                    <li>
+                                        <Link href="/resources/dyslexia" className="block py-2 px-5 text-gray-700 text-sm hover:text-primary-color">
+                                            Understanding Dyslexia
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href="/resources/dysgraphia" className="block py-2 px-5 text-gray-700 text-sm hover:text-primary-color">
+                                            Understanding Dysgraphia
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href="/resources/dyscalculia" className="block py-2 px-5 text-gray-700 text-sm hover:text-primary-color">
+                                            Understanding Dyscalculia
+                                        </Link>
+                                    </li>
+                                </div>
                             </ul>
                         )}
                     </div>
 
-                    <Link href="/articles" className={linkClassNames('/resources')}>Explore resources</Link>
-                    <Link href="/contact" className={linkClassNames('/contact')}>Contact</Link>
 
+
+                </div>
+                <div className="hidden md:flex items-center space-x-2">
                     {status === 'loading' ? (
                         <p>Loading...</p>
                     ) : !session ? (
@@ -133,7 +175,7 @@ const Navbar: React.FC = () => {
                                     <div className="w-10 rounded-full">
                                         <Image
                                             alt="User Avatar"
-                                            src={session.user?.image || avatarFallback} // Use session avatar or fallback
+                                            src={session.user?.image || avatarFallback}
                                             width={40}
                                             height={40}
                                             className="rounded-full"
@@ -153,7 +195,7 @@ const Navbar: React.FC = () => {
                                     </li>
                                     <li>
                                         <button
-                                            onClick={handleSignOut} // Use the new handler
+                                            onClick={handleSignOut}
                                             className="w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md"
                                         >
                                             Logout
@@ -162,38 +204,6 @@ const Navbar: React.FC = () => {
                                 </ul>
                             </div>
                         </div>
-                    )}
-                </div>
-            </div>
-            {/* Mobile Menu */}
-            <div className={`fixed inset-0 z-40 bg-black bg-opacity-70 ${isOpen ? 'flex' : 'hidden'} md:hidden`}>
-                <div className="bg-white w-64 h-full flex flex-col p-8 space-y-6 shadow-lg">
-                    <button onClick={toggleMenu} aria-label="Close Menu" className="self-end">
-                        <HiOutlineX className="text-3xl text-gray-800" />
-                    </button>
-                    <Link href="/" onClick={toggleMenu} className={linkClassNames('/')}>Home</Link>
-                    <Link href="/about" onClick={toggleMenu} className={linkClassNames('/about')}>About</Link>
-                    <Link href="/disabilities" onClick={toggleMenu} className={linkClassNames('/disabilities')}>Assessments</Link>
-                    <Link href="/machinemodel" onClick={toggleMenu} className={linkClassNames('/machinemodel')}> Concepts</Link>
-                    <Link href="/articles" onClick={toggleMenu} className={linkClassNames('/resources')}>Articles</Link>
-                    <Link href="/contact" onClick={toggleMenu} className={linkClassNames('/contact')}>Contact</Link>
-                    {!session ? (
-                        <>
-                            <Link href="/login" onClick={toggleMenu} className={linkClassNames('/login')}>Login</Link>
-                            <Link
-                                href="/register"
-                                onClick={toggleMenu}
-                                className={`border border-[#0D7C66] rounded-lg px-4 py-2 text-sm font-medium text-gray-800 
-                                ${pathname === '/register' ? 'bg-[#0D7C66] text-white' : 'hover:bg-[#0D7C66] hover:text-white'} 
-                                transition duration-300`}
-                            >
-                                Sign Up
-                            </Link>
-                        </>
-                    ) : (
-                        <button onClick={handleSignOut} className="w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md">
-                            Logout
-                        </button>
                     )}
                 </div>
             </div>
