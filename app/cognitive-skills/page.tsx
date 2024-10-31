@@ -14,7 +14,7 @@ const Page = () => {
                     <div className="bg-white shadow rounded-lg p-6 flex flex-col items-center">
                         <img className="w-24 h-24 mb-4" src="/path-to-your-dyslexia-image.png" alt="Dyslexia" />
                         <h2 className="text-xl font-bold text-blue-600 mb-2">Dyslexia</h2>
-                        <p className="text-gray-700 text-center mb-4">A specific learning disability in reading that affects the ability to recognize and decode words fluently.</p>
+                        <p className="text-gray-700 text-center mb-4">Dyslexia is a common learning disorder that mainly affects reading and spelling.</p>
                         <Link href="/cognitive-skills/dyslexia" className="text-blue-600 font-semibold hover:underline">Learn More</Link>
                     </div>
 

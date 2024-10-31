@@ -108,7 +108,7 @@ const Navbar: React.FC = () => {
                         )}
                     </div>
 
-                    <Link href="/articles" className={linkClassNames('/resources')}>Articles</Link>
+                    <Link href="/articles" className={linkClassNames('/resources')}>Explore resources</Link>
                     <Link href="/contact" className={linkClassNames('/contact')}>Contact</Link>
 
                     {status === 'loading' ? (
