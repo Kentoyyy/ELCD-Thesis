@@ -54,7 +54,7 @@ const Navbar: React.FC = () => {
                         {isOpen ? <HiOutlineX className="text-2xl text-gray-800" /> : <HiOutlineMenu className="text-3xl text-gray-800" />}
                     </button>
                 </div>
-                <div className="hidden md:flex flex-grow justify-center space-x-8">
+                <div className="hidden md:flex flex-grow justify-center space-x-8 ">
                     <Link href="/about" className={linkClassNames('/about')}>About us</Link>
                     <div className="relative">
                         <button onClick={toggleDropdown} className={linkClassNames('/assessment')}>
