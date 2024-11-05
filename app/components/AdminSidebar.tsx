@@ -76,13 +76,7 @@ const AdminSidebar = () => {
           </Link>
 
           <p className="text-xs uppercase text-white pl-6 mt-6 mb-2">System</p>
-          <Link
-            href="/admin-panel/assessment"
-            className="flex items-center px-6 py-3 text-sm transition duration-200 text-white hover:bg-[#434343] focus:bg-[#434343] rounded-lg  font-normal"
-          >
-            <FaClipboardList className="mr-3" size={20} />
-            Test Management
-          </Link>
+         
           <Link
             href="/admin-panel/reports"
             className="flex items-center px-6 py-3 text-sm transition duration-200 text-white hover:bg-[#434343] focus:bg-[#434343] rounded-lg  font-normal"
