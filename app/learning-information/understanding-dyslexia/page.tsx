@@ -16,10 +16,10 @@ const UnderstandingDyslexia = () => {
                 {/* Writer and Clinical Expert */}
                 <div className="text-gray-500 text-xs mb-6 text-center">
                     <p>
-                        Writer: <a href="#" className="text-blue-600 underline">Katherine Martinelli</a>
+                        Writer: <a href="#" className="text-blue-600 underline">.</a>
                     </p>
                     <p>
-                        Clinical Expert: <a href="#" className="text-blue-600 underline">Matthew Cruger, PhD</a>
+                        Clinical Expert: <a href="#" className="text-blue-600 underline">.</a>
                     </p>
                 </div>
 
@@ -42,7 +42,7 @@ const UnderstandingDyslexia = () => {
 
                 {/* Quick Read Section */}
                 <div>
-                    <h2 className="text-xl font-bold text-gray-900 mb-3 text-center">Quick Read</h2>
+                    <h2 className="text-2xl font-bold text-gray-900 mb-3 text-center font-robotoserif">Quick Read</h2>
                     <p className="text-gray-900 text-base leading-relaxed mb-6 text-justify">
                         The most common learning disorder is called dyslexia. Dyslexia makes it hard to recognize and use the sounds in language. Kids might reverse letters, like reading <em>"pot"</em> as <em>"top"</em>. Or they might have trouble sounding out new words and recognizing ones they know. Having dyslexia does not mean your child isn’t smart. With the right support, dyslexic kids can learn to read and do very well in school.
                     </p>
