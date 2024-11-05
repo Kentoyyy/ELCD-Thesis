@@ -130,12 +130,12 @@ const Navbar: React.FC = () => {
                                 <div>
                                     <h3 className="text-sm font-medium text-gray-600 mb-2 px-5">Learning Disabilities Information</h3>
                                     <li>
-                                        <Link href="/resources/dyslexia" className="block py-2 px-5 text-gray-700 text-sm hover:text-primary-color">
+                                        <Link href="/learning-information/understanding-dyslexia" className="block py-2 px-5 text-gray-700 text-sm hover:text-primary-color">
                                             Understanding Dyslexia
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href="/resources/dysgraphia" className="block py-2 px-5 text-gray-700 text-sm hover:text-primary-color">
+                                        <Link href="/learning-information/understanding-dysgraphia" className="block py-2 px-5 text-gray-700 text-sm hover:text-primary-color">
                                             Understanding Dysgraphia
                                         </Link>
                                     </li>
