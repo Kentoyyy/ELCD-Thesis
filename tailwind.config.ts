@@ -27,6 +27,7 @@ const config: Config = {
         title:["Roboto", "sans-serif"],
         robotoserif:["Roboto Serf", "serif"],
         Montserrat:["Montserrat", "sans-serif"],
+        HeadlineFontRoboto: ["Roboto" , "serif"],
       }
     },
   },
