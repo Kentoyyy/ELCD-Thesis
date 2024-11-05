@@ -29,6 +29,7 @@ const config: Config = {
         Montserrat:["Montserrat", "sans-serif"],
         HeadlineFontRoboto: ["Roboto" , "serif"],
         raleway: ["Raleway" ,  "sans-serif"],
+        PTSerif: ["PT Seri" ,  "serif"],
       }
     },
   },
