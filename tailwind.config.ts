@@ -28,6 +28,7 @@ const config: Config = {
         robotoserif:["Roboto Serf", "serif"],
         Montserrat:["Montserrat", "sans-serif"],
         HeadlineFontRoboto: ["Roboto" , "serif"],
+        raleway: ["Raleway" ,  "sans-serif"],
       }
     },
   },
