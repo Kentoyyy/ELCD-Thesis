@@ -120,6 +120,32 @@ const UnderstandingDyslexia = () => {
                     </p>
 
                 </div>
+                <div className="mt-6">
+                    <h2 className="text-3xl font-bold text-gray-900 mb-3 mt-14 font-PTSerif">Signs of Dyslexia</h2>
+                    <p className="text-gray-600 text-base leading-relaxed mb-6 font-raleway font-medium">
+                        A young person with dyslexia may:
+                    </p>
+                    <ul className="list-disc pl-5 text-gray-600 text-base leading-relaxed mb-6 font-raleway font-medium space-y-2">
+                        <li>Struggle with learning even simple rhymes</li>
+                        <li>Have a speech delay</li>
+                        <li>Have trouble following directions</li>
+                        <li>Repeat or omit short words such as <em>and</em>, <em>the</em>, <em>but</em></li>
+                        <li>Find it difficult to tell left from right</li>
+                    </ul>
+                    <p className="text-gray-600 text-base leading-relaxed mb-6 font-raleway font-medium">
+                        In school, children with dyslexia are likely to:
+                    </p>
+                    <ul className="list-disc pl-5 text-gray-600 text-base leading-relaxed mb-6 font-raleway font-medium space-y-2">
+                        <li>Have difficulty sounding out new words</li>
+                        <li>Lack fluency compared to other children their age</li>
+                        <li>Reverse letters and numbers when reading (read <em>saw</em> as <em>was</em>, for example)</li>
+                        <li>Find it difficult to take notes and copy down words from the board</li>
+                        <li>Struggle with rhyming, associating sounds with letters, and sequencing and ordering sounds</li>
+                        <li>Stumble and have difficulty spelling even common words; frequently they will spell them phonetically (e.g., <em>hrbr</em> instead of <em>harbor</em>)</li>
+                        <li>Avoid being called on to read out loud in front of classmates</li>
+                        <li>Become tired or frustrated from reading</li>
+                    </ul>
+                </div>
             </div>
         </div>
     );
