@@ -145,7 +145,7 @@ const UnderstandingDyslexia = () => {
                         <li>Avoid being called on to read out loud in front of classmates</li>
                         <li>Become tired or frustrated from reading</li>
                     </ul>
-                    <p className="text-gray-900 text-xl leading-relaxed mb-6 font-raleway font-bold">
+                    <p className="text-gray-900 text-2xl leading-relaxed mb-6 font-raleway font-bold">
                         Dyslexia affects children outside of school as well. Kids with dyslexia may also:
                     </p>
                     <ul className="list-disc pl-5 text-gray-600 text-base leading-relaxed mb-6 font-raleway font-medium space-y-2">
@@ -156,8 +156,11 @@ const UnderstandingDyslexia = () => {
                         <li>Find it especially challenging to learn another language</li>
                         
                     </ul>
-                    <p className="text-gray-900 text-xl leading-relaxed mb-6 font-raleway font-bold">
-                        Dyslexia affects children outside of school as well. Kids with dyslexia may also:
+                    <p className="text-gray-900 text-2xl leading-relaxed mb-6 font-raleway font-bold">
+                    Social and emotional impacts of dyslexia
+                    </p>
+                    <p className="text-gray-600 text-base leading-relaxed mb-6 font-raleway font-medium">
+                    Dyslexia affects a lot more than reading — it can also impact a child socially. “A dyslexic person who has word-finding difficulties can have trouble with their expressive language,” says Scott Bezsylko, the executive director of Winston Preparatory School, which specializes in teaching kids with learning disorders. “That has a social impact, in addition to your difficulties with reading and writing, that make you feel not so good about yourself.”
                     </p>
                 </div>
 
