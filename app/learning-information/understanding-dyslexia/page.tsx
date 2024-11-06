@@ -168,6 +168,9 @@ const UnderstandingDyslexia = () => {
                     <p className="text-gray-900 text-2xl leading-relaxed mb-6 font-raleway font-bold">
                     How is dyslexia diagnosed?
                     </p>
+                    <p className="text-gray-600 text-base leading-relaxed mb-6 font-raleway font-medium">
+                    If your child isn’t meeting expectations for reading, as parents you can ask the school district to perform an evaluation and share the results with you. The evaluation will test your child’s intellectual capacity and reading skills, to see if there is an achievement gap. It should also rule out other potential causes like environmental factors or hearing impairment.
+                    </p>
                 </div>
 
             </div>
