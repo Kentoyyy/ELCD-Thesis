@@ -162,6 +162,12 @@ const UnderstandingDyslexia = () => {
                     <p className="text-gray-600 text-base leading-relaxed mb-6 font-raleway font-medium">
                     Dyslexia affects a lot more than reading — it can also impact a child socially. “A dyslexic person who has word-finding difficulties can have trouble with their expressive language,” says Scott Bezsylko, the executive director of Winston Preparatory School, which specializes in teaching kids with learning disorders. “That has a social impact, in addition to your difficulties with reading and writing, that make you feel not so good about yourself.”
                     </p>
+                    <p className="text-gray-600 text-base leading-relaxed mb-6 font-raleway font-medium">
+                    Kids with dyslexia — particularly those who have yet to be diagnosed — often suffer from low self-esteem because they worry that there is something wrong with them, and are often accused of not trying hard enough to learn to read. “A lot of our work with dyslexic kids is to help them rediscover that they are smart and capable,” notes Beszylko, “because they’ve stopped believing in themselves.”
+                    </p>
+                    <p className="text-gray-900 text-2xl leading-relaxed mb-6 font-raleway font-bold">
+                    How is dyslexia diagnosed?
+                    </p>
                 </div>
 
             </div>
