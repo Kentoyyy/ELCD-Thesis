@@ -145,7 +145,21 @@ const UnderstandingDyslexia = () => {
                         <li>Avoid being called on to read out loud in front of classmates</li>
                         <li>Become tired or frustrated from reading</li>
                     </ul>
+                    <p className="text-gray-900 text-xl leading-relaxed mb-6 font-raleway font-bold">
+                        Dyslexia affects children outside of school as well. Kids with dyslexia may also:
+                    </p>
+                    <ul className="list-disc pl-5 text-gray-600 text-base leading-relaxed mb-6 font-raleway font-medium space-y-2">
+                        <li>Find it difficult to decode logos and signs</li>
+                        <li>Lack fluency compared to other children their age</li>
+                        <li>Reverse letters and numbers when reading (read <em>saw</em> as <em>was</em>, for example)</li>
+                        <li>Find it difficult to take notes and copy down words from the board</li>
+                        <li>Struggle with rhyming, associating sounds with letters, and sequencing and ordering sounds</li>
+                        <li>Stumble and have difficulty spelling even common words; frequently they will spell them phonetically (e.g., <em>hrbr</em> instead of <em>harbor</em>)</li>
+                        <li>Avoid being called on to read out loud in front of classmates</li>
+                        <li>Become tired or frustrated from reading</li>
+                    </ul>
                 </div>
+
             </div>
         </div>
     );
