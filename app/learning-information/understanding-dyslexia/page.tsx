@@ -38,7 +38,7 @@ const UnderstandingDyslexia = () => {
                 />
             </div>
 
-            <div className="flex-1 max-w-4xl mx-auto">
+            <div className="flex-grow max-w-4xl mx-auto">
                 <h1 className="text-5xl font-extrabold text-gray-900 mb-2 text-center font-robotoserif">
                     Understanding Dyslexia
                 </h1>
