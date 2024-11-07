@@ -74,6 +74,18 @@ const UnderstandingDyslexia = () => {
                             <p className="text-gray-600 text-base leading-relaxed mb-6 font-raleway font-medium">
                                 Children each learn and develop at their own pace, and reading is no different from other skill building. It’s common for kids to find reading challenging at one point or another. But if learning to read becomes an ongoing struggle that leaves a child falling behind their peers, it’s possible that they have a learning disorder known as dyslexia.
                             </p>
+                            <p className="text-gray-600 text-base leading-relaxed mb-6 font-raleway font-medium">
+                                Kids with dyslexia often show signs before they start school. They often have trouble learning even simple rhymes. They might talk later than most kids. They may struggle to follow directions or learn left and right. Once they start school, they struggle with reading, writing, and spelling.
+                            </p>
+                            <p className="text-gray-600 text-base leading-relaxed mb-6 font-raleway font-medium">
+                                <span className="font-bold bg-yellow-200">If your child</span> is in first grade or older and still struggling with reading, their school can give them a test for dyslexia. You can also get an <a href="#" className="text-blue-600 underline">outside evaluation</a> from a psychologist, reading specialist, or speech and language therapist. Using the results from the tests, you can work with the school to get your child the right support.
+                            </p>
+                            <p className="text-gray-600 text-base leading-relaxed mb-6 font-raleway font-medium">
+                                There are lots of reading instruction programs that can help kids with dyslexia build skills and catch up with their classmates. They can also <a href="#" className="text-blue-600 underline">get other kinds of support at school</a>. This could include extra time on tests, a quiet workspace, and options to listen rather than reading, or to type or speak rather than writing by hand.
+                            </p>
+                            <p className="text-gray-600 text-base leading-relaxed mb-6 font-raleway font-medium">
+                                Kids with dyslexia may feel frustrated or embarrassed, so it’s also important to give them plenty of emotional support. Make sure to praise their hard work, celebrate their strengths in other areas, and remind them that dyslexia has nothing to do with their intelligence.
+                            </p>
                         </div>
 
                         <button
@@ -86,7 +98,7 @@ const UnderstandingDyslexia = () => {
 
                     {/* Additional Sections */}
                     <div className="mt-6">
-                        <h2 className="text-3xl font-bold text-gray-900 mb-3 mt-14 font-PTSerif">What is Dyslexia?</h2>
+                        <h2 className="text-3xl font-bold text-gray-900 mb-3 mt-14 font-raleway">What is Dyslexia?</h2>
                         <p className="text-gray-600 text-base leading-relaxed mb-6 font-raleway font-medium">
                             Dyslexia is most commonly associated with trouble learning to read. It affects a child’s ability to recognize and manipulate the sounds in language. Kids with dyslexia have a hard time decoding new words, or breaking them down into manageable chunks they can then sound out. This causes difficulty with reading, writing, and spelling. They may compensate by memorizing words, but they’ll have trouble recognizing new words and may be slow in retrieving even familiar ones.
                         </p>
@@ -98,7 +110,7 @@ const UnderstandingDyslexia = () => {
                         </p>
                     </div>
                     <div className="mt-6">
-                        <h2 className="text-3xl font-bold text-gray-900 mb-3 mt-14 font-PTSerif ">How common is dyslexia?</h2>
+                        <h2 className="text-3xl font-bold text-gray-900 mb-3 mt-14 font-raleway ">How common is dyslexia?</h2>
                         <p className="text-gray-600 text-base leading-relaxed mb-6 font-raleway font-medium">
                             It is estimated that as many as one in five kids has dyslexia, and that 80 to 90 percent of kids with learning disorders have it. Sally Shaywitz, MD, co-director of the Yale Center for Dyslexia and Creativity, notes that many children go undiagnosed as struggles in school are incorrectly attributed to intelligence, level of effort orenvironmental factors.
                         </p>
@@ -108,7 +120,7 @@ const UnderstandingDyslexia = () => {
 
                     </div>
                     <div className="mt-6">
-                        <h2 className="text-3xl font-bold text-gray-900 mb-3 mt-14 font-PTSerif">Signs of Dyslexia</h2>
+                        <h2 className="text-3xl font-bold text-gray-900 mb-3 mt-14 font-raleway">Signs of Dyslexia</h2>
                         <p className="text-gray-600 text-base leading-relaxed mb-6 font-raleway font-medium">
                             A young person with dyslexia may:
                         </p>
