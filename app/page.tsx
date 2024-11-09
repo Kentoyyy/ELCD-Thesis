@@ -15,6 +15,7 @@ import feature5 from '../public/images/featureimage5.jpg';
 import feature6 from '../public/images/featureimage6.jpg';
 import image1 from '../public/images/1.png';
 import image2 from '../public/images/2.png';
+import image3 from '../public/images/3.png';
 
 import Footer from '../app/components/Footer';
 
@@ -36,6 +37,10 @@ export default function Home() {
     },
     {
       src: image2,
+      alt: 'Image 8',
+    },
+    {
+      src: image3,
       alt: 'Image 8',
     },
   ];
