@@ -13,6 +13,8 @@ import feature3 from '../public/images/featureimage3.jpg';
 import feature4 from '../public/images/featureimage4.jpg';
 import feature5 from '../public/images/featureimage5.jpg';
 import feature6 from '../public/images/featureimage6.jpg';
+import image1 from '../public/images/1.png';
+import image2 from '../public/images/2.png';
 
 import Footer from '../app/components/Footer';
 
@@ -27,17 +29,14 @@ export default function Home() {
 
   const slides: Slide[] = [
 
+   
     {
-      src: feature3,
-      alt: 'Image 3',
+      src: image1,
+      alt: 'Image 6',
     },
     {
-      src: feature4,
-      alt: 'Image 4',
-    },
-    {
-      src: feature5,
-      alt: 'Image 5',
+      src: image2,
+      alt: 'Image 8',
     },
   ];
   // Automatically go to the next slide every 3 seconds
@@ -61,58 +60,48 @@ export default function Home() {
   return (
     <>
       <main className="flex flex-col items-center justify-center bg-white">
-        <div className="relative w-full pt-0 h-[60vh]">
-          <div className="flex w-full h-full">
-            {/* Image Section */}
-            <div className="w-full h-full relative">
-              {slides.map((slide, index) => (
-                <div
-                  key={index}
-                  className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'
-                    }`}
-                >
-                  <Image
-                    src={slide.src}
-                    alt={slide.alt}
-                    fill
-                    quality={100}  // Adjust this value if needed
-                    style={{ objectFit: 'cover' }}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Left Button */}
-          <button
-            onClick={prevSlide}
-            className="absolute left-4 z-10 p-2 bg-teal-500 rounded-full hover:bg-teal-600 focus:outline-none"
-          >
-            &#9664; {/* Left arrow */}
-          </button>
-
-          {/* Right Button */}
-          <button
-            onClick={nextSlide}
-            className="absolute right-4 z-10 p-2 bg-blue-700 rounded-full hover:bg-blue-800 focus:outline-none"
-          >
-            &#9654; {/* Right arrow */}
-          </button>
-
-          {/* Pagination Dots */}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-4">
-            {slides.map((_, index) => (
+        <div className="relative w-full h-[60vh] flex items-center justify-center">
+          <div className="relative w-full h-full">
+            {slides.map((slide, index) => (
               <div
                 key={index}
-                className={`h-3 w-3 rounded-full ${currentSlide === index ? 'bg-secondary-color' : 'bg-teal-600'}`}
-              ></div>
+                className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}
+              >
+                <Image
+                  src={slide.src}  // Pass slide.src here
+                  alt={slide.alt}   // Pass slide.alt here
+                  fill
+                  className="object-cover"
+                />
+              </div>
             ))}
           </div>
 
-      
+          <button
+            onClick={prevSlide}
+            className="absolute left-6 bottom-1/2 transform translate-y-1/2 z-10 p-3 bg-teal-500 rounded-full hover:bg-teal-600 focus:outline-none"
+          >
+            &#9664;
+          </button>
 
+          <button
+            onClick={nextSlide}
+            className="absolute right-6 bottom-1/2 transform translate-y-1/2 z-10 p-3 bg-blue-700 rounded-full hover:bg-blue-800 focus:outline-none"
+          >
+            &#9654;
+          </button>
+
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-4 z-10">
+            {slides.map((_, index) => (
+              <div
+                key={index}
+                className={`h-3 w-3 rounded-full ${currentSlide === index ? 'bg-blue-800' : 'bg-teal-600'}`}
+              ></div>
+            ))}
+          </div>
         </div>
       </main>
+
 
       <section id="features" className="py-20 bg-white">
 
