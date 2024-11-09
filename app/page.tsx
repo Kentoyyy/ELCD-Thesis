@@ -30,7 +30,7 @@ export default function Home() {
 
   const slides: Slide[] = [
 
-   
+
     {
       src: image1,
       alt: 'Image 6',
@@ -84,14 +84,14 @@ export default function Home() {
 
           <button
             onClick={prevSlide}
-            className="absolute left-6 bottom-1/2 transform translate-y-1/2 z-10 p-3 bg-teal-500 rounded-full hover:bg-teal-600 focus:outline-none"
+            className="absolute left-6 bottom-1/2 transform translate-y-1/2 z-10 text-teal-500 hover:text-teal-600 focus:outline-none text-3xl"
           >
             &#9664;
           </button>
 
           <button
             onClick={nextSlide}
-            className="absolute right-6 bottom-1/2 transform translate-y-1/2 z-10 p-3 bg-blue-700 rounded-full hover:bg-blue-800 focus:outline-none"
+            className="absolute right-6 bottom-1/2 transform translate-y-1/2 z-10 text-teal-500 hover:text-teal-600 focus:outline-none text-3xl"
           >
             &#9654;
           </button>
@@ -100,7 +100,7 @@ export default function Home() {
             {slides.map((_, index) => (
               <div
                 key={index}
-                className={`h-3 w-3 rounded-full ${currentSlide === index ? 'bg-blue-800' : 'bg-teal-600'}`}
+                className={`h-3 w-3 rounded-full ${currentSlide === index ? 'bg-primary-color' : 'bg-teal-900'}`}
               ></div>
             ))}
           </div>
