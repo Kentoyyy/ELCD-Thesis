@@ -37,7 +37,7 @@ export default function Home() {
   };
 
   const slides: Slide[] = [
-    
+
     {
       src: image1, // replace with your image paths
       alt: 'Image 1',
@@ -169,9 +169,125 @@ export default function Home() {
         </div>
       </main>
 
-      <section id="features" className="py-20 bg-white">
+      <section id="explore" className="py-56 bg-white">
+        <div className="container mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-12 font-raleway text-gray-600">Explore Care</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Card 1 */}
+            <div className="group">
+              <div className="overflow-hidden">
+                <img
+                  src={feature3.src} // Accessing the .src property for the URL
+                  alt="School Refusal Parent Training"
+                  className="w-full h-auto rounded-md transform transition-transform duration-300 group-hover:scale-105"
+                />
+              </div>
 
+              <h3 className="text-lg font-semibold mt-4">School Refusal Parent Training and Consultation</h3>
+              <p className="text-gray-500 mt-2">
+                Evidence-based parent training and consultation for school refusal and avoidance behaviors.
+              </p>
+              <div className="mt-4">
+                <a
+                  href="#"
+                  className="text-blue-500 flex items-center hover:underline"
+                >
+                  Learn more
+                  <svg
+                    className="ml-2 w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 12h14m-7-7l7 7-7 7"
+                    ></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="group">
+              <div className="overflow-hidden">
+              <img
+                  src={feature4.src} // Accessing the .src property for the URL
+                  alt="School Refusal Parent Training"
+                  className="w-full h-auto rounded-md transform transition-transform duration-300 group-hover:scale-105"
+                />
+              </div>
+              <h3 className="text-lg font-semibold mt-4">College Readiness Program</h3>
+              <p className="text-gray-500 mt-2">
+                Designed to help young adults strengthen their emotion regulation and problem-solving skills.
+              </p>
+              <div className="mt-4">
+                <a
+                  href="#"
+                  className="text-blue-500 flex items-center hover:underline"
+                >
+                  Learn more
+                  <svg
+                    className="ml-2 w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 12h14m-7-7l7 7-7 7"
+                    ></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="group">
+              <div className="overflow-hidden">
+              <img
+                  src={feature5.src} // Accessing the .src property for the URL
+                  alt="School Refusal Parent Training"
+                  className="w-full h-auto rounded-md transform transition-transform duration-300 group-hover:scale-105"
+                />
+              </div>
+              <h3 className="text-lg font-semibold mt-4">PEERS® Program | Teen</h3>
+              <p className="text-gray-500 mt-2">
+                Our 14-week social skills intervention program to help teens learn how to make and keep friends.
+              </p>
+              <div className="mt-4">
+                <a
+                  href="#"
+                  className="text-blue-500 flex items-center hover:underline"
+                >
+                  Learn more
+                  <svg
+                    className="ml-2 w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 12h14m-7-7l7 7-7 7"
+                    ></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
+
 
 
 
