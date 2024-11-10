@@ -2,7 +2,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Image, { StaticImageData } from 'next/image';
-
+import Link from 'next/link';
 import data from '../public/images/data.png';
 import model from '../public/images/modeltraning.png';
 import time from '../public/images/realtime.png';
@@ -16,43 +16,81 @@ import feature6 from '../public/images/featureimage6.jpg';
 import image1 from '../public/images/1.png';
 import image2 from '../public/images/2.png';
 import image3 from '../public/images/3.png';
+import image4 from '../public/images/4.png';
 
 import Footer from '../app/components/Footer';
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
 
   type Slide = {
     src: StaticImageData;
     alt: string;
+    buttonText: string;
+    buttonLink: string;
+    buttonPosition: {
+      left: string;
+      bottom: string;
+    };
   };
 
   const slides: Slide[] = [
-
-
+    
     {
-      src: image1,
-      alt: 'Image 6',
+      src: image1, // replace with your image paths
+      alt: 'Image 1',
+      buttonText: 'What is Dyslexia',
+      buttonLink: '/resources',
+      buttonPosition: {
+        left: '15%',
+        bottom: '30%',
+      },
+    },
+    {
+      src: image4, // replace with your image paths
+      alt: 'Image 4',
+      buttonText: 'Skills & Training',
+      buttonLink: '/resources',
+      buttonPosition: {
+        left: '58%',
+        bottom: '25%',
+      },
+    },
+    {
+      src: image3, // replace with your image paths
+      alt: 'Image 3',
+      buttonText: 'Explore Resources',
+      buttonLink: '/resources',
+      buttonPosition: {
+        left: '57%',
+        bottom: '30%',
+      },
     },
     {
       src: image2,
-      alt: 'Image 8',
+      alt: 'Image 2',
+      buttonText: 'Learn More',
+      buttonLink: '/learn-more',
+      buttonPosition: {
+        left: '14%',
+        bottom: '20%',
+      },
     },
-    {
-      src: image3,
-      alt: 'Image 8',
-    },
+    // Add more slides as needed
   ];
+
   // Automatically go to the next slide every 3 seconds
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-    }, 3000); // Change slide every 3 seconds
+    if (!isPaused) {
+      const interval = setInterval(() => {
+        setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+      }, 5000); // Change slide every 7 seconds
 
-    return () => clearInterval(interval); // Clear interval on component unmount
-  }, [slides.length]);
-
+      return () => clearInterval(interval); // Clear interval on component unmount
+    }
+  }, [isPaused, slides.length]);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
@@ -61,52 +99,75 @@ export default function Home() {
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
   };
-
   return (
     <>
-      <main className="flex flex-col items-center justify-center bg-white">
+      <main
+        className="flex flex-col items-center justify-center bg-white"
+        onMouseEnter={() => setIsPaused(true)}  // Pause on mouse hover
+        onMouseLeave={() => setIsPaused(false)} // Resume when mouse leaves
+      >
         <div className="relative w-full h-[60vh] flex items-center justify-center">
           <div className="relative w-full h-full">
             {slides.map((slide, index) => (
               <div
                 key={index}
-                className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}
+                className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100 z-20' : 'opacity-0 z-10'
+                  }`}
               >
                 <Image
-                  src={slide.src}  // Pass slide.src here
-                  alt={slide.alt}   // Pass slide.alt here
-                  fill
+                  src={slide.src}
+                  alt={slide.alt}
+                  layout="fill"
                   className="object-cover"
                 />
+
+                {/* Add a unique button for each slide */}
+                {index === currentSlide && (
+                  <div
+                    className="absolute z-30"
+                    style={{
+                      left: slide.buttonPosition.left,
+                      bottom: slide.buttonPosition.bottom,
+                    }}
+                  >
+                    <Link href={slide.buttonLink}>
+                      <button className="bg-primary-color text-white px-6 py-3 rounded-full hover:bg-teal-600 transition">
+                        {slide.buttonText}
+                      </button>
+                    </Link>
+                  </div>
+                )}
               </div>
             ))}
           </div>
 
+          {/* Slide controls */}
           <button
             onClick={prevSlide}
-            className="absolute left-6 bottom-1/2 transform translate-y-1/2 z-10 text-teal-500 hover:text-teal-600 focus:outline-none text-3xl"
+            className="absolute left-6 bottom-1/2 transform translate-y-1/2 z-40 text-teal-500 hover:text-teal-600 focus:outline-none text-3xl"
           >
             &#9664;
           </button>
 
           <button
             onClick={nextSlide}
-            className="absolute right-6 bottom-1/2 transform translate-y-1/2 z-10 text-teal-500 hover:text-teal-600 focus:outline-none text-3xl"
+            className="absolute right-6 bottom-1/2 transform translate-y-1/2 z-40 text-teal-500 hover:text-teal-600 focus:outline-none text-3xl"
           >
             &#9654;
           </button>
 
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-4 z-10">
+          {/* Dots navigation */}
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-4 z-40">
             {slides.map((_, index) => (
               <div
                 key={index}
-                className={`h-3 w-3 rounded-full ${currentSlide === index ? 'bg-primary-color' : 'bg-teal-900'}`}
+                className={`h-3 w-3 rounded-full ${currentSlide === index ? 'bg-primary-color' : 'bg-gray-400'
+                  }`}
               ></div>
             ))}
           </div>
         </div>
       </main>
-
 
       <section id="features" className="py-20 bg-white">
 
