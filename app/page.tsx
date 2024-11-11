@@ -18,6 +18,8 @@ import image1 from '../public/images/1.png';
 import image2 from '../public/images/2.png';
 import image3 from '../public/images/3.png';
 import image4 from '../public/images/4.png';
+import frontpage from '../public/images/5front.png'
+import cognitivepage from '../public/images/4cognitive.png'
 
 import Footer from '../app/components/Footer';
 
@@ -40,10 +42,10 @@ export default function Home() {
   const slides: Slide[] = [
 
     {
-      src: welcome, // replace with your image paths
+      src: frontpage, // replace with your image paths
       alt: 'Welcome ',
       buttonText: 'Read More',
-      buttonLink: '/resources',
+      buttonLink: '/about',
       buttonPosition: {
         left: '47%',
         bottom: '40%',
@@ -61,13 +63,13 @@ export default function Home() {
       },
     },
     {
-      src: image4, // replace with your image paths
+      src: cognitivepage, // replace with your image paths
       alt: 'Image 4',
       buttonText: 'Skills & Training',
       buttonLink: '/resources',
       buttonPosition: {
         left: '58%',
-        bottom: '25%',
+        bottom: '20%',
       },
     },
     {
@@ -183,7 +185,7 @@ export default function Home() {
 
       <section id="explore" className="py-56 bg-white">
         <div className="container mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12 font-raleway text-gray-600">Explore Care</h2>
+          <h2 className="text-3xl font-bold text-center mb-12 font-raleway text-gray-600">Explore More</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Card 1 */}
             <div className="group">
