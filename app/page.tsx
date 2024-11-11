@@ -13,6 +13,7 @@ import feature3 from '../public/images/featureimage3.jpg';
 import feature4 from '../public/images/featureimage4.jpg';
 import feature5 from '../public/images/featureimage5.jpg';
 import feature6 from '../public/images/featureimage6.jpg';
+import welcome from '../public/images/testttt.png';
 import image1 from '../public/images/1.png';
 import image2 from '../public/images/2.png';
 import image3 from '../public/images/3.png';
@@ -37,6 +38,17 @@ export default function Home() {
   };
 
   const slides: Slide[] = [
+
+    {
+      src: welcome, // replace with your image paths
+      alt: 'Welcome ',
+      buttonText: 'Read More',
+      buttonLink: '/resources',
+      buttonPosition: {
+        left: '47%',
+        bottom: '40%',
+      },
+    },
 
     {
       src: image1, // replace with your image paths
@@ -106,7 +118,7 @@ export default function Home() {
         onMouseEnter={() => setIsPaused(true)}  // Pause on mouse hover
         onMouseLeave={() => setIsPaused(false)} // Resume when mouse leaves
       >
-        <div className="relative w-full h-[60vh] flex items-center justify-center">
+        <div className="relative w-full h-[60vh] flex items-center justify-center pt-8">
           <div className="relative w-full h-full">
             {slides.map((slide, index) => (
               <div
@@ -161,7 +173,7 @@ export default function Home() {
             {slides.map((_, index) => (
               <div
                 key={index}
-                className={`h-3 w-3 rounded-full ${currentSlide === index ? 'bg-primary-color' : 'bg-gray-400'
+                className={`h-2 w-2 rounded-full text-sm ${currentSlide === index ? 'bg-primary-color' : 'bg-gray-400'
                   }`}
               ></div>
             ))}

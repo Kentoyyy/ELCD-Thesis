@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
@@ -9,8 +9,16 @@ const Welcome: React.FC = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      router.push('/');
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [router]);
+
   const handleProceed = () => {
-    router.push('/'); // Adjust the path as needed
+    router.push('/');
   };
 
   return (
@@ -21,7 +29,6 @@ const Welcome: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        {/* Animated Logo Image */}
         <motion.img
           src="/images/elcdfav.png"
           alt="Logo"
@@ -31,17 +38,15 @@ const Welcome: React.FC = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
         />
         
-        {/* Animated Title */}
         <motion.h1
           className="text-3xl font-bold mb-2"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
         >
-          Welcome to <span className="font-extrabold">GetInsight</span>, {session?.user?.name}!
+          Welcome to <span className="font-extrabold">EarlyEdge</span>, {session?.user?.name}!
         </motion.h1>
 
-        {/* Animated Subtitle */}
         <motion.p
           className="text-gray-400 text-center"
           initial={{ opacity: 0, y: -20 }}
@@ -52,7 +57,6 @@ const Welcome: React.FC = () => {
         </motion.p>
       </motion.div>
 
-      {/* Animated Button */}
       <motion.button
         onClick={handleProceed}
         className="mt-10 px-6 py-3 bg-primary-color text-white rounded-full text-sm hover:bg-secondary-color transition duration-300"
