@@ -1,88 +1,82 @@
 import React from 'react';
-
-import Footer from '../components/Footer'; // Make sure the Footer component file name is capitalized
+import Footer from '../components/Footer';
 import Image from 'next/image';
-import vision from '../../public/images/vision.png';
 import { Metadata } from 'next';
-import Link from 'next/link';
-
+import fam from '../../public/images/fam.jpg';
+import fam1 from '../../public/images/fam1.jpg';
 export const metadata: Metadata = {
-  title: "EarlyEdge - About",
+  title: "EarlyEdge - About Us",
   icons: {
     icon: '/images/elcdfav.png',
   },
-}
+};
 
 const AboutPage = () => {
   return (
     <>
-     
       <div className="min-h-screen flex flex-col bg-white">
         {/* Hero Section */}
-        <div className="container mx-auto py-12 px-6 lg:px-16 flex flex-col lg:flex-row items-center">
-          {/* Text Section */}
-          <div className="lg:w-1/2 mb-8 lg:mb-0">
-            <h1 className="text-4xl lg:text-5xl font-extrabold text-[#0D7C66] mb-6 leading-tight">
-              Revolutionizing Early Detection in Education
-            </h1>
-            <p className="text-lg text-gray-600 mb-4 leading-relaxed">
-              At EarlyEdge, we harness the power of machine learning to detect learning disabilities at an early stage, ensuring timely intervention and support to maximize every child's educational journey.
-            </p>
-            <a href="#learn-more" className="inline-block mt-4 px-6 py-2 bg-[#0D7C66] text-white font-medium rounded-lg hover:bg-secondary-color transition">
-              Learn More
-            </a>
-          </div>
-
-          {/* Image Section */}
-          <div className="lg:w-1/2 flex justify-center">
-            <div className="relative w-72 h-72 md:w-96 md:h-96">
-              <Image
-                src={vision}
-                alt="Vision for Early Detection"
-                layout="fill"
-                objectFit="contain"
-                className="rounded-lg shadow-lg"
-              />
-            </div>
-          </div>
+        <div className="container mx-auto py-12 px-6 lg:px-16 flex flex-col items-center text-center">
+          <h1 className="text-4xl font-extrabold text-[#0D7C66] mb-6 leading-tight font-raleway">
+            About EarlyEdge
+          </h1>
+          <p className="text-base text-gray-600 max-w-2xl leading-relaxed mb-8">
+            EarlyEdge is dedicated to identifying learning disabilities in young children through the power of machine learning. Our platform provides early, accurate insights, enabling parents and educators to support each child's unique learning path from the very start.
+          </p>
         </div>
 
         {/* Impact Section */}
-        <div className="bg-gray-50 py-16">
-          <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-6 lg:px-16 text-center">
-            {[
-              { label: '3+ Years', value: 'of Research' },
-              { label: '25+', value: 'ML Models' },
-              { label: '90%+', value: 'Detection Accuracy' },
-              { label: '100K+', value: 'Children Impacted' }
-            ].map((stat, index) => (
-              <div key={index} className="p-6 bg-white rounded-lg shadow-md">
-                <h2 className="text-2xl font-semibold text-[#0D7C66]">{stat.value}</h2>
-                <p className="text-gray-600">{stat.label}</p>
-              </div>
-            ))}
+        <div className="bg-primary-color py-16 text-white">
+          <div className="container mx-auto text-center px-6 lg:px-16">
+            <h2 className="text-xl font-semibold uppercase mb-4">Our Impact</h2>
+            <h3 className="text-4xl font-bold mb-4">
+              Transforming Early Detection of Learning Disabilities
+            </h3>
+            <p className="text-lg max-w-3xl mx-auto mb-8 leading-relaxed">
+              At EarlyEdge, we are committed to supporting children with learning disabilities by providing accessible, accurate, and compassionate early detection services. Our system utilizes advanced machine learning models to identify signs of dyslexia, dysgraphia, and dyscalculia in children between the ages of 2 and 7. Through timely diagnosis, parents and educators can work together to create tailored educational strategies, fostering a supportive environment that allows each child to thrive.
+            </p>
+            <button className="px-6 py-3 bg-secondary-color text-[#0D3B66] font-semibold rounded-full shadow-md hover:bg-primary-colortransition duration-300">
+              Our Impact
+            </button>
           </div>
         </div>
 
-        {/* Detailed Explanation Section */}
-        <div id="learn-more" className="container mx-auto py-16 px-6 lg:px-16 grid grid-cols-1 md:grid-cols-2 gap-8">
-          {[
-            { title: 'Research & Development', text: 'Our dedicated team has spent over three years researching and developing machine learning models that analyze developmental data to accurately detect learning disabilities.' },
-            { title: 'Machine Learning Approach', text: 'We use advanced algorithms to process and analyze a child’s developmental patterns, allowing for early and precise identification of potential challenges.' },
-            { title: 'Why It Matters', text: 'Early detection ensures that children get the help they need before their learning disabilities affect their educational performance, improving their chances for success.' },
-            { title: 'Our Mission', text: 'Our mission is to empower educators and parents by providing data-driven insights, helping children overcome learning barriers and reach their full potential.' }
-          ].map((section, index) => (
-            <div key={index} className="p-6 bg-white rounded-lg shadow-md border border-gray-100">
-              <h3 className="text-2xl font-semibold text-[#0D7C66] mb-4">{section.title}</h3>
-              <p className="text-gray-600 leading-relaxed">{section.text}</p>
-            </div>
-          ))}
+        {/* Article Section */}
+        <div className="container mx-auto py-16 px-6 lg:px-16 text-gray-800">
+          <h2 className="text-3xl font-semibold text-[#0D7C66] mb-8 text-center">
+            Our Mission
+          </h2>
+          <p className="text-center text-lg italic text-[#4A4A4A] mb-10">
+            "Empowering children to reach their full potential through early detection and personalized support."
+          </p>
+          <article className="space-y-6 leading-relaxed text-lg bg-gray-50 p-8 rounded-lg shadow-lg">
+            <p>
+              <span className="font-bold">EarlyEdge</span> was created to address a critical need: early intervention for learning disabilities in young children. Research has shown that early detection significantly improves a child’s educational and emotional outcomes. By identifying learning challenges at a young age, children receive the support they need before they face the academic and social pressures of formal schooling.
+            </p>
+            <p>
+              Our platform serves as a bridge between parents, educators, and specialists. Using advanced machine learning, <span className="font-bold">EarlyEdge</span> identifies subtle patterns that may indicate potential learning disabilities, offering an objective and data-driven approach to early diagnosis. This enables parents and educators to make informed decisions and implement personalized learning plans for each child.
+            </p>
+            <p>
+              <span className="font-bold">We empower families</span> with insights that foster collaboration between home and school, providing a unified support system for every child’s growth. By sharing results and resources, <span className="font-bold">EarlyEdge</span> becomes a trusted partner in each child’s educational journey, building a foundation for lifelong learning and confidence.
+            </p>
+            <p>
+              For educators, <span className="font-bold">EarlyEdge</span> provides actionable data to inform classroom strategies and interventions, helping teachers better support students with diverse needs. Our vision is a world where every child, regardless of their learning challenges, is given an equal opportunity to succeed and flourish.
+            </p>
+            <p>
+              With a commitment to <span className="font-bold">privacy, accuracy, and compassion</span>, <span className="font-bold">EarlyEdge</span> is dedicated to breaking down barriers to early detection and making advanced technology accessible to families everywhere. We believe that by supporting children from the start, we can create lasting positive impacts throughout their lives.
+            </p>
+          </article>
+
+          {/* Image Section */}
+          <div className="text-center mt-12">
+            <img src={fam.src} alt="Our Mission Graphic" className="inline-block w-96 h-96 max-w-full" />
+       
+            <p className="mt-4 text-gray-600">Together, we create a future where every child thrives.</p>
+          </div>
         </div>
-          
-        {/* Call to Action */}
-        
+
       </div>
-      <Footer /> {/* Footer at the bottom */}
+      <Footer /> {/* Footer component */}
     </>
   );
 };

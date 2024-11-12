@@ -100,7 +100,7 @@ const Navbar: React.FC = () => {
                             Explore Resources
                         </button>
                         {resourcesDropdownOpen && (
-                            <ul className="absolute left-1/2 transform -translate-x-1/2 mt-2 py-8 w-[850px] bg-[#0A2C38] border border-gray-700 shadow-lg rounded-lg z-10 grid grid-cols-3 gap-12 px-10">
+                            <ul className="absolute left-1/2 transform -translate-x-1/2 mt-6 py-8 w-max bg-[#0A2C38]  border border-gray-700 shadow-lg rounded-md pb-10 z-10 grid grid-cols-3 gap-12 px-10">
                                 {/* Articles, Guides, and Tutorials Column */}
                                 <div>
                                     <h3 className="text-md font-semibold text-white mb-4">Topics</h3>
