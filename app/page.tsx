@@ -185,21 +185,21 @@ export default function Home() {
 
       <section id="explore" className="py-56 bg-white">
         <div className="container mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12 font-raleway text-gray-600">Explore More</h2>
+          <h2 className="text-3xl font-bold text-center mb-12 font-raleway text-gray-600">Explore Early Edge Features</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+
             {/* Card 1 */}
             <div className="group">
               <div className="overflow-hidden">
                 <img
-                  src={feature3.src} // Accessing the .src property for the URL
-                  alt="School Refusal Parent Training"
+                  src={feature3.src}
+                  alt="Dyslexia Screening"
                   className="w-full h-auto rounded-md transform transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
-
-              <h3 className="text-lg font-semibold mt-4">School Refusal Parent Training and Consultation</h3>
+              <h3 className="text-lg font-semibold mt-4">Dyslexia Screening</h3>
               <p className="text-gray-500 mt-2">
-                Evidence-based parent training and consultation for school refusal and avoidance behaviors.
+                Comprehensive dyslexia screening for early detection of reading difficulties in young children.
               </p>
               <div className="mt-4">
                 <a
@@ -228,15 +228,15 @@ export default function Home() {
             {/* Card 2 */}
             <div className="group">
               <div className="overflow-hidden">
-              <img
-                  src={feature4.src} // Accessing the .src property for the URL
-                  alt="School Refusal Parent Training"
+                <img
+                  src={feature4.src}
+                  alt="Dysgraphia Training"
                   className="w-full h-auto rounded-md transform transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
-              <h3 className="text-lg font-semibold mt-4">College Readiness Program</h3>
+              <h3 className="text-lg font-semibold mt-4">Dysgraphia Assessment</h3>
               <p className="text-gray-500 mt-2">
-                Designed to help young adults strengthen their emotion regulation and problem-solving skills.
+                Early detection and training for children with dysgraphia to improve writing skills.
               </p>
               <div className="mt-4">
                 <a
@@ -265,15 +265,15 @@ export default function Home() {
             {/* Card 3 */}
             <div className="group">
               <div className="overflow-hidden">
-              <img
-                  src={feature5.src} // Accessing the .src property for the URL
-                  alt="School Refusal Parent Training"
+                <img
+                  src={feature5.src}
+                  alt="Dyscalculia Support"
                   className="w-full h-auto rounded-md transform transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
-              <h3 className="text-lg font-semibold mt-4">PEERS® Program | Teen</h3>
+              <h3 className="text-lg font-semibold mt-4">Dyscalculia Support</h3>
               <p className="text-gray-500 mt-2">
-                Our 14-week social skills intervention program to help teens learn how to make and keep friends.
+                Specialized support for children struggling with math-related learning difficulties.
               </p>
               <div className="mt-4">
                 <a
