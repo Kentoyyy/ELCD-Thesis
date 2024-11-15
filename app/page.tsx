@@ -183,121 +183,50 @@ export default function Home() {
         </div>
       </main>
 
-      <section id="explore" className="py-56 bg-white">
-        <div className="container mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12 font-raleway text-gray-600">Explore Early Edge Features</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <section id="explore" className="py-32 bg-white">
+        <div className="container mx-auto px-6">
+          <h2 className="text-3xl font-semibold text-center mb-16 text-gray-700">Explore Early Edge Features</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 
-            {/* Card 1 */}
-            <div className="group">
-              <div className="overflow-hidden">
+            {/* Feature Card */}
+            {[
+              { title: "Dyslexia Screening", src: feature3.src, description: "Comprehensive dyslexia screening for early detection of reading difficulties in young children." },
+              { title: "Dysgraphia Assessment", src: feature4.src, description: "Early detection and training for children with dysgraphia to improve writing skills." },
+              { title: "Dyscalculia Support", src: feature5.src, description: "Specialized support for children struggling with math-related learning difficulties." }
+            ].map((feature, index) => (
+              <div key={index} className="group shadow-lg hover:shadow-2xl transition-shadow duration-300 rounded-lg overflow-hidden">
                 <img
-                  src={feature3.src}
-                  alt="Dyslexia Screening"
-                  className="w-full h-auto rounded-md transform transition-transform duration-300 group-hover:scale-105"
+                  src={feature.src}
+                  alt={feature.title}
+                  className="w-full h-48 object-cover transition-transform duration-300 transform group-hover:scale-105"
                 />
-              </div>
-              <h3 className="text-lg font-semibold mt-4">Dyslexia Screening</h3>
-              <p className="text-gray-500 mt-2">
-                Comprehensive dyslexia screening for early detection of reading difficulties in young children.
-              </p>
-              <div className="mt-4">
-                <a
-                  href="#"
-                  className="text-blue-500 flex items-center hover:underline"
-                >
-                  Learn more
-                  <svg
-                    className="ml-2 w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
+                <div className="p-6 text-center">
+                  <h3 className="text-lg font-medium text-gray-800 mb-2">{feature.title}</h3>
+                  <p className="text-sm text-gray-500 mb-6">{feature.description}</p>
+                  <a
+                    href="#"
+                    className="text-primary-color flex items-center justify-center gap-2 font-medium transition-colors duration-300 hover:text-gray-700"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 12h14m-7-7l7 7-7 7"
-                    ></path>
-                  </svg>
-                </a>
+                    Learn more
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M5 12h14m-7-7l7 7-7 7"
+                      ></path>
+                    </svg>
+                  </a>
+                </div>
               </div>
-            </div>
+            ))}
 
-            {/* Card 2 */}
-            <div className="group">
-              <div className="overflow-hidden">
-                <img
-                  src={feature4.src}
-                  alt="Dysgraphia Training"
-                  className="w-full h-auto rounded-md transform transition-transform duration-300 group-hover:scale-105"
-                />
-              </div>
-              <h3 className="text-lg font-semibold mt-4">Dysgraphia Assessment</h3>
-              <p className="text-gray-500 mt-2">
-                Early detection and training for children with dysgraphia to improve writing skills.
-              </p>
-              <div className="mt-4">
-                <a
-                  href="#"
-                  className="text-blue-500 flex items-center hover:underline"
-                >
-                  Learn more
-                  <svg
-                    className="ml-2 w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 12h14m-7-7l7 7-7 7"
-                    ></path>
-                  </svg>
-                </a>
-              </div>
-            </div>
-
-            {/* Card 3 */}
-            <div className="group">
-              <div className="overflow-hidden">
-                <img
-                  src={feature5.src}
-                  alt="Dyscalculia Support"
-                  className="w-full h-auto rounded-md transform transition-transform duration-300 group-hover:scale-105"
-                />
-              </div>
-              <h3 className="text-lg font-semibold mt-4">Dyscalculia Support</h3>
-              <p className="text-gray-500 mt-2">
-                Specialized support for children struggling with math-related learning difficulties.
-              </p>
-              <div className="mt-4">
-                <a
-                  href="#"
-                  className="text-blue-500 flex items-center hover:underline"
-                >
-                  Learn more
-                  <svg
-                    className="ml-2 w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 12h14m-7-7l7 7-7 7"
-                    ></path>
-                  </svg>
-                </a>
-              </div>
-            </div>
           </div>
         </div>
       </section>
