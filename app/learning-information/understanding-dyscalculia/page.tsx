@@ -29,7 +29,7 @@ const FAQItem = ({ question, answer }: { question: string; answer: string }) => 
     );
 };
 
-const UnderstandingDyslexia = () => {
+const UnderstandingDyscalculia = () => {
     const [showMore, setShowMore] = useState(false);
 
     const faqData = [
@@ -219,4 +219,4 @@ const UnderstandingDyslexia = () => {
     );
 };
 
-export default UnderstandingDyslexia;
+export default UnderstandingDyscalculia;
