@@ -184,52 +184,75 @@ export default function Home() {
       </main>
 
       <section id="explore" className="py-32 bg-white">
-        <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-semibold text-center mb-16 text-gray-700">Explore Early Edge Features</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+  <div className="container mx-auto px-6">
+    <h2 className="text-3xl font-semibold text-center mb-16 text-gray-700">Explore Early Edge Features</h2>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 
-            {/* Feature Card */}
-            {[
-              { title: "Dyslexia Screening", src: feature3.src, description: "Comprehensive dyslexia screening for early detection of reading difficulties in young children." },
-              { title: "Dysgraphia Assessment", src: feature4.src, description: "Early detection and training for children with dysgraphia to improve writing skills." },
-              { title: "Dyscalculia Support", src: feature5.src, description: "Specialized support for children struggling with math-related learning difficulties." }
-            ].map((feature, index) => (
-              <div key={index} className="group shadow-lg hover:shadow-2xl transition-shadow duration-300 rounded-lg overflow-hidden">
-                <img
-                  src={feature.src}
-                  alt={feature.title}
-                  className="w-full h-48 object-cover transition-transform duration-300 transform group-hover:scale-105"
-                />
-                <div className="p-6 text-center">
-                  <h3 className="text-lg font-medium text-gray-800 mb-2">{feature.title}</h3>
-                  <p className="text-sm text-gray-500 mb-6">{feature.description}</p>
-                  <a
-                    href="#"
-                    className="text-primary-color flex items-center justify-center gap-2 font-medium transition-colors duration-300 hover:text-gray-700"
-                  >
-                    Learn more
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M5 12h14m-7-7l7 7-7 7"
-                      ></path>
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            ))}
-
+      {/* Feature Card */}
+      {[
+        {
+          title: "Dyslexia Screening",
+          src: feature3.src,
+          description: "Comprehensive dyslexia screening for early detection of reading difficulties in young children.",
+          link: "/dyslexia-assessment-types", // Add the path to this page
+        },
+        {
+          title: "Dysgraphia Assessment",
+          src: feature4.src,
+          description: "Early detection and training for children with dysgraphia to improve writing skills.",
+          link: "/dysgraphia-assessment", // Add the path to this page
+        },
+        {
+          title: "Dyscalculia Support",
+          src: feature5.src,
+          description: "Specialized support for children struggling with math-related learning difficulties.",
+          link: "/dyscalculia-support", // Add the path to this page
+        },
+      ].map((feature, index) => (
+        <div
+          key={index}
+          className="group shadow-lg hover:shadow-2xl transition-shadow duration-300 rounded-lg overflow-hidden"
+        >
+          <img
+            src={feature.src}
+            alt={feature.title}
+            className="w-full h-48 object-cover transition-transform duration-300 transform group-hover:scale-105"
+          />
+          <div className="p-6 text-center">
+            <h3 className="text-lg font-medium text-gray-800 mb-2">
+              {feature.title}
+            </h3>
+            <p className="text-sm text-gray-500 mb-6">
+              {feature.description}
+            </p>
+            <a
+              href={feature.link}
+              className="text-primary-color flex items-center justify-center gap-2 font-medium transition-colors duration-300 hover:text-gray-700"
+            >
+              Learn more
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M5 12h14m-7-7l7 7-7 7"
+                ></path>
+              </svg>
+            </a>
           </div>
         </div>
-      </section>
+      ))}
+
+    </div>
+  </div>
+</section>
+
 
 
 
