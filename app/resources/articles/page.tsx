@@ -5,15 +5,15 @@ import Footer from "../../components/Footer";
 const BlogPost: React.FC = () => {
     return (
         <div className="bg-gray-50 min-h-screen">
-            {/* Hero Section */}
-            <div className="bg-white shadow">
+           
+            <div className="bg-primary-color shadow">
                 <div className="container mx-auto px-6 py-12 flex flex-col lg:flex-row items-center">
                     <div className="lg:w-2/3">
-                        <p className="text-sm text-gray-500 uppercase">Blog • Articles</p>
-                        <h1 className="mt-2 text-4xl font-bold text-gray-800 leading-tight">
+                        <p className="text-sm text-white uppercase">Blog • Articles</p>
+                        <h1 className="mt-2 text-4xl font-bold text-white leading-tight">
                             The Three Types of Specific Learning Disabilities: Dyslexia, Dysgraphia, and Dyscalculia
                         </h1>
-                        <p className="mt-4 text-gray-600">
+                        <p className="mt-4 text-white">
                             Learn about this article.<br></br>
                             [November, 2024]
                         </p>
@@ -28,9 +28,9 @@ const BlogPost: React.FC = () => {
                 </div>
             </div>
 
-            {/* Main Content Section */}
+          
             <div className="container mx-auto px-6 py-12 flex flex-col lg:flex-row gap-8">
-                {/* Blog Content */}
+               
                 <div className="lg:w-2/3">
                     <article>
                         <p className="text-gray-600 leading-relaxed mb-6">
@@ -40,7 +40,7 @@ const BlogPost: React.FC = () => {
                             A specific learning disability is a disorder of one or more psychological processes involved in language acquisition, manifesting as an “imperfect ability to listen, think, speak, read, write, spell, or do mathematical calculations.” No wonder students with learning disabilities can have a hard time in class; their own psychological processes are working against them. Educators must be on the lookout for signs of the three types of specific learning disabilities: dyslexia, dysgraphia, and dyscalculia.
                         </p>
 
-                        {/* Dyslexia Section */}
+                      
                         <h2 id="dyslexia" className="text-2xl font-semibold text-gray-800 mb-4">Dyslexia</h2>
                         <p className="text-gray-600 leading-relaxed mb-6">
                             Dyslexia impairs a person’s ability to decode, or associate letters and words with their corresponding speech sounds. Consequently, reading becomes slow and laborious, even for students who’ve mastered basic reading skills. Dyslexia can also impair writing and spelling skills, and some students with dyslexia will mix up similar-looking letters like “b” and “d.”
@@ -53,13 +53,13 @@ const BlogPost: React.FC = () => {
                             <li>Sounding out unfamiliar words.</li>
                         </ul>
 
-                        {/* Dysgraphia Section */}
+                  
                         <h2 id="dysgraphia" className="text-2xl font-semibold text-gray-800 mb-4">Dysgraphia</h2>
                         <p className="text-gray-600 leading-relaxed mb-6">
                             Both dyslexia and dysgraphia are characterized by writing difficulties, but dysgraphia interferes with all aspects of writing, including spelling, grammar, and punctuation. Students with dysgraphia tend to write in an awkward position, gripping their pencil in a clenched fist.
                         </p>
 
-                        {/* Dyscalculia Section */}
+                  
                         <h2 id="dyscalculia" className="text-2xl font-semibold text-gray-800 mb-4">Dyscalculia</h2>
                         <p className="text-gray-600 leading-relaxed mb-6">
                             Referred to as “number dyslexia,” dyscalculia impairs a person’s ability to learn number-related concepts or perform calculations with symbols and functions. Without a clear understanding of numbers, students with dyscalculia must sometimes rely on finger-counting to perform even simple calculations.
@@ -73,7 +73,7 @@ const BlogPost: React.FC = () => {
                         </ul>
                     </article>
 
-                    {/* Sources Section */}
+                   
                     <div className="mt-12">
                         <h3 className="text-xl font-semibold text-gray-800 mb-4">Sources</h3>
                         <ul className="list-disc list-inside text-blue-600">
@@ -101,9 +101,9 @@ const BlogPost: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Sidebar */}
+              
                 <aside className="lg:w-1/3">
-                    {/* Table of Contents */}
+        
                     <div className="bg-white shadow rounded-lg p-6 mb-8">
                         <h3 className="text-lg font-semibold text-gray-800">Table of Contents</h3>
                         <ul className="mt-4 space-y-2">
@@ -119,7 +119,7 @@ const BlogPost: React.FC = () => {
                         </ul>
                     </div>
 
-                    {/* Related Topics */}
+                    
                     <div className="bg-white shadow rounded-lg p-6">
                         <h3 className="text-lg font-semibold text-gray-800">Related Topics</h3>
                         <ul className="mt-4 space-y-4">
@@ -148,7 +148,7 @@ const BlogPost: React.FC = () => {
                 </aside>
             </div>
 
-            {/* Footer */}
+
             <Footer />
         </div>
     );

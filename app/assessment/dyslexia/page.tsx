@@ -1,135 +1,174 @@
 "use client";
+
 import React, { useState } from "react";
-import { fetchWords, submitDictation } from "../../../utils/api";
+import axios from "axios";
 
-const Dyslexia: React.FC = () => {
-  const [level, setLevel] = useState(1);
-  const [words, setWords] = useState<string[]>([]);
-  const [typedWords, setTypedWords] = useState<string[]>([]);
-  const [accuracy, setAccuracy] = useState<number | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+const PracticePage = () => {
+  const [testType, setTestType] = useState<"dictation" | "pronunciation" | null>(null);
+  const [level, setLevel] = useState<number | null>(null);
+  const [dictatedWords, setDictatedWords] = useState<string[]>([]);
+  const [typedWords, setTypedWords] = useState<string[]>(Array(10).fill(""));
+  const [results, setResults] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const startTest = async () => {
+  const API_BASE_URL = "http://localhost:8000"; // Replace with your backend URL
+
+  const startDictation = async () => {
+    if (level === null) {
+      alert("Please select a level.");
+      return;
+    }
+
     setLoading(true);
-    setError(null);
     try {
-      const wordList = await fetchWords(level);
-      setWords(wordList);
-      setTypedWords(new Array(wordList.length).fill(""));
-      setAccuracy(null);
-    } catch (err) {
-      setError("Failed to fetch words. Please try again.");
-      console.error(err);
+      const response = await axios.get(`${API_BASE_URL}/generate-vocabulary/`, {
+        params: { level },
+      });
+      setDictatedWords(response.data.words);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to start dictation.");
     } finally {
       setLoading(false);
     }
   };
 
-  const submitTest = async () => {
-    setLoading(true);
-    setError(null);
+  const submitDictationAnswers = async () => {
     try {
-      const result = await submitDictation(typedWords, words);
-      setAccuracy(result.accuracy);
-      alert(`Correct Words: ${result.correct_words.join(", ")}`);
-    } catch (err) {
-      setError("Failed to submit the test. Please try again.");
-      console.error(err);
-    } finally {
-      setLoading(false);
+      const response = await axios.post(`${API_BASE_URL}/dictation/`, {
+        words: dictatedWords,
+        userInputs: typedWords,
+      });
+      setResults(response.data.responses);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to submit answers.");
+    }
+  };
+
+  const startPronunciation = async () => {
+    if (level === null) {
+      alert("Please select a level.");
+      return;
+    }
+
+    try {
+      const response = await axios.get(`${API_BASE_URL}/pronunciation-words/`, {
+        params: { level },
+      });
+      setDictatedWords(response.data.words);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to start pronunciation test.");
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white px-6 py-4">
-      {/* Navbar */}
-      <header className="flex justify-between items-center border-b border-gray-700 pb-2">
-        <h1 className="text-2xl font-bold">Dyslexia Web APP</h1>
-        <nav>
-          <ul className="flex space-x-4 text-lg">
-            <li className="hover:text-red-400 cursor-pointer">Home</li>
-            <li className="text-red-500 font-bold border-b-2 border-red-500 cursor-pointer">Pronunciation</li>
-            <li className="hover:text-red-400 cursor-pointer">Dictation</li>
-            <li className="hover:text-red-400 cursor-pointer">About</li>
-          </ul>
-        </nav>
-      </header>
-
-      {/* Submenu */}
-      <div className="mt-4 text-sm border-b border-gray-700 pb-2">
-        <ul className="flex space-x-4">
-          <li className="text-red-500 font-bold cursor-pointer">Home</li>
-          <li className="hover:text-red-400 cursor-pointer">Pronunciation Test</li>
-          <li className="hover:text-red-400 cursor-pointer">Phonetics</li>
-        </ul>
-      </div>
-
-      {/* Main Content */}
-      <main className="mt-8">
-        <h2 className="text-3xl font-bold mb-4">A Test for Dyslexia</h2>
-        <div className="mb-6">
-          <label className="block text-sm font-medium mb-2">Select your grade level</label>
-          <select
-            value={level}
-            onChange={(e) => setLevel(Number(e.target.value))}
-            className="w-full p-2 bg-gray-800 text-white rounded border border-gray-700"
+    <div className="p-8 max-w-3xl mx-auto bg-white rounded-lg shadow-sm">
+      <h1 className="text-2xl font-semibold mb-6 text-gray-800 text-center">
+        Practice Page
+      </h1>
+      {!testType && (
+        <div className="flex flex-col gap-4">
+          <button
+            className="w-full bg-gray-800 text-white py-2 rounded hover:bg-gray-700 transition"
+            onClick={() => setTestType("dictation")}
           >
-            <option value={1}>5th-7th Grade</option>
-            <option value={2}>2nd-4th Grade</option>
-          </select>
+            Dictation Test
+          </button>
+          <button
+            className="w-full bg-gray-600 text-white py-2 rounded hover:bg-gray-500 transition"
+            onClick={() => setTestType("pronunciation")}
+          >
+            Pronunciation Test
+          </button>
         </div>
+      )}
 
-        <button
-          onClick={startTest}
-          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 disabled:bg-red-700"
-          disabled={loading}
-        >
-          {loading ? "Loading..." : "Start Test"}
-        </button>
-
-        {error && (
-          <p className="mt-4 text-red-500">
-            <strong>Error:</strong> {error}
-          </p>
-        )}
-
-        {words.length > 0 && (
-          <div className="mt-6">
-            <h3 className="text-xl font-semibold mb-4">Type the words you hear:</h3>
-            {words.map((word, index) => (
-              <div key={index} className="mb-4">
-                <label className="block mb-1">Word {index + 1}:</label>
-                <input
-                  type="text"
-                  value={typedWords[index]}
-                  onChange={(e) => {
-                    const updatedWords = [...typedWords];
-                    updatedWords[index] = e.target.value;
-                    setTypedWords(updatedWords);
-                  }}
-                  className="w-full p-2 bg-gray-800 text-white rounded border border-gray-700"
-                />
-              </div>
-            ))}
-            <button
-              onClick={submitTest}
-              className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 disabled:bg-green-700"
-              disabled={loading}
+      {testType && (
+        <>
+          <div className="mb-6">
+            <label className="block text-sm font-medium mb-2 text-gray-700">
+              Choose Difficulty Level:
+            </label>
+            <select
+              className="p-2 border rounded w-full"
+              onChange={(e) => setLevel(Number(e.target.value))}
             >
-              {loading ? "Submitting..." : "Submit"}
-            </button>
+              <option value="">Select Level</option>
+              <option value={1}>Elementary</option>
+              <option value={2}>Intermediate</option>
+            </select>
           </div>
-        )}
 
-        {accuracy !== null && (
-          <p className="mt-4 text-lg">
-            Accuracy: <span className="font-bold">{accuracy}</span>/{words.length}
-          </p>
-        )}
-      </main>
+          {testType === "dictation" && (
+            <>
+              <button
+                className="w-full bg-gray-800 text-white py-2 rounded hover:bg-gray-700 transition"
+                onClick={startDictation}
+                disabled={loading || dictatedWords.length > 0}
+              >
+                {loading ? "Loading..." : "Start Dictation"}
+              </button>
+
+              {dictatedWords.length > 0 && (
+                <div className="mt-8">
+                  <h2 className="text-lg font-medium mb-4">Type the Words Below:</h2>
+                  {dictatedWords.map((_, index) => (
+                    <div key={index} className="flex items-center gap-4 mb-3">
+                      <label className="text-sm text-gray-600">Word {index + 1}:</label>
+                      <input
+                        type="text"
+                        className="p-2 border rounded w-full"
+                        value={typedWords[index]}
+                        onChange={(e) => {
+                          const updatedWords = [...typedWords];
+                          updatedWords[index] = e.target.value;
+                          setTypedWords(updatedWords);
+                        }}
+                      />
+                    </div>
+                  ))}
+                  <button
+                    className="w-full bg-gray-600 text-white py-2 rounded hover:bg-gray-500 transition mt-4"
+                    onClick={submitDictationAnswers}
+                  >
+                    Submit Answers
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
+          {testType === "pronunciation" && (
+            <>
+              <button
+                className="w-full bg-gray-600 text-white py-2 rounded hover:bg-gray-500 transition"
+                onClick={startPronunciation}
+              >
+                Start Pronunciation
+              </button>
+              {dictatedWords.length > 0 && (
+                <div className="mt-8">
+                  <h2 className="text-lg font-medium mb-4">Pronounce the Words:</h2>
+                  <ul className="space-y-3">
+                    {dictatedWords.map((word, index) => (
+                      <li
+                        key={index}
+                        className="p-2 border rounded bg-gray-50 text-gray-700"
+                      >
+                        <span className="font-medium">Word {index + 1}:</span> {word}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </>
+          )}
+        </>
+      )}
     </div>
   );
 };
 
-export default Dyslexia;
+export default PracticePage;

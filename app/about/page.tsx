@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Metadata } from 'next';
 import fam from '../../public/images/fam.jpg';
 import fam1 from '../../public/images/fam1.jpg';
+
 export const metadata: Metadata = {
   title: "EarlyEdge - About Us",
   icons: {
@@ -15,7 +16,7 @@ const AboutPage = () => {
   return (
     <>
       <div className="min-h-screen flex flex-col bg-white">
-        {/* Hero Section */}
+    
         <div className="container mx-auto py-12 px-6 lg:px-16 flex flex-col items-center text-center">
           <h1 className="text-4xl font-extrabold text-[#0D7C66] mb-6 leading-tight font-raleway">
             About EarlyEdge
@@ -25,7 +26,7 @@ const AboutPage = () => {
           </p>
         </div>
 
-        {/* Impact Section */}
+       
         <div className="bg-primary-color py-16 text-white">
           <div className="container mx-auto text-center px-6 lg:px-16">
             <h2 className="text-xl font-semibold uppercase mb-4">Our Impact</h2>
@@ -36,13 +37,40 @@ const AboutPage = () => {
               At EarlyEdge, we are committed to supporting children with learning disabilities by providing accessible, accurate, and compassionate early detection services. Our system utilizes advanced machine learning models to identify signs of dyslexia, dysgraphia, and dyscalculia in children between the ages of 2 and 7. Through timely diagnosis, parents and educators can work together to create tailored educational strategies, fostering a supportive environment that allows each child to thrive.
             </p>
             <button className="px-6 py-3 bg-secondary-color text-[#0D3B66] font-semibold rounded-full shadow-md hover:bg-primary-colortransition duration-300">
-              Our Impact
+              Learn More
             </button>
           </div>
         </div>
 
-        {/* Article Section */}
-        <div className="container mx-auto py-16 px-6 lg:px-16 text-gray-800">
+     
+        <div className="bg-gray-50 py-16 px-6 lg:px-16 text-center">
+          <h2 className="text-3xl font-semibold text-[#0D7C66] mb-8">Our Vision in Action</h2>
+          <div className="flex flex-col lg:flex-row justify-center items-center gap-8">
+            <div className="w-full lg:w-1/2">
+              <iframe
+                className="w-full rounded-lg shadow-lg aspect-video"
+                src="#"
+                title="Our Vision"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+              <p className="mt-4 text-gray-600">Watch how EarlyEdge is transforming lives.</p>
+            </div>
+            <div className="w-full lg:w-1/2">
+              <iframe
+                className="w-full rounded-lg shadow-lg aspect-video"
+                src="#"
+                title="Our Technology"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+              <p className="mt-4 text-gray-600">Explore the technology that powers our solutions.</p>
+            </div>
+          </div>
+        </div>
+
+        
+            <div className="container mx-auto py-16 px-6 lg:px-16 text-gray-800">
           <h2 className="text-3xl font-semibold text-[#0D7C66] mb-8 text-center">
             Our Mission
           </h2>
@@ -66,17 +94,54 @@ const AboutPage = () => {
               With a commitment to <span className="font-bold">privacy, accuracy, and compassion</span>, <span className="font-bold">EarlyEdge</span> is dedicated to breaking down barriers to early detection and making advanced technology accessible to families everywhere. We believe that by supporting children from the start, we can create lasting positive impacts throughout their lives.
             </p>
           </article>
-
-          {/* Image Section */}
-          <div className="text-center mt-12">
-            <img src={fam.src} alt="Our Mission Graphic" className="inline-block w-96 h-96 max-w-full" />
-       
-            <p className="mt-4 text-gray-600">Together, we create a future where every child thrives.</p>
-          </div>
         </div>
 
+       
+        <div className="text-center mt-12">
+          <img src={fam.src} alt="Our Mission Graphic" className="inline-block w-96 h-96 max-w-full rounded-lg shadow-lg" />
+          <p className="mt-4 text-gray-600">Together, we create a future where every child thrives.</p>
+        </div>
+
+       
+        <div className="container mx-auto py-16 px-6 lg:px-16 text-gray-800">
+          <h2 className="text-3xl font-semibold text-[#0D7C66] mb-8 text-center">
+            Meet Reseachers
+          </h2>
+          <p className="text-lg text-gray-600 text-center max-w-2xl mx-auto mb-12">
+            The EarlyEdge team consists of 3 members.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-white shadow-lg rounded-lg p-6 text-center">
+              <img
+                src="https://via.placeholder.com/150"
+                alt="Team Member"
+                className="w-32 h-32 mx-auto rounded-full mb-4"
+              />
+              <h3 className="text-xl font-semibold text-gray-800">Afable JhonRey</h3>
+              <p className="text-gray-600">Reseacher</p>
+            </div>
+            <div className="bg-white shadow-lg rounded-lg p-6 text-center">
+              <img
+                src="https://via.placeholder.com/150"
+                alt="Team Member"
+                className="w-32 h-32 mx-auto rounded-full mb-4"
+              />
+              <h3 className="text-xl font-semibold text-gray-800">Alcantara Ken</h3>
+              <p className="text-gray-600">Reseacher</p>
+            </div>
+            <div className="bg-white shadow-lg rounded-lg p-6 text-center">
+              <img
+                src="https://via.placeholder.com/150"
+                alt="Team Member"
+                className="w-32 h-32 mx-auto rounded-full mb-4"
+              />
+              <h3 className="text-xl font-semibold text-gray-800">Banogon Angel</h3>
+              <p className="text-gray-600">Reseacher</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <Footer /> {/* Footer component */}
+      <Footer />
     </>
   );
 };
