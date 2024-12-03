@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Footer from "../../components/Footer";
+import image from "../../../public/images/posterdyslexia.png"
 
 const FAQItem = ({ question, answer }: { question: string; answer: string }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -10,10 +11,10 @@ const FAQItem = ({ question, answer }: { question: string; answer: string }) => 
     return (
         <div className="border-b border-gray-200 py-4">
             <button
-               onClick={() => setIsOpen(!isOpen)}
-               className={`flex justify-between items-center w-full text-left py-2 px-4 rounded transition-all duration-300
+                onClick={() => setIsOpen(!isOpen)}
+                className={`flex justify-between items-center w-full text-left py-2 px-4 rounded transition-all duration-300
                    ${isOpen ? "bg-green-100" : "hover:bg-gray-200"}  // Background change on click and hover`}
-           >
+            >
                 <span className="text-gray-800 font-semibold">{question}</span>
                 <span className="text-gray-600">
                     {isOpen ? "▲" : "▼"}
@@ -83,14 +84,35 @@ const UnderstandingDyslexia = () => {
                     </div>
 
                     {/* What You'll Learn Section */}
-                    <div className="bg-gray-50 p-5 rounded-lg shadow-md mb-8">
-                        <h2 className="text-lg font-semibold text-gray-900 mb-3 text-center">What You'll Learn</h2>
-                        <ul className="text-gray-700 space-y-2 text-sm text-center">
-                            <li>• What is dyslexia, and what are the signs?</li>
-                            <li>• How and when is dyslexia diagnosed?</li>
-                            <li>• How can schools and parents support a child with dyslexia?</li>
-                        </ul>
+                    {/* What You'll Learn Section */}
+                    <div className="bg-primary-color shadow-lg w-full">
+                        <div className="max-w-3xl mx-auto px-6 py-12">
+                            <h2 className="text-3xl font-extrabold text-white mb-6 text-center">
+                                What You'll Learn
+                            </h2>
+                            <ul className="text-white text-lg space-y-4 list-none">
+                                <li className="flex items-center gap-3">
+                                    <span className="w-6 h-6 flex items-center justify-center rounded-full bg-white text-primary-color font-bold">
+                                        1
+                                    </span>
+                                    How dyslexia affects learning and development.
+                                </li>
+                                <li className="flex items-center gap-3">
+                                    <span className="w-6 h-6 flex items-center justify-center rounded-full bg-white text-primary-color font-bold">
+                                        2
+                                    </span>
+                                    Ways to identify early signs of dyslexia.
+                                </li>
+                                <li className="flex items-center gap-3">
+                                    <span className="w-6 h-6 flex items-center justify-center rounded-full bg-white text-primary-color font-bold">
+                                        3
+                                    </span>
+                                    Effective strategies to support children with dyslexia.
+                                </li>
+                            </ul>
+                        </div>
                     </div>
+
 
                     <h2 className="text-3xl font-bold text-gray-900 mb-3 mt-24 font-PTSerif">Quick Read</h2>
                     <p className="text-gray-600 text-base leading-relaxed mb-6 font-raleway font-bold">
@@ -241,6 +263,7 @@ const UnderstandingDyslexia = () => {
                         ))}
                     </div>
                 </div>
+               
             </div>
 
             <Footer />
