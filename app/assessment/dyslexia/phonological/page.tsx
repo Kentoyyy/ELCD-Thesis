@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
+import questionsData from "../../../data/questions.json"; // Import the JSON data
 
 const PhonologicalTest = () => {
   const [questionIndex, setQuestionIndex] = useState(0);
@@ -9,27 +10,10 @@ const PhonologicalTest = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const questions = [
-    {
-      images: ["/images/bat.png", "/images/hat.png"],
-      question: "Do 'bat' and 'hat' sound the same?",
-      options: ["Yes", "No"],
-    },
-    {
-      images: ["/images/dog.png", "/images/log.png"],
-      question: "Which word rhymes with 'dog': 'log' or 'cat'?",
-      options: ["Log", "Cat"],
-    },
-    {
-      images: ["/images/sun.png", "/images/moon.png"],
-      question: "What word do these sounds make: /s/ /u/ /n/?",
-      options: ["Sun", "Moon"],
-    },
-  ];
+  const questions = questionsData; // Use imported JSON data
 
   const handleAnswer = (selected: number | null) => {
-    // Push the answer if selected, or push null if the question is skipped
-    setAnswers([...answers, selected !== null ? selected : -1]);
+    setAnswers([...answers, selected !== null ? selected : -1]); // Use -1 for skipped answers
     if (questionIndex + 1 < questions.length) {
       setQuestionIndex(questionIndex + 1);
     } else {
@@ -41,9 +25,11 @@ const PhonologicalTest = () => {
     setLoading(true);
     setError(null);
 
+    const paddedAnswers = [...answers, ...new Array(15 - answers.length).fill(-1)];
+
     try {
       const response = await axios.post("http://127.0.0.1:8000/predict/", {
-        answers: answers,
+        answers: paddedAnswers,
       });
       setResult(response.data.prediction);
     } catch (err) {
@@ -57,46 +43,66 @@ const PhonologicalTest = () => {
     handleAnswer(null);
   };
 
+  const resetTest = () => {
+    setQuestionIndex(0);
+    setAnswers([]);
+    setResult(null);
+    setError(null);
+  };
+
   return (
-    <div className="container mx-auto p-6 bg-white">
-      <h1 className="text-2xl font-bold mb-4">Phonological Awareness Test</h1>
-      {error && <p className="text-red-500">{error}</p>}
-      {loading ? (
-        <p>Loading...</p>
-      ) : result ? (
-        <p className="text-lg font-bold">{result}</p>
-      ) : (
-        <div>
-          <div className="flex justify-center space-x-4 mb-4">
-            {questions[questionIndex].images.map((image, idx) => (
-              <img
-                key={idx}
-                src={image}
-                alt={`Question image ${idx + 1}`}
-                className="w-40 h-40 object-contain"
-              />
-            ))}
+    <div className="min-h-screen bg-white flex justify-center items-center p-6">
+      <div className="max-w-md w-full">
+        <h1 className="text-3xl font-bold text-center mb-6">Phonological Awareness Test</h1>
+        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+        {loading ? (
+          <p className="text-center">Loading...</p>
+        ) : result ? (
+          <div className="text-center">
+            <p className="text-lg font-semibold">{result}</p>
           </div>
-          <p className="mb-4">{questions[questionIndex].question}</p>
-          <div className="space-y-2">
-            {questions[questionIndex].options.map((option, idx) => (
+        ) : (
+          <div className="space-y-6">
+            <div className="flex justify-center mb-4">
+              {questions[questionIndex].images &&
+                questions[questionIndex].images.map((image, idx) => (
+                  <img
+                    key={idx}
+                    src={image}
+                    alt={`Question image ${idx + 1}`}
+                    className="w-36 h-36 object-contain"
+                  />
+                ))}
+            </div>
+            <p className="text-center text-xl mb-4">{questions[questionIndex].question}</p>
+            <div className="space-y-2">
+              {questions[questionIndex].options.map((option, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handleAnswer(idx)}
+                  className="bg-blue-500 text-white p-2 w-full rounded hover:bg-blue-600 transition"
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+            <div className="flex justify-between mt-6">
               <button
-                key={idx}
-                onClick={() => handleAnswer(idx)}
-                className="bg-blue-500 text-white p-2 rounded w-full"
+                onClick={skipQuestion}
+                className="bg-gray-300 text-black p-2 rounded w-full hover:bg-gray-400 transition"
               >
-                {option}
+                Skip Question
               </button>
-            ))}
+              <button
+                onClick={resetTest}
+                className="bg-red-500 text-white p-2 rounded w-full hover:bg-red-600 transition"
+              >
+                Reset Test
+              </button>
+            </div>
           </div>
-          <button
-            onClick={skipQuestion}
-            className="mt-4 bg-gray-500 text-white p-2 rounded w-full"
-          >
-            Skip Question
-          </button>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

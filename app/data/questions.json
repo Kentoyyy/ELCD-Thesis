@@ -1,0 +1,73 @@
+[
+    {
+      "images": ["/images/bat.png", "/images/hat.png"],
+      "question": "Do 'bat' and 'hat' sound the same?",
+      "options": ["Yes", "No"]
+    },
+    {
+      "images": ["/images/dog.png", "/images/log.png"],
+      "question": "Which word rhymes with 'dog': 'log' or 'cat'?",
+      "options": ["Log", "Cat"]
+    },
+    {
+      "images": ["/images/mat.png", "/images/rat.png"],
+      "question": "Which word rhymes with 'mat'?",
+      "options": ["Rat", "Cat"]
+    },
+    {
+      "images": ["/images/apple.png", "/images/banana.png", "/images/cherry.png"],
+      "question": "Which word doesn't belong based on its beginning sound?",
+      "options": ["Apple", "Banana", "Cherry"]
+    },
+    {
+      "images": ["/images/cat.png", "/images/dog.png", "/images/cow.png"],
+      "question": "Which animal starts with a different sound?",
+      "options": ["Cat", "Dog", "Cow"]
+    },
+    {
+      "images": ["/images/elephant.png"],
+      "question": "How many syllables are in the word 'elephant'?",
+      "options": ["2", "3", "4"]
+    },
+    {
+      "images": ["/images/banana.png"],
+      "question": "How many syllables are in the word 'banana'?",
+      "options": ["2", "3", "4"]
+    },
+    {
+      "images": ["/images/dragon.png"],
+      "question": "How many syllables are in the word 'dragon'?",
+      "options": ["1", "2", "3"]
+    },
+    {
+      "images": ["/images/sun.png", "/images/boot.png"],
+      "question": "What word do these sounds make: /s/ /u/ /n/?",
+      "options": ["Sun", "Boot"]
+    },
+    {
+      "images": ["/images/pen.png", "/images/dog.png"],
+      "question": "What word do these sounds make: /p/ /e/ /n/?",
+      "options": ["Pen", "Dog"]
+    },
+    {
+      "images": ["/images/bat.png", "/images/cat.png"],
+      "question": "Change the /b/ sound in 'bat' to /c/. What word do you get?",
+      "options": ["Bat", "Cat"]
+    },
+    {
+      "images": ["/images/sun.png", "/images/fun.png"],
+      "question": "Change the /s/ sound in 'sun' to /f/. What word do you get?",
+      "options": ["Sun", "Fun"]
+    },
+    {
+      "images": ["/images/dog.png"],
+      "question": "What is the first sound in the word 'dog'?",
+      "options": ["D", "O", "G"]
+    },
+    {
+      "images": ["/images/fish.png"],
+      "question": "What is the last sound in the word 'fish'?",
+      "options": ["F", "I", "SH"]
+    }
+  ]
+  
