@@ -65,10 +65,10 @@ const Login: React.FC = () => {
         <div className="flex flex-col lg:flex-row w-full max-w-6xl shadow-2xl min-h-[600px] bg-white rounded-lg overflow-hidden">
 
           <div className="w-full lg:w-1/2 p-10 flex flex-col justify-center">
-            <h1 className="text-3xl font-extrabold text-gray-800 mb-2 font-robotoserif">
-              Welcome back!<br />Log in to your profile.
+            <h1 className="text-3xl font-extrabold text-gray-800 mb-2 font-raleway">
+             <br />Login to EarlyEdge
             </h1>
-            <p className="text-gray-600 mb-6">Enter your credentials to access your account.</p>
+            <p className="text-gray-600 mb-6 text-sm">Enter your credentials to access your account.</p>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
@@ -95,9 +95,9 @@ const Login: React.FC = () => {
               <div className="flex items-center justify-between">
                 <label className="flex items-center">
                   <input type="checkbox" className="mr-2" />
-                  <span className="text-sm text-gray-600">Remember me</span>
+                  <span className="text-sm text-gray-400">Remember me</span>
                 </label>
-                <Link href="/reset-password" className="text-sm text-gray-400 hover:underline">Forgot your password?</Link>
+                <Link href="/reset-password" className="text-sm text-gray-700 hover:underline">Forgot your password?</Link>
               </div>
               <button
                 type="submit"

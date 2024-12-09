@@ -1,64 +1,50 @@
 "use client";
-import React, { useState } from "react";
-import axios from "axios";
+import { useState } from 'react';
+import axios from 'axios';
 
-const DictationTest: React.FC = () => {
-  const [level, setLevel] = useState<number>(1);
-  const [words, setWords] = useState<string[]>(Array(10).fill(""));
-  const [result, setResult] = useState<any>(null);
+export default function DictationTest() {
+  const [level, setLevel] = useState(1);
+  const [words, setWords] = useState<string[]>([]);
+  const [score, setScore] = useState<number | null>(null);
 
-  const handleWordChange = (index: number, value: string) => {
-    const newWords = [...words];
-    newWords[index] = value;
-    setWords(newWords);
+  const handleStartTest = async () => {
+    try {
+      const res = await axios.post('http://localhost:8000/start-dictation/', { level });
+      setWords(res.data.dictated_words || []);
+    } catch (err) {
+      setWords(['Error starting test.']);
+    }
   };
 
-  const handleSubmit = async () => {
+  const handleScore = async () => {
     try {
-      const response = await axios.post("http://localhost:8000/dictation/", {
-        level,
-        words,
+      const res = await axios.post('http://localhost:8000/calculate-dictation-score/', {
+        typed_words: words,
+        dictated_words: words,
       });
-      setResult(response.data);
-    } catch (error) {
-      console.error("Error during dictation test:", error);
+      setScore(res.data.score);
+    } catch (err) {
+      setScore(null);
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen space-y-4">
-      <h1 className="text-3xl mb-4">Dictation Test</h1>
-      <select
-        value={level}
-        onChange={(e) => setLevel(Number(e.target.value))}
-        className="border p-2 mb-4 w-40"
-      >
-        <option value={1}>Intermediate (5th-7th)</option>
-        <option value={2}>Elementary (2nd-4th)</option>
-      </select>
-      {words.map((word, index) => (
-        <input
-          key={index}
-          type="text"
-          placeholder={`Word ${index + 1}`}
-          value={word}
-          onChange={(e) => handleWordChange(index, e.target.value)}
-          className="border p-2 mb-2 w-80"
-        />
-      ))}
-      <button onClick={handleSubmit} className="px-6 py-2 bg-green-500 text-white rounded">
-        Submit
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <h1 className="text-2xl font-bold mb-4">Dictation Test</h1>
+      <button onClick={handleStartTest} className="bg-purple-500 text-white py-2 px-4 rounded mb-4">
+        Start Test
       </button>
-      {result && (
-        <div className="mt-6">
-          <h2 className="text-xl">Dictation Result:</h2>
-          <p>Expected Words: {result.expected}</p>
-          <p>Your Words: {result.recognized}</p>
-          <p>Accuracy: {result.accuracy.toFixed(2)}%</p>
+      {words.length > 0 && (
+        <div className="space-y-2">
+          {words.map((word, idx) => (
+            <p key={idx}>{word}</p>
+          ))}
         </div>
       )}
+      <button onClick={handleScore} className="bg-blue-500 text-white py-2 px-4 rounded mt-4">
+        Calculate Score
+      </button>
+      {score !== null && <p className="mt-4">Score: {score}</p>}
     </div>
   );
-};
-
-export default DictationTest;
+}
