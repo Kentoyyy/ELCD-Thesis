@@ -13,6 +13,7 @@ type User = {
   parentName?: string;
   childName?: string;
   childAge?: number;
+  dyslexiaRisk?: string; // Added dyslexiaRisk field
   createdAt?: string;
 };
 
@@ -152,6 +153,7 @@ const UserManagement = () => {
               <th className="py-3 px-4">Parent Name</th>
               <th className="py-3 px-4">Child Name</th>
               <th className="py-3 px-4">Age</th>
+              <th className="py-3 px-4">Dyslexia Risk</th>
               <th className="py-3 px-4">Access</th>
               <th className="py-3 px-4">Last Active</th>
               <th className="py-3 px-4">Created At</th>
@@ -175,7 +177,8 @@ const UserManagement = () => {
                   </td>
                   <td className="py-4 px-4">{user.parentName || "N/A"}</td>
                   <td className="py-4 px-4">{user.childName || "N/A"}</td>
-                  <td className="py-4 px-4">{user.childAge !== undefined ? user.childAge : "N/A"}</td>
+                  <td className="py-4 px-4">{user.childAge || "N/A"}</td>
+                  <td className="py-4 px-4">{user.dyslexiaRisk || "No test result"}</td>
                   <td className="py-4 px-4">
                     <span
                       className={`${user.role === "admin"
@@ -193,20 +196,20 @@ const UserManagement = () => {
                       onClick={() => handleUpdateUser(user)}
                       className="text-blue-500 hover:text-blue-600"
                     >
-                      <FaEdit /> {/* Update icon */}
+                      <FaEdit />
                     </button>
                     <button
                       onClick={() => handleDeleteUser(user._id)}
                       className="text-red-500 hover:text-red-600"
                     >
-                      <FaTrashAlt /> {/* Delete icon */}
+                      <FaTrashAlt />
                     </button>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={8} className="py-4 px-4 text-center text-gray-500">
+                <td colSpan={9} className="py-4 px-4 text-center text-gray-500">
                   No users found.
                 </td>
               </tr>
@@ -215,7 +218,6 @@ const UserManagement = () => {
         </table>
       </div>
 
-      {/* Pagination */}
       <div className="flex justify-between mt-6">
         <button
           onClick={prevPage}
@@ -238,91 +240,55 @@ const UserManagement = () => {
       </div>
 
       {isModalOpen && currentUser && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
-            <h2 className="text-xl font-semibold mb-4">Update User</h2>
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+            <h2 className="text-xl font-semibold mb-4">Edit User</h2>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
-                <label className="block text-gray-700">Name</label>
+                <label className="block text-gray-700">User Name</label>
                 <input
                   type="text"
-                  className="w-full px-4 py-2 border rounded-lg bg-transparent"
                   value={currentUser.name || ""}
                   onChange={(e) =>
                     setCurrentUser({ ...currentUser, name: e.target.value })
                   }
+                  className="w-full px-4 py-2 border rounded-lg bg-transparent"
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700">Email</label>
-                <input
-                  type="email"
-                  className="w-full px-4 py-2 border rounded-lg bg-transparent"
-                  value={currentUser.email || ""}
+                <label className="block text-gray-700">Dyslexia Risk</label>
+                <select
+                  value={currentUser.dyslexiaRisk || "No test result"}
                   onChange={(e) =>
-                    setCurrentUser({ ...currentUser, email: e.target.value })
+                    setCurrentUser({ ...currentUser, dyslexiaRisk: e.target.value })
                   }
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700">Parent Name</label>
-                <input
-                  type="text"
                   className="w-full px-4 py-2 border rounded-lg bg-transparent"
-                  value={currentUser.parentName || ""}
-                  onChange={(e) =>
-                    setCurrentUser({ ...currentUser, parentName: e.target.value })
-                  }
-                />
+                >
+                  <option value="No test result">No test result</option>
+                  <option value="Low risk">Low risk</option>
+                  <option value="Medium risk">Medium risk</option>
+                  <option value="High risk">High risk</option>
+                </select>
               </div>
-              <div className="mb-4">
-                <label className="block text-gray-700">Child Name</label>
-                <input
-                  type="text"
-                  className="w-full px-4 py-2 border rounded-lg bg-transparent"
-                  value={currentUser.childName || ""}
-                  onChange={(e) =>
-                    setCurrentUser({ ...currentUser, childName: e.target.value })
-                  }
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700">Child Age</label>
-                <input
-                  type="number"
-                  className="w-full px-4 py-2 border rounded-lg bg-transparent"
-                  value={currentUser.childAge || ""}
-                  min={2}  // Set the minimum age to 2
-                  max={7}  // Set the maximum age to 7
-                  onChange={(e) => {
-                    const age = parseInt(e.target.value);
-                    if (age >= 2 && age <= 7) {  // Ensure the value is within the range
-                      setCurrentUser({ ...currentUser, childAge: age });
-                    }
-                  }}
-                />
-              </div>
-
-              <div className="flex justify-end space-x-2">
+              <div className="flex justify-end space-x-4">
                 <button
                   type="button"
                   onClick={handleModalClose}
-                  className="px-4 py-2 bg-gray-500 text-white rounded-lg"
+                  className="py-2 px-4 text-gray-500 hover:text-gray-700"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+                  className="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
                 >
-                  Save
+                  Save Changes
                 </button>
               </div>
             </form>
           </div>
         </div>
       )}
-
     </div>
   );
 };
