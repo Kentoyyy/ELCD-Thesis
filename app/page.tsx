@@ -242,9 +242,11 @@ export default function Home() {
             Join EarlyEdge today and discover how our innovative platform can
             transform learning for the next generation.
           </p>
-          <button className="px-6 py-3 bg-secondary-color text-white font-medium text-lg rounded-lg hover:bg-opacity-90 transition">
-            Get Started
-          </button>
+          <Link href="/pre-assessment">
+            <button className="px-6 py-3 bg-secondary-color text-white font-medium text-lg rounded-lg hover:bg-opacity-90 transition">
+              Get Started
+            </button>
+          </Link>
         </div>
       </div>
     </section>
