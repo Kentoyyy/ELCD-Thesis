@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
-import avatar from '../../../public/images/avatarrr.png';
+import avatar from "../../../public/images/avatarrr.png";
 
 type User = {
   _id: string;
@@ -49,13 +49,16 @@ const UserManagement = () => {
     });
   };
 
+  // Updated filter logic to include dyslexiaRisk and handle undefined fields
   const filteredUsers = users.filter((user) => {
     const searchLower = searchQuery.toLowerCase();
+
     return (
-      user.name?.toLowerCase().includes(searchLower) ||
-      user.email?.toLowerCase().includes(searchLower) ||
-      user.parentName?.toLowerCase().includes(searchLower) ||
-      user.childName?.toLowerCase().includes(searchLower)
+      (user.name?.toLowerCase().includes(searchLower) || "") ||
+      (user.email?.toLowerCase().includes(searchLower) || "") ||
+      (user.parentName?.toLowerCase().includes(searchLower) || "") ||
+      (user.childName?.toLowerCase().includes(searchLower) || "") ||
+      (user.dyslexiaRisk?.toLowerCase().includes(searchLower) || "")
     );
   });
 
@@ -156,7 +159,6 @@ const UserManagement = () => {
               <th className="py-3 px-4">Dyslexia Risk</th>
               <th className="py-3 px-4">Access</th>
               <th className="py-3 px-4">Last Active</th>
-              <th className="py-3 px-4">Created At</th>
               <th className="py-3 px-4">Actions</th>
             </tr>
           </thead>
@@ -181,16 +183,16 @@ const UserManagement = () => {
                   <td className="py-4 px-4">{user.dyslexiaRisk || "No test result"}</td>
                   <td className="py-4 px-4">
                     <span
-                      className={`${user.role === "admin"
-                        ? "bg-green-100 text-green-700"
-                        : "bg-blue-100 text-blue-700"
-                        } py-1 px-2 rounded-full`}
+                      className={`${
+                        user.role === "admin"
+                          ? "bg-green-100 text-green-700"
+                          : "bg-blue-100 text-blue-700"
+                      } py-1 px-2 rounded-full`}
                     >
                       {user.role}
                     </span>
                   </td>
                   <td className="py-4 px-4">{formatDate(user.lastActive)}</td>
-                  <td className="py-4 px-4">{formatDate(user.createdAt)}</td>
                   <td className="py-4 px-4 space-x-2">
                     <button
                       onClick={() => handleUpdateUser(user)}
@@ -209,7 +211,7 @@ const UserManagement = () => {
               ))
             ) : (
               <tr>
-                <td colSpan={9} className="py-4 px-4 text-center text-gray-500">
+                <td colSpan={8} className="py-4 px-4 text-center text-gray-500">
                   No users found.
                 </td>
               </tr>
@@ -221,18 +223,20 @@ const UserManagement = () => {
       <div className="flex justify-between mt-6">
         <button
           onClick={prevPage}
-          className={`${currentPage === 1 ? "text-gray-400" : "text-blue-500 hover:text-blue-600"
-            } py-2 px-4`}
+          className={`${
+            currentPage === 1 ? "text-gray-400" : "text-blue-500 hover:text-blue-600"
+          } py-2 px-4`}
           disabled={currentPage === 1}
         >
           Previous
         </button>
         <button
           onClick={nextPage}
-          className={`${currentPage === Math.ceil(filteredUsers.length / usersPerPage)
-            ? "text-gray-400"
-            : "text-blue-500 hover:text-blue-600"
-            } py-2 px-4`}
+          className={`${
+            currentPage === Math.ceil(filteredUsers.length / usersPerPage)
+              ? "text-gray-400"
+              : "text-blue-500 hover:text-blue-600"
+          } py-2 px-4`}
           disabled={currentPage === Math.ceil(filteredUsers.length / usersPerPage)}
         >
           Next
