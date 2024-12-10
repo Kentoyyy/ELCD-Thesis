@@ -263,8 +263,8 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[{ src: data, alt: "Data Collection", title: "Data Collection", description: "Collecting comprehensive data, including behavioral observations, test scores, and developmental milestones." },
-            { src: model, alt: "Model Training", title: "Model Training", description: "Training models to recognize patterns with high accuracy, aiding in the identification of potential learning disabilities." },
-            { src: time, alt: "Real-Time Predictions", title: "Real-Time Predictions", description: "Providing real-time insights into a child's progress for proactive interventions and support." }
+            { src: model, alt: "Model Training", title: "Model Training", description: "Training models to recognize patterns with accuracy, aiding in the identification of potential learning disabilities." },
+            { src: time, alt: "Real-Time Predictions", title: "Real-Time Predictions", description: "child's progress for proactive interventions and support." }
             ].map((feature, index) => (
               <div key={index} className="flex flex-col items-center text-center p-6 bg-white rounded-lg shadow-lg transition-transform transform hover:scale-105">
                 <Image
