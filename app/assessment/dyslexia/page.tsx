@@ -1,5 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { determineTest } from "@/utils/determineTest";
 import ProgressBar from "../../components/ProgressBar";
 import QuestionCard from "../../components/QuestionCard";
@@ -34,9 +36,19 @@ const questions = [
 ];
 
 const DyslexiaInterview = () => {
+  const { data: session, status: sessionStatus } = useSession(); // Check user session
+  const router = useRouter();
   const [step, setStep] = useState(1);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [recommendedTest, setRecommendedTest] = useState<string | null>(null);
+  const [isRedirecting, setIsRedirecting] = useState(false); // State to track animation and delay
+
+  // Redirect to login if the user is not authenticated
+  useEffect(() => {
+    if (sessionStatus === "unauthenticated") {
+      router.replace("/login"); // Redirect to login page if not logged in
+    }
+  }, [sessionStatus, router]);
 
   const handleAnswerChange = (answer: string) => {
     setAnswers((prev) => ({ ...prev, [questions[step - 1].id]: answer }));
@@ -48,15 +60,51 @@ const DyslexiaInterview = () => {
     }
   };
 
+  useEffect(() => {
+    if (recommendedTest === "Comprehensive Dyslexia Evaluation") {
+      // Wait 3 seconds to show the result before redirecting
+      const timeout = setTimeout(() => {
+        setIsRedirecting(true); // Start redirect animation
+        setTimeout(() => {
+          router.push("/assessment/dyslexia/phonological"); // Redirect after animation
+        }, 3000); // 3000ms for animation delay
+      }, 3000); // 3 seconds to show the result
+
+      return () => clearTimeout(timeout); // Cleanup timeout if component unmounts
+    }
+  }, [recommendedTest, router]);
+
+  if (sessionStatus === "loading") {
+    // Show a loading state while checking session
+    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+  }
+
+  if (isRedirecting) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-gray-100">
+        <div className="text-center">
+          <p className="text-2xl font-semibold text-gray-800 mb-4">
+            Redirecting to the phonological test...
+          </p>
+          <div className="loader"></div>
+        </div>
+      </div>
+    );
+  }
+
   if (recommendedTest) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-gray-100">
         <div className="max-w-md w-full p-8 bg-white shadow-lg rounded-xl">
-          <ResultCard test={recommendedTest} onReset={() => {
-            setStep(1);
-            setAnswers({});
-            setRecommendedTest(null);
-          }} />
+          <ResultCard
+            test={recommendedTest}
+            onReset={() => {
+              setStep(1);
+              setAnswers({});
+              setRecommendedTest(null);
+              setIsRedirecting(false);
+            }}
+          />
         </div>
       </div>
     );
