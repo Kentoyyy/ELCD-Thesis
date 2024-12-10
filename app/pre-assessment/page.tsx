@@ -39,7 +39,7 @@ const PreAssessment: React.FC = () => {
       {/* Introductory Guide */}
       {!completed && currentQuestion === 0 && (
         <div className="mb-10 max-w-3xl text-center">
-          <h1 className="text-4xl font-semibold text-indigo-800 mb-4 font-title">
+          <h1 className="text-4xl font-semibold text-primary-color mb-4 font-title">
             Why Pre-Assessment?
           </h1>
           <p className="text-lg text-gray-700 mb-6">

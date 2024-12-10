@@ -16,6 +16,21 @@ const Navbar: React.FC = () => {
     const router = useRouter();
     const hideDropdownTimeout = useRef<NodeJS.Timeout | null>(null);
 
+    const handleDropdownEnter = () => {
+        // Clear any existing timeout to prevent immediate hiding
+        if (hideDropdownTimeout.current) {
+            clearTimeout(hideDropdownTimeout.current);
+        }
+        setDropdownOpen(true);  // Show dropdown
+    };
+
+    const handleDropdownLeave = () => {
+        // Set a timeout to delay hiding the dropdown
+        hideDropdownTimeout.current = setTimeout(() => {
+            setDropdownOpen(false);  // Hide dropdown
+        }, 200); // Adjust the delay (200ms) as needed
+    };
+
     const handleMouseEnter = () => {
         // Clear any existing timeout to prevent immediate hiding
         if (hideDropdownTimeout.current) {
@@ -30,10 +45,12 @@ const Navbar: React.FC = () => {
             setResourcesDropdownOpen(false);
         }, 200); // Adjust the delay (200ms) as needed
     };
-
+    
+    
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
+    
 
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
@@ -71,8 +88,8 @@ const Navbar: React.FC = () => {
                 </div>
                 <div className="hidden md:flex flex-grow justify-center space-x-8 ">
                     <Link href="/about" className={linkClassNames('/about')}>About us</Link>
-                    <div className="relative">
-                        <button onClick={toggleDropdown} className={linkClassNames('/assessment')}>
+                    <div className="relative" onMouseEnter={handleDropdownEnter} onMouseLeave={handleDropdownLeave}>
+                        <button className={linkClassNames('/assessment')}>
                             Assessment
                         </button>
                         {dropdownOpen && (
@@ -100,7 +117,7 @@ const Navbar: React.FC = () => {
                             Explore Resources
                         </button>
                         {resourcesDropdownOpen && (
-                            <ul className="absolute left-1/2 transform -translate-x-1/2 mt-6 py-8 w-max bg-[#0A2C38]  border border-gray-700 shadow-lg rounded-md pb-10 z-10 grid grid-cols-3 gap-12 px-10">
+                            <ul className="absolute left-1/2 transform -translate-x-1/2 mt-6 py-8 w-max bg-[#0A2C38] border border-gray-700 shadow-lg rounded-md pb-10 z-10 grid grid-cols-3 gap-12 px-10">
                                 {/* Articles, Guides, and Tutorials Column */}
                                 <div>
                                     <h3 className="text-md font-semibold text-white mb-4">Topics</h3>
@@ -125,18 +142,18 @@ const Navbar: React.FC = () => {
                                 <div>
                                     <h3 className="text-md font-semibold text-white mb-4">Cognitive Skills and Training</h3>
                                     <li>
-                                        <Link href="/cognitive-skills" className="block py-2 text-white text-sm hover:text-[#FFD700]">
-                                            What Cognitive Skills Do We Assess?
+                                        <Link href="resources/dyslexia-resources" className="block py-2 text-white text-sm hover:text-[#FFD700]">
+                                            Dyslexia Resources
                                         </Link>
                                     </li>
                                     <li>
                                         <Link href="/training-children" className="block py-2 text-white text-sm hover:text-[#FFD700]">
-                                            Training for Children
+                                            Dysgraphia Resources
                                         </Link>
                                     </li>
                                     <li>
                                         <Link href="/training-adults" className="block py-2 text-white text-sm hover:text-[#FFD700]">
-                                            Training for Adults
+                                            Dyscalculia Resources
                                         </Link>
                                     </li>
                                 </div>
