@@ -118,7 +118,7 @@ const DashboardPage = () => {
                         <span className="absolute top-0 right-0 block h-2 w-2 transform translate-x-1 -translate-y-1 bg-red-600 rounded-full"></span>
                     </button>
 
-                    {/* Admin Avatar and Name */}
+                
                     <div className="flex items-center space-x-2">
                         <Image
                             src={session.user.image || '/images/avatarrr.png'}
@@ -137,10 +137,9 @@ const DashboardPage = () => {
 
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-6">
-                {/* Registered Users Card */}
                 <div className="bg-white p-4 rounded-lg border border-gray-100 shadow-sm hover:shadow transition-shadow duration-300 text-center">
                     <div className="mb-3 text-gray-700">
-                        {/* Add icon */}
+                     
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 11c1.657 0 3-1.343 3-3S13.657 5 12 5 9 6.343 9 8s1.343 3 3 3zm0 2c-2.67 0-8 1.333-8 4v2h16v-2c0-2.667-5.33-4-8-4z" />
                         </svg>
@@ -149,18 +148,6 @@ const DashboardPage = () => {
                     <p className="text-xs text-gray-400">Registered Users</p>
                 </div>
 
-                {/* Model Accuracy Card */}
-                <div className="bg-white p-4 rounded-lg border border-gray-100 shadow-sm hover:shadow transition-shadow duration-300 text-center">
-                    <div className="mb-3 text-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.104 0-2 .896-2 2v6c0 1.104.896 2 2 2s2-.896 2-2v-6c0-1.104-.896-2-2-2zm-6 2h2v8h2v-8h2V8H6zm10 0v2h2v8h-2v-8h-2v-2h2z" />
-                        </svg>
-                    </div>
-                    <p className="text-3xl font-semibold text-gray-900">{modelAccuracy ? `${modelAccuracy}%` : 'Loading...'}</p>
-                    <p className="text-xs text-gray-400">Model Accuracy</p>
-                </div>
-
-                {/* Recent Tests Card */}
                 <div className="bg-white p-4 rounded-lg border border-gray-100 shadow-sm hover:shadow transition-shadow duration-300 text-center">
                     <div className="mb-3 text-gray-700">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
