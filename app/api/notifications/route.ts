@@ -1,9 +1,9 @@
 import connect from "@/utils/db";
-import Notification from "@/models/Notification"; // Adjust path if needed
+import Notification from "@/models/Notification";
 import { NextResponse } from "next/server";
 
-// Handler for GET requests
-export const GET = async (request: any) => {
+// Handler for GET requests to fetch notifications
+export const GET = async () => {
   await connect();
 
   try {
@@ -15,23 +15,17 @@ export const GET = async (request: any) => {
   }
 };
 
-// Handler for PUT requests to mark a notification as read
-export const PUT = async (request: Request) => {
+// Handler for creating a notification (POST)
+export const POST = async (request: Request) => {
   await connect();
-
   try {
-    const { id } = await request.json();
-    const notification = await Notification.findById(id);
+    const { type, content, link } = await request.json();
+    const newNotification = new Notification({ type, content, link });
 
-    if (notification) {
-      notification.isRead = true;
-      await notification.save();
-      return new NextResponse("Notification marked as read", { status: 200 });
-    } else {
-      return new NextResponse("Notification not found", { status: 404 });
-    }
+    await newNotification.save();
+    return new NextResponse("Notification created successfully", { status: 201 });
   } catch (error) {
-    console.error("Error marking notification as read:", error);
+    console.error("Error creating notification:", error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 };
