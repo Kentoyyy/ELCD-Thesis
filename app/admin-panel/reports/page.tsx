@@ -17,6 +17,8 @@ const GenerateReport = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 8;
 
   // Fetch users with test results
   useEffect(() => {
@@ -35,6 +37,11 @@ const GenerateReport = () => {
 
     fetchUsers();
   }, []);
+
+  // Calculate the users to display on the current page
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
 
   // Print user-specific report
   const handlePrint = (user: User) => {
@@ -121,6 +128,18 @@ const GenerateReport = () => {
     }
   };
 
+  const handleNextPage = () => {
+    if (currentPage < Math.ceil(users.length / usersPerPage)) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   if (isLoading) {
     return <div className="text-center text-xl py-4">Loading users...</div>;
   }
@@ -144,7 +163,7 @@ const GenerateReport = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user, idx) => (
+            {currentUsers.map((user, idx) => (
               <tr
                 key={user._id}
                 className={`${idx % 2 === 0 ? "bg-white" : "bg-gray-50"} hover:bg-gray-100`}
@@ -165,6 +184,22 @@ const GenerateReport = () => {
             ))}
           </tbody>
         </table>
+        <div className="flex justify-between p-4">
+          <button
+            onClick={handlePrevPage}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 disabled:opacity-50"
+          >
+            Previous
+          </button>
+          <button
+            onClick={handleNextPage}
+            disabled={currentPage === Math.ceil(users.length / usersPerPage)}
+            className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );
