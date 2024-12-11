@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue } from "@nextui-org/react";
 
 interface User {
   _id: string;
@@ -17,8 +18,6 @@ const GenerateReport = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 8;
 
   // Fetch users with test results
   useEffect(() => {
@@ -38,12 +37,7 @@ const GenerateReport = () => {
     fetchUsers();
   }, []);
 
-  // Calculate the users to display on the current page
-  const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
-
-  // Print user-specific report
+  // Print user-specific report function
   const handlePrint = (user: User) => {
     const printWindow = window.open("", "_blank", "width=800,height=600");
     if (printWindow) {
@@ -128,79 +122,49 @@ const GenerateReport = () => {
     }
   };
 
-  const handleNextPage = () => {
-    if (currentPage < Math.ceil(users.length / usersPerPage)) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
   if (isLoading) {
-    return <div className="text-center text-xl py-4">Loading users...</div>;
+    return <div style={{ textAlign: "center", padding: "50px" }}>Loading...</div>;
   }
 
   if (error) {
-    return <div className="text-center text-red-600 py-4">{error}</div>;
+    return (
+      <div style={{ textAlign: "center", color: "red", padding: "50px" }}>
+        {error}
+      </div>
+    );
   }
 
+  const columns = [
+    { key: "name", label: "Name" },
+    { key: "email", label: "Email" },
+    { key: "role", label: "Role" },
+    { key: "dyslexiaRisk", label: "Dyslexia Risk" },
+    { key: "actions", label: "Actions" },
+  ];
+
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6 text-center">Reports Management</h1>
-      <div className="bg-white shadow rounded-lg overflow-hidden">
-        <table className="w-full text-left border border-gray-300">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="px-4 py-2 text-sm font-medium text-gray-600 border border-gray-300">Name</th>
-              <th className="px-4 py-2 text-sm font-medium text-gray-600 border border-gray-300">Email</th>
-              <th className="px-4 py-2 text-sm font-medium text-gray-600 border border-gray-300">Role</th>
-              <th className="px-4 py-2 text-sm font-medium text-gray-600 border border-gray-300">Dyslexia Risk</th>
-              <th className="px-4 py-2 text-sm font-medium text-gray-600 border border-gray-300 text-center">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentUsers.map((user, idx) => (
-              <tr
-                key={user._id}
-                className={`${idx % 2 === 0 ? "bg-white" : "bg-gray-50"} hover:bg-gray-100`}
-              >
-                <td className="px-4 py-2 text-sm text-gray-800 border border-gray-300">{user.name}</td>
-                <td className="px-4 py-2 text-sm text-gray-800 border border-gray-300">{user.email}</td>
-                <td className="px-4 py-2 text-sm text-gray-800 border border-gray-300">{user.role}</td>
-                <td className="px-4 py-2 text-sm text-gray-800 border border-gray-300">{user.dyslexiaRisk || "N/A"}</td>
-                <td className="px-4 py-2 text-center border border-gray-300">
-                  <button
-                    onClick={() => handlePrint(user)}
-                    className="text-sm px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-                  >
-                    Print
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <div className="flex justify-between p-4">
-          <button
-            onClick={handlePrevPage}
-            disabled={currentPage === 1}
-            className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 disabled:opacity-50"
-          >
-            Previous
-          </button>
-          <button
-            onClick={handleNextPage}
-            disabled={currentPage === Math.ceil(users.length / usersPerPage)}
-            className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 disabled:opacity-50"
-          >
-            Next
-          </button>
-        </div>
-      </div>
+    <div style={{ padding: "20px" }}>
+      <h1 style={{ textAlign: "center" }}>Reports Management</h1>
+      <Table aria-label="User reports table">
+        <TableHeader columns={columns}>
+          {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
+        </TableHeader>
+        <TableBody items={users}>
+          {(user) => (
+            <TableRow key={user._id}>
+              {(columnKey) => (
+                <TableCell>
+                  {columnKey === "actions" ? (
+                    <button onClick={() => handlePrint(user)}>Print</button>
+                  ) : (
+                    getKeyValue(user, columnKey)
+                  )}
+                </TableCell>
+              )}
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
     </div>
   );
 };
