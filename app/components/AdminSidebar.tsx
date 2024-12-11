@@ -35,9 +35,8 @@ const AdminSidebar = () => {
       </button>
 
       <div
-        className={`fixed z-10 top-0 left-0 h-full bg-[#2c2c2c] text-gray-700 transform transition-transform duration-300 ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        } md:translate-x-0 md:relative md:w-64 w-64 shadow-lg flex flex-col`}
+        className={`fixed z-10 top-0 left-0 h-full bg-[#2c2c2c] text-gray-700 transform transition-transform duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full"
+          } md:translate-x-0 md:relative md:w-64 w-64 shadow-lg flex flex-col`}
       >
         <div className="flex items-center justify-center py-6">
           <Image src={logo} alt="Logo" width={55} height={55} />
@@ -76,13 +75,13 @@ const AdminSidebar = () => {
           </Link>
 
           <p className="text-xs uppercase text-white pl-6 mt-6 mb-2">System</p>
-         
+
           <Link
             href="/admin-panel/reports"
             className="flex items-center px-6 py-3 text-sm transition duration-200 text-white hover:bg-[#434343] focus:bg-[#434343] rounded-lg  font-normal"
           >
             <FaChartBar className="mr-3" size={20} />
-            Reports & Analytics
+            Generate Reports
           </Link>
           <Link
             href="/admin-panel/settings"
