@@ -9,17 +9,77 @@ import {
   AiOutlineLogout,
   AiOutlineBell,
 } from "react-icons/ai";
-import { FaClipboardList, FaChartBar } from "react-icons/fa";
+import { FaChartBar } from "react-icons/fa";
 import Image from "next/image";
 import logo from "../../public/images/adminlogo.png";
+
+// Type for a notification
+type Notification = {
+  id: string;
+  message: string;
+  createdAt: string;
+  isRead: boolean;
+};
 
 const AdminSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [unreadCount, setUnreadCount] = useState<number>(0);
 
   useEffect(() => {
     setMounted(true);
+
+    const fetchNotifications = async () => {
+      try {
+        const response = await fetch("/api/notifications");
+        const data: Notification[] = await response.json();
+
+        if (Array.isArray(data)) {
+          setNotifications(data);
+          const unreadNotifications = data.filter(notification => !notification.isRead);
+          setUnreadCount(unreadNotifications.length);
+        } else {
+          console.error("Fetched data is not an array:", data);
+        }
+      } catch (error) {
+        console.error("Error fetching notifications:", error);
+      }
+    };
+
+    fetchNotifications();
+    const interval = setInterval(fetchNotifications, 5000);
+    return () => clearInterval(interval);
   }, []);
+
+  // Function to mark a notification as read
+  const markAsRead = async (id: string) => {
+    try {
+      const response = await fetch("/api/notifications", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      if (response.ok) {
+        // Update the notifications state to reflect the change
+        setNotifications(prevNotifications => 
+          prevNotifications.map(notification => 
+            notification.id === id ? { ...notification, isRead: true } : notification
+          )
+        );
+        // Recalculate the unread count
+        const unreadNotifications = notifications.filter(notification => !notification.isRead);
+        setUnreadCount(unreadNotifications.length);
+      } else {
+        console.error("Failed to mark notification as read");
+      }
+    } catch (error) {
+      console.error("Error marking notification as read:", error);
+    }
+  };
 
   if (!mounted) {
     return null;
@@ -35,8 +95,9 @@ const AdminSidebar = () => {
       </button>
 
       <div
-        className={`fixed z-10 top-0 left-0 h-full bg-[#2c2c2c] text-gray-700 transform transition-transform duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full"
-          } md:translate-x-0 md:relative md:w-64 w-64 shadow-lg flex flex-col`}
+        className={`fixed z-10 top-0 left-0 h-full bg-[#2c2c2c] text-gray-700 transform transition-transform duration-300 ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        } md:translate-x-0 md:relative md:w-64 w-64 shadow-lg flex flex-col`}
       >
         <div className="flex items-center justify-center py-6">
           <Image src={logo} alt="Logo" width={55} height={55} />
@@ -62,9 +123,11 @@ const AdminSidebar = () => {
           >
             <AiOutlineBell className="mr-3" size={20} />
             Notifications
-            <span className="ml-auto bg-red-500 text-white text-xs rounded-full px-2 py-0.5">
-              4
-            </span>
+            {unreadCount > 0 && (
+              <span className="ml-auto bg-red-500 text-white text-xs rounded-full px-2 py-0.5">
+                {unreadCount}
+              </span>
+            )}
           </Link>
           <Link
             href="/admin-panel/users"
@@ -92,7 +155,6 @@ const AdminSidebar = () => {
           </Link>
         </nav>
 
-        {/* Move Logout button to the bottom */}
         <div className="mt-auto mb-4">
           <Link
             href="/api/auth/signout"
