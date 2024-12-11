@@ -1,4 +1,5 @@
 import User from "@/models/User";
+import Notification from "../../../models/Notification";
 import connect from "@/utils/db";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
@@ -32,6 +33,16 @@ export const POST = async (request: any) => {
         console.log("Saving User:", newUser);
 
         await newUser.save();
+
+        // Create a notification for the new user registration
+        const newNotification = new Notification({
+            type: "New User Registered",
+            content: `${accountName} has just signed up. Click here to view the profile.`,
+            link: `/admin/users`, // Adjust the link as needed
+        });
+
+        await newNotification.save();
+
         return new NextResponse("User is registered", { status: 200 });
     } catch (err: any) {
         console.error("Error during registration:", err);
