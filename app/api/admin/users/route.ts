@@ -10,18 +10,16 @@ export const GET = async () => {
   await connect();
 
   try {
-    // Connect to the test_results collection
+
     await client.connect();
     const db = client.db("phonological_test");
     const testResultsCollection = db.collection("test_results");
 
-    // Fetch all users
     const users = await User.find();
 
-    // Fetch all test results
     const testResults = await testResultsCollection.find().toArray();
 
-    // Merge users with their test results
+
     const usersWithResults = users.map((user) => {
       const testResult = testResults.find(
         (result) => result.user_id.toString() === user._id.toString()
