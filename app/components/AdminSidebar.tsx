@@ -57,7 +57,7 @@ const AdminSidebar = () => {
             Dashboard
           </Link>
           <Link
-            href="/admin-panel/notifications"
+            href="/admin-panel/notification"
             className="flex items-center px-6 py-3 text-sm transition duration-200 text-white hover:bg-[#434343] focus:bg-[#434343] rounded-lg  font-normal"
           >
             <AiOutlineBell className="mr-3" size={20} />
