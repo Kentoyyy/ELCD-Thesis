@@ -41,6 +41,11 @@ const userSchema = new Schema(
       type: Date,
       default: Date.now, // Default to current time when created
     },
+    dyslexiaRisk: {
+      type: String,
+      enum: ["No risk", "Low risk", "Medium risk", "High risk"],
+      default: "No risk",
+    },
   },
   { timestamps: true } // This automatically adds createdAt and updatedAt fields
 );

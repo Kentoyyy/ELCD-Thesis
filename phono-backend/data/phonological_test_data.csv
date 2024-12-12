@@ -1,0 +1,29 @@
+answer_1,answer_2,answer_3,answer_4,answer_5,answer_6,answer_7,answer_8,answer_9,answer_10,answer_11,answer_12,answer_13,answer_14,answer_15,label
+0,0,0,1,1,0,1,0,1,0,1,0,1,-1,-1,No risk of dyslexia (Probability: 0.46)
+1,1,1,2,1,2,0,0,1,1,1,0,1,-1,-1,No risk of dyslexia (Probability: 0.46)
+1,1,1,1,2,0,0,2,1,1,0,0,2,-1,-1,No risk of dyslexia (Probability: 0.34)
+0,1,0,1,0,0,1,0,1,0,1,0,1,-1,-1,No risk of dyslexia (Probability: 0.52)
+0,1,0,1,2,1,2,1,0,1,0,1,0,-1,-1,No risk of dyslexia (Probability: 0.52)
+0,0,0,0,1,1,1,1,1,0,0,0,1,-1,-1,No risk of dyslexia (Probability: 0.47)
+0,-1,-1,0,1,2,2,2,1,1,1,1,1,-1,-1,No risk of dyslexia (Probability: 0.59)
+0,0,1,1,1,1,2,2,1,1,1,1,2,-1,-1,No risk of dyslexia (Probability: 0.69)
+0,0,1,1,2,2,2,1,1,1,1,1,2,-1,-1,No risk of dyslexia (Probability: 0.61)
+1,1,1,1,2,2,2,2,1,1,1,1,2,-1,-1,No risk of dyslexia (Probability: 0.59)
+0,1,0,1,2,1,0,1,1,1,1,1,2,-1,-1,No risk of dyslexia (Probability: 0.34)
+0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,No risk of dyslexia (Probability: 0.46)
+0,1,1,2,2,2,2,2,1,1,1,1,2,-1,-1,No risk of dyslexia (Probability: 0.55)
+1,1,1,1,2,2,2,2,1,1,1,1,2,-1,-1,
+1,1,1,1,2,2,2,2,1,1,1,1,2,2,-1,
+1,1,1,1,2,2,2,2,1,1,1,1,2,2,2,
+1,1,1,1,2,2,2,2,1,1,1,1,2,-1,-1,No risk of dyslexia (Probability: 0.47)
+1,1,1,1,2,2,2,2,1,1,1,1,2,-1,-1,No risk of dyslexia (Probability: 0.47)
+1,1,1,1,2,2,2,2,1,1,1,1,2,-1,-1,No risk of dyslexia (Probability: 0.47)
+0,0,0,0,1,0,1,0,1,0,0,0,0,-1,-1,No risk of dyslexia (Probability: 0.34)
+0,1,1,1,2,2,2,2,1,1,1,1,2,-1,-1,No risk of dyslexia (Probability: 0.59)
+0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,No risk of dyslexia (Probability: 0.46)
+0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,No risk of dyslexia (Probability: 0.46)
+0,0,0,1,1,1,0,1,1,0,1,0,1,-1,-1,No risk of dyslexia (Probability: 0.40)
+0,1,1,1,1,1,1,1,1,1,1,1,1,-1,-1,6716063f4bc2c436e0ebe663,No risk of dyslexia (Probability: 0.51),2024-12-10 08:10:28.178512,6757f774d213467f23a932ef
+0,0,0,0,1,2,2,2,1,0,1,0,1,-1,-1,6752bff759e478decd4f9f2d,No risk of dyslexia (Probability: 0.59),2024-12-10 08:30:17.470393,6757fc19d213467f23a932f0
+0,0,0,0,1,1,1,0,1,1,0,0,1,-1,-1,67314dc4b584f09e1ad83cbb,No risk of dyslexia (Probability: 0.44),2024-12-10 08:49:01.247381,6758007dd213467f23a932f1
+0,1,1,1,1,2,2,1,1,1,1,1,2,-1,-1,675923f872ccc2d8aa18fa36,No risk of dyslexia (Probability: 0.69),2024-12-11 06:54:33.475004,675937293b5cda12f785b76b
