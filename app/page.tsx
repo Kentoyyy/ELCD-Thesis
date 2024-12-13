@@ -202,18 +202,21 @@ export default function Home() {
                 description:
                   "Engage children with interactive exercises and gamified learning experiences that make education enjoyable.",
                 imgSrc: "/images/interactive_learning.png",
+                link: "/interactive-learning-tools", // Link for this feature
               },
               {
                 title: "Progress Tracking",
                 description:
                   "Track your child’s progress with detailed analytics and reports that help identify strengths and areas for improvement.",
                 imgSrc: "/images/progress_tracking.png",
+                link: "/progress-tracking", // Link for this feature
               },
               {
                 title: "Personalized Resources",
                 description:
                   "Access curated resources tailored to your child’s learning style and specific needs.",
                 imgSrc: "/images/personalized_resources.png",
+                link: "/personalized-resources", // Link for this feature
               },
             ].map((feature, index) => (
               <div
@@ -228,12 +231,17 @@ export default function Home() {
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">
                   {feature.title}
                 </h3>
-                <p className="text-gray-600 text-sm">{feature.description}</p>
+                <p className="text-gray-600 text-sm mb-4">{feature.description}</p>
+                <Link href={feature.link}>
+                  <button className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-all">
+                    Explore {feature.title}
+                  </button>
+                </Link>
               </div>
             ))}
           </div>
 
-          {/* CTA Section */}
+
           <div className="bg-primary-color text-white rounded-lg p-10 mt-16 text-center">
             <h2 className="text-3xl font-bold mb-4">
               Start Your Child's Learning Journey Today!
@@ -307,7 +315,7 @@ export default function Home() {
               Learn More
             </button>
           </div>
-        </div>
+          jjy</div>
       </section>
 
       <Footer />
