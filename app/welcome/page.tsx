@@ -37,23 +37,23 @@ const Welcome: React.FC = () => {
           animate={{ scale: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         />
-        
+
         <motion.h1
           className="text-3xl font-bold mb-2"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
         >
-            Welcome to <span className="font-extrabold">EarlyEdge</span>, {session?.user?.name}!
-          </motion.h1>
+          Welcome to <span className="font-extrabold">EarlyEdge</span>, {session?.user?.name}!
+        </motion.h1>
 
-          <motion.p
-            className="text-gray-400 text-center"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
-          >
-              Your gateway to uncovering the power of early child detection of learning disabilities using advanced machine learning insights
+        <motion.p
+          className="text-gray-400 text-center"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
+        >s
+          Your gateway to uncovering the power of early child detection of learning disabilities using advanced machine learning insights
         </motion.p>
       </motion.div>
 
