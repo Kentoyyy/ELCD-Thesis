@@ -30,7 +30,7 @@ const Welcome: React.FC = () => {
         transition={{ duration: 0.8 }}
       >
         <motion.img
-          src="/images/elcdfav.png"
+          src="/images/elcdfavicon.png"
           alt="Logo"
           className="w-40 h-40 mb-4"
           initial={{ scale: 0 }}
@@ -44,16 +44,16 @@ const Welcome: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
         >
-          Welcome to <span className="font-extrabold">EarlyEdge</span>, {session?.user?.name}!
-        </motion.h1>
+            Welcome to <span className="font-extrabold">EarlyEdge</span>, {session?.user?.name}!
+          </motion.h1>
 
-        <motion.p
-          className="text-gray-400 text-center"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
-        >
-          Where you can discover subtle ideas in your sources or materials.
+          <motion.p
+            className="text-gray-400 text-center"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
+          >
+              Your gateway to uncovering the power of early child detection of learning disabilities using advanced machine learning insights
         </motion.p>
       </motion.div>
 
