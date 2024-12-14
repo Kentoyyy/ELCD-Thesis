@@ -1,19 +1,30 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import questionsData from "../../../data/questions.json"; // Import the JSON data
+import { useSession } from "next-auth/react"; // Use session from NextAuth
+import { useRouter } from "next/navigation";; // For navigation
 
 const PhonologicalTest = () => {
+  const { data: session, status } = useSession(); // Get session data and status from next-auth
+  const router = useRouter(); // Initialize the router for redirection
+
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
   const [result, setResult] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const questions = questionsData; // Use imported JSON data
+  const questions = questionsData; 
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.replace("/login");
+    }
+  }, [status, router]);
 
   const handleAnswer = (selected: number | null) => {
-    setAnswers([...answers, selected !== null ? selected : -1]); // Use -1 for skipped answers
+    setAnswers([...answers, selected !== null ? selected : -1]);
     if (questionIndex + 1 < questions.length) {
       setQuestionIndex(questionIndex + 1);
     } else {
@@ -22,16 +33,22 @@ const PhonologicalTest = () => {
   };
 
   const submitAnswers = async () => {
+    if (!session || !session.user?.id) {
+      setError("You must be logged in to submit answers.");
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
-    const paddedAnswers = [...answers, ...new Array(15 - answers.length).fill(-1)];
+    const paddedAnswers = [...answers, ...new Array(15 - answers.length).fill(-1)]; 
 
     try {
       const response = await axios.post("http://127.0.0.1:8000/predict/", {
         answers: paddedAnswers,
+        user_id: session.user.id, 
       });
-      setResult(response.data.prediction);
+      setResult(response.data.prediction); 
     } catch (err) {
       setError("Failed to get prediction. Please try again.");
     } finally {
@@ -49,6 +66,11 @@ const PhonologicalTest = () => {
     setResult(null);
     setError(null);
   };
+
+  // Show loading or redirect for unauthenticated users
+  if (status === "loading") {
+    return <div className="min-h-screen flex justify-center items-center">Loading...</div>;
+  }
 
   return (
     <div className="min-h-screen bg-white flex justify-center items-center p-6">
