@@ -7,21 +7,15 @@ import data from '../public/images/data.png';
 import model from '../public/images/modeltraning.png';
 import time from '../public/images/realtime.png';
 import ai from '../public/images/mattersimage.png';
-import feature from '../public/images/fetaureimage2.jpg';
-import feature1 from '../public/images/featureimage.jpg';
-import feature3 from '../public/images/featureimage3.jpg';
-import feature4 from '../public/images/featureimage4.jpg';
-import feature5 from '../public/images/featureimage5.jpg';
-import feature6 from '../public/images/featureimage6.jpg';
-import welcome from '../public/images/testttt.png';
 import image1 from '../public/images/1.png';
 import image2 from '../public/images/2.png';
 import image3 from '../public/images/3.png';
-import image4 from '../public/images/4.png';
 import frontpage from '../public/images/5front.png'
 import cognitivepage from '../public/images/4cognitive.png'
-
+import Head from 'next/head';
 import Footer from '../app/components/Footer';
+
+
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -115,6 +109,7 @@ export default function Home() {
   };
   return (
     <>
+   
       <main
         className="flex flex-col items-center justify-center bg-white"
         onMouseEnter={() => setIsPaused(true)}  // Pause on mouse hover
