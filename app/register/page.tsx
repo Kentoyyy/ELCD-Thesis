@@ -4,9 +4,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession, signIn } from "next-auth/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLock, faUser, faEnvelope, faChild,   } from "@fortawesome/free-solid-svg-icons";
+import { faLock, faUser, faEnvelope, faChild } from "@fortawesome/free-solid-svg-icons";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-
 
 const Register = () => {
     const [error, setError] = useState("");
@@ -23,15 +22,6 @@ const Register = () => {
     const isValidEmail = (email: string) => {
         const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
         return emailRegex.test(email);
-    };
-
-    const validateAge = (e: any) => {
-        const age = e.target.value;
-        if (age < 2 || age > 7) {
-            setError("Child's age must be between 2 and 7");
-        } else {
-            setError("");
-        }
     };
 
     const handleSubmit = async (e: any) => {
@@ -54,12 +44,7 @@ const Register = () => {
         }
 
         if (!password || password.length < 8) {
-            setError("Password is invalid");
-            return;
-        }
-
-        if (childAge < 2 || childAge > 7) {
-            setError("Child's age must be between 2 and 7");
+            setError("Password must be at least 8 characters long.");
             return;
         }
 
@@ -84,7 +69,7 @@ const Register = () => {
                 router.push("/login");
             }
         } catch (error) {
-            setError("Error, try again");
+            setError("An error occurred. Please try again.");
         }
     };
 
@@ -106,10 +91,10 @@ const Register = () => {
                             Sign Up First!
                         </h2>
                         <form onSubmit={handleSubmit} className="space-y-4">
+                            {/* Input Fields */}
                             {[
                                 { label: "Parent's Full Name", type: "text", placeholder: "Enter Parent's Name", icon: faUser },
                                 { label: "Child's Name", type: "text", placeholder: "Enter Child's Name", icon: faChild },
-                                { label: "Child's Age", type: "number", placeholder: "Age (2-7)", icon: faChild },
                                 { label: "Name", type: "text", placeholder: "Enter Your Name", icon: faUser },
                                 { label: "Email", type: "email", placeholder: "Enter Email Address", icon: faEnvelope },
                                 { label: "Password", type: "password", placeholder: "Enter Password", icon: faLock },
@@ -121,14 +106,31 @@ const Register = () => {
                                         type={field.type}
                                         placeholder={field.placeholder}
                                         required
-                                        min={field.label === "Child's Age" ? 2 : undefined}
-                                        max={field.label === "Child's Age" ? 7 : undefined}
-                                        className={`w-full pl-10 pr-3 py-2 text-black bg-transparent border-b-2 border-gray-300 text-sm focus:outline-none focus:border-primary-col transition duration-200`}
-                                        onBlur={field.label === "Child's Age" ? validateAge : undefined}
-                                        style={field.label === "Child's Age" && error ? { borderColor: "red" } : {}}
+                                        className="w-full pl-10 pr-3 py-2 text-black bg-transparent border-b-2 border-gray-300 text-sm focus:outline-none focus:border-primary-col transition duration-200"
                                     />
                                 </div>
                             ))}
+
+                            {/* Child's Age Dropdown */}
+                            <div className="relative flex items-center">
+                                <FontAwesomeIcon icon={faChild} className="absolute left-3 text-gray-400 text-lg" />
+                                <select
+                                    id="childAge"
+                                    name="childAge"
+                                    defaultValue=""
+                                    required
+                                    className="w-full pl-10 pr-3 py-2 text-black bg-transparent border-b-2 border-gray-300 text-sm focus:outline-none focus:border-primary-col transition duration-200"
+                                >
+                                    <option value="" disabled>
+                                        Select Child's Age (2-7)
+                                    </option>
+                                    {[2, 3, 4, 5, 6, 7].map((age) => (
+                                        <option key={age} value={age}>
+                                            {age}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
 
                             {/* Checkbox for Terms */}
                             <div className="flex items-center gap-2">
@@ -137,7 +139,7 @@ const Register = () => {
                                     id="terms"
                                     checked={agreeTerms}
                                     onChange={() => setAgreeTerms(!agreeTerms)}
-                                    className="w-4 h-4"
+                                    className="w-4 h-4 cursor-pointer"
                                 />
                                 <label htmlFor="terms" className="text-sm text-gray-600">
                                     I agree to the{" "}
@@ -154,7 +156,12 @@ const Register = () => {
                             {error && <p className="text-red-600 text-sm text-center">{error}</p>}
                             <button
                                 type="submit"
-                                className="w-full px-3 py-2 bg-primary-color text-white text-sm rounded-md hover:bg-secondary-color focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200"
+                                disabled={!agreeTerms}
+                                className={`w-full px-3 py-2 text-white text-sm rounded-md transition duration-200 ${
+                                    agreeTerms
+                                        ? "bg-primary-color hover:bg-secondary-color focus:ring-2 focus:ring-blue-400"
+                                        : "bg-gray-400 cursor-not-allowed"
+                                }`}
                             >
                                 Register
                             </button>
