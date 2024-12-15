@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Link from 'next/link';
 
 const IntroductionDyslexiaScreening = () => {
 
@@ -15,17 +15,17 @@ const IntroductionDyslexiaScreening = () => {
                 }}
             >
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-black opacity-50"></div>
-
-                {/* Content */}
                 <div className="relative max-w-3xl mx-auto text-center text-white p-8">
                     <h1 className="text-4xl font-bold">Dyslexia Screening Guide</h1>
                     <p className="mt-4 leading-relaxed text-lg">
                         Identify dyslexia early with our comprehensive screening tools. Tailor support to improve learning outcomes and empower confidence.
                     </p>
-                    <button className="mt-6 px-6 py-3 bg-blue-600 text-white text-lg font-medium rounded shadow hover:bg-blue-700">
+                    <Link
+                        href="/assessment/dyslexia"
+                        className="mt-6 inline-block px-6 py-3 bg-primary-color text-white text-lg font-medium rounded shadow hover:bg-secondary-color"
+                    >
                         Start Screening
-                    </button>
+                    </Link>
                 </div>
             </section>
 
