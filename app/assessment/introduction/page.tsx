@@ -33,7 +33,7 @@ const IntroductionDyslexiaScreening = () => {
             {/* Importance Section */}
             <section className="py-16 bg-white">
                 <div className="max-w-5xl mx-auto text-center">
-                    <h2 className="text-3xl font-bold text-blue-800">Why Dyslexia Screening Matters</h2>
+                    <h2 className="text-3xl font-bold text-primary-color">Why Dyslexia Screening Matters</h2>
                     <p className="mt-4 text-gray-700 leading-relaxed text-lg">
                         Screening provides critical insights to help identify early signs of dyslexia. By acting early, you can provide targeted interventions and tools that foster academic success and personal growth.
                     </p>
@@ -42,7 +42,7 @@ const IntroductionDyslexiaScreening = () => {
 
             <section className="py-16 bg-gray-50">
                 <div className="max-w-5xl mx-auto text-center">
-                    <h2 className="text-3xl font-bold text-blue-800">How Screening Works</h2>
+                    <h2 className="text-3xl font-bold text-primary-color">How Screening Works</h2>
                     <p className="mt-4 text-gray-700 text-lg">
                         Learn how each step—from early detection to personalized assessments—can make a lasting impact in identifying and managing dyslexia effectively.
                     </p>
