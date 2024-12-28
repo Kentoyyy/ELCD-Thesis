@@ -157,11 +157,10 @@ const Register = () => {
                             <button
                                 type="submit"
                                 disabled={!agreeTerms}
-                                className={`w-full px-3 py-2 text-white text-sm rounded-md transition duration-200 ${
-                                    agreeTerms
-                                        ? "bg-primary-color hover:bg-secondary-color focus:ring-2 focus:ring-blue-400"
-                                        : "bg-gray-400 cursor-not-allowed"
-                                }`}
+                                className={`w-full px-3 py-2 text-white text-sm rounded-md transition duration-200 ${agreeTerms
+                                    ? "bg-primary-color hover:bg-secondary-color focus:ring-2 focus:ring-blue-400"
+                                    : "bg-gray-400 cursor-not-allowed"
+                                    }`}
                             >
                                 Register
                             </button>
@@ -183,14 +182,22 @@ const Register = () => {
                         </div>
                     </div>
 
-                    {/* Right side - Image */}
-                    <div className="w-full md:w-1/2 h-[200px] md:h-auto relative overflow-hidden">
+
+                    <div className="w-full md:w-1/2 h-[200px] md:h-auto bg-primary-color flex flex-col items-center justify-start">
+                        <div className="w-full text-center p-4">
+                            <blockquote className="text-lg font-semibold italic text-white">
+                                "Play is the highest form of research"
+                            </blockquote>
+                        </div>
                         <img
-                            src="/images/registerpic.png"
+                            src="/images/pictureereg.png"
                             alt="Welcome Image"
-                            className="object-contain w-full h-full rounded-r-xl"
+                            className="object-contain w-3/4 h-auto rounded-r-xl"
                         />
                     </div>
+
+
+
                 </div>
             </div>
         )
