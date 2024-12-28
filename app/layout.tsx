@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "EarlyEdge | Home",
   icons: {
-    icon: "/images/elcdfavicon.png", // Correct favicon path in `public`
+    icon: "/images/elcdfavicon.png",
   },
 };
 export default function RootLayout({
