@@ -122,7 +122,7 @@ const DyslexiaInterview = () => {
           </p>
           <div className="mb-6">
             <img
-              src="/assets/screening-overview.gif"
+              src="/images/dyslexicbrain.gif"
               alt="Dyslexia Screening Overview"
               className="rounded-lg mx-auto"
             />
