@@ -1,36 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
-// Fetch words data from the words.json file
-import wordsData from "../../../data/word_attack_data.json"; // You will need to create this file.
-
-declare global {
-  interface Window {
-    SpeechRecognition: any;
-    webkitSpeechRecognition: any;
-  }
-}
-
-interface SpeechRecognitionResult {
-  transcript: string;
-  confidence: number;
-}
-
-interface SpeechRecognitionEvent extends Event {
-  results: SpeechRecognitionResult[][];
-  type: string;
-}
-
-interface SpeechRecognitionErrorEvent extends Event {
-  error: string;
-}
+import wordsData from "../../../data/word_attack_data.json";
 
 const WordAttack = () => {
   const [entryLevel, setEntryLevel] = useState<number>(1);
   const [words, setWords] = useState<any[]>([]);
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
-  const [userResponses, setUserResponses] = useState<string[]>([]);
+  const [userResponses, setUserResponses] = useState<{ word: string; recognized: string }[]>([]);
   const [isListening, setIsListening] = useState<boolean>(false);
 
   useEffect(() => {
@@ -40,49 +17,47 @@ const WordAttack = () => {
     setUserResponses([]);
   }, [entryLevel]);
 
-  const handleSubmitResponse = async (response: string) => {
-    setUserResponses([...userResponses, response]);
-    if (currentWordIndex < words.length - 1) {
-      setCurrentWordIndex(currentWordIndex + 1);
-    } else {
-      await submitResults();
+  const handleResponse = async () => {
+    if (!words[currentWordIndex]) return;
+    const word = words[currentWordIndex].word;
+
+    try {
+      setIsListening(true);
+      const response = await axios.post("http://localhost:8000/api/word-attack/speech", null, {
+        params: { user_id: "test_user", word },
+      });
+
+      const { recognized_word } = response.data;
+      setUserResponses((prev) => [
+        ...prev,
+        { word, recognized: recognized_word },
+      ]);
+
+      if (currentWordIndex < words.length - 1) {
+        setCurrentWordIndex(currentWordIndex + 1);
+      } else {
+        await submitResults();
+      }
+    } catch (error: any) {
+      console.error("Speech recognition error:", error);
+      alert(error.response?.data?.detail || "An error occurred. Please try again.");
+    } finally {
+      setIsListening(false);
     }
   };
 
   const submitResults = async () => {
-    const payload = {
-      userId: "test_user", // Replace with actual user ID.
-      responses: userResponses,
-    };
     try {
+      const payload = {
+        userId: "test_user",
+        responses: userResponses,
+      };
       const response = await axios.post("http://localhost:8000/api/word-attack/results", payload);
-      alert(`Test Complete! Risk: ${response.data.risk}, Accuracy: ${response.data.accuracy}`);
+      alert("Test completed and submitted successfully!");
     } catch (error) {
       console.error("Error submitting results:", error);
       alert("Failed to submit results. Please try again.");
     }
-  };
-
-  // Speech recognition functions
-  const startListening = () => {
-    setIsListening(true);
-    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    recognition.lang = "en-US";
-
-    // Proper typing for event
-    recognition.onresult = (event: SpeechRecognitionEvent) => {
-      const transcript = event.results[0][0].transcript;
-      handleSubmitResponse(transcript.toLowerCase() === words[currentWordIndex].word.toLowerCase() ? "correct" : "incorrect");
-      setIsListening(false);
-    };
-
-    // Error handling with correct event type
-    recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
-      console.error("Speech recognition error:", event.error);
-      setIsListening(false);
-    };
-
-    recognition.start();
   };
 
   return (
@@ -104,32 +79,28 @@ const WordAttack = () => {
 
         {currentWordIndex < words.length ? (
           <div>
-            <p className="text-center mb-4">{words[currentWordIndex].word}</p>
-            <div className="flex justify-center gap-4">
-              <button
-                onClick={() => handleSubmitResponse("correct")}
-                className="px-4 py-2 bg-green-500 text-white rounded"
-              >
-                Correct
-              </button>
-              <button
-                onClick={() => handleSubmitResponse("incorrect")}
-                className="px-4 py-2 bg-red-500 text-white rounded"
-              >
-                Incorrect
-              </button>
-              <button
-                onClick={startListening}
-                disabled={isListening}
-                className="px-4 py-2 bg-blue-500 text-white rounded"
-              >
-                {isListening ? "Listening..." : "Start Speaking"}
-              </button>
-            </div>
+            <p className="text-center mb-4">Word: {words[currentWordIndex].word}</p>
+            <button
+              onClick={handleResponse}
+              disabled={isListening}
+              className="px-4 py-2 bg-blue-500 text-white rounded w-full"
+            >
+              {isListening ? "Listening..." : "Start Speaking"}
+            </button>
           </div>
         ) : (
           <p className="text-center text-green-600">Test complete! Submitting results...</p>
         )}
+      </div>
+      <div className="mt-6">
+        <h2 className="text-lg font-semibold mb-2">Responses</h2>
+        <ul>
+          {userResponses.map((response, index) => (
+            <li key={index}>
+              <strong>Word:</strong> {response.word} | <strong>Recognized:</strong> {response.recognized}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
