@@ -1,106 +1,135 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
-import wordsData from "../../../data/word_attack_data.json";
 
 const WordAttack = () => {
-  const [entryLevel, setEntryLevel] = useState<number>(1);
-  const [words, setWords] = useState<any[]>([]);
-  const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
-  const [userResponses, setUserResponses] = useState<{ word: string; recognized: string }[]>([]);
-  const [isListening, setIsListening] = useState<boolean>(false);
+  const [recordedAudio, setRecordedAudio] = useState<Blob | null>(null);
+  const [recognizedWord, setRecognizedWord] = useState<string>("");
+  const [predictedClass, setPredictedClass] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isRecording, setIsRecording] = useState<boolean>(false);
+  const [wordToRead, setWordToRead] = useState<string>("");
 
-  useEffect(() => {
-    const filteredWords = wordsData.filter((word: any) => word.level === entryLevel);
-    setWords(filteredWords);
-    setCurrentWordIndex(0);
-    setUserResponses([]);
-  }, [entryLevel]);
+  let mediaRecorder: MediaRecorder | null = null;
 
-  const handleResponse = async () => {
-    if (!words[currentWordIndex]) return;
-    const word = words[currentWordIndex].word;
+  const wordList = ["apple", "banana", "cherry", "dog", "elephant", "giraffe", "house", "jungle"];
 
+  const selectRandomWord = () => {
+    const randomIndex = Math.floor(Math.random() * wordList.length);
+    setWordToRead(wordList[randomIndex]);
+  };
+
+  const startRecording = async () => {
     try {
-      setIsListening(true);
-      const response = await axios.post("http://localhost:8000/api/word-attack/speech", null, {
-        params: { user_id: "test_user", word },
-      });
+      setIsRecording(true);
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorder = new MediaRecorder(stream);
 
-      const { recognized_word } = response.data;
-      setUserResponses((prev) => [
-        ...prev,
-        { word, recognized: recognized_word },
-      ]);
+      const audioChunks: Blob[] = [];
+      mediaRecorder.ondataavailable = (event) => {
+        audioChunks.push(event.data);
+      };
 
-      if (currentWordIndex < words.length - 1) {
-        setCurrentWordIndex(currentWordIndex + 1);
-      } else {
-        await submitResults();
-      }
-    } catch (error: any) {
-      console.error("Speech recognition error:", error);
-      alert(error.response?.data?.detail || "An error occurred. Please try again.");
-    } finally {
-      setIsListening(false);
+      mediaRecorder.onstop = () => {
+        const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+        setRecordedAudio(audioBlob);
+        setIsRecording(false);
+      };
+
+      mediaRecorder.start();
+    } catch (error) {
+      setError("Unable to access microphone. Please check your permissions.");
+      setIsRecording(false);
     }
   };
 
-  const submitResults = async () => {
+  const stopRecording = () => {
+    if (mediaRecorder) {
+      mediaRecorder.stop();
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!recordedAudio) {
+      setError("Please record your voice first.");
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+
     try {
-      const payload = {
-        userId: "test_user",
-        responses: userResponses,
-      };
-      const response = await axios.post("http://localhost:8000/api/word-attack/results", payload);
-      alert("Test completed and submitted successfully!");
-    } catch (error) {
-      console.error("Error submitting results:", error);
-      alert("Failed to submit results. Please try again.");
+      const formData = new FormData();
+      formData.append("audio", recordedAudio);
+      formData.append("word", wordToRead);
+
+      const response = await axios.post("/api/word-attack/speech", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      setRecognizedWord(response.data.recognized_word);
+      setPredictedClass(response.data.predicted_class);
+    } catch (error: any) {
+      setError(error?.response?.data?.detail || "An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-md w-3/4 md:w-1/2 lg:w-1/3">
-        <h1 className="text-2xl font-semibold mb-4 text-center">Word Attack Test</h1>
+    <div className="min-h-screen bg-white flex items-center justify-center px-4">
+      <div className="w-full max-w-md p-6 bg-gray-100 rounded-lg shadow-md">
+        <h1 className="text-2xl font-semibold text-center mb-6 text-gray-800">Word Attack Detection</h1>
+
         <div className="mb-4">
-          <label className="block mb-2">Select Entry Level:</label>
-          <select
-            value={entryLevel}
-            onChange={(e) => setEntryLevel(Number(e.target.value))}
-            className="w-full p-2 border rounded"
-          >
-            <option value={1}>Level 1 (Grades 1-3)</option>
-            <option value={2}>Level 2 (Grades 4-6)</option>
-            <option value={3}>Level 3 (Advanced)</option>
-          </select>
+          {wordToRead ? (
+            <p className="text-center text-lg font-medium text-gray-700">
+              <strong>Read this word aloud:</strong> <span className="text-blue-600">{wordToRead}</span>
+            </p>
+          ) : (
+            <button
+              className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none"
+              onClick={selectRandomWord}
+            >
+              Get a Word to Read
+            </button>
+          )}
         </div>
 
-        {currentWordIndex < words.length ? (
-          <div>
-            <p className="text-center mb-4">Word: {words[currentWordIndex].word}</p>
-            <button
-              onClick={handleResponse}
-              disabled={isListening}
-              className="px-4 py-2 bg-blue-500 text-white rounded w-full"
-            >
-              {isListening ? "Listening..." : "Start Speaking"}
-            </button>
+        <div className="flex justify-center gap-4 mb-4">
+          <button
+            className={`w-full py-2 px-4 rounded-lg focus:outline-none ${
+              isRecording ? "bg-red-500 hover:bg-red-600 text-white" : "bg-blue-500 hover:bg-blue-600 text-white"
+            }`}
+            onClick={isRecording ? stopRecording : startRecording}
+            disabled={isLoading || !wordToRead}
+          >
+            {isRecording ? "Stop Recording" : "Start Recording"}
+          </button>
+        </div>
+
+        <button
+          className="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none disabled:opacity-50"
+          onClick={handleSubmit}
+          disabled={isLoading || !recordedAudio}
+        >
+          {isLoading ? "Processing..." : "Submit"}
+        </button>
+
+        {error && <div className="mt-4 text-red-500 text-center">{error}</div>}
+
+        {recognizedWord && (
+          <div className="mt-6 p-4 bg-white rounded-lg shadow-md">
+            <h3 className="text-lg font-semibold text-gray-700">Recognition Result</h3>
+            <p className="mt-2 text-gray-600">
+              <strong>Recognized Word:</strong> {recognizedWord}
+            </p>
+            <p className="mt-1 text-gray-600">
+              <strong>Predicted Class:</strong> {predictedClass !== null ? predictedClass : "No prediction yet"}
+            </p>
           </div>
-        ) : (
-          <p className="text-center text-green-600">Test complete! Submitting results...</p>
         )}
-      </div>
-      <div className="mt-6">
-        <h2 className="text-lg font-semibold mb-2">Responses</h2>
-        <ul>
-          {userResponses.map((response, index) => (
-            <li key={index}>
-              <strong>Word:</strong> {response.word} | <strong>Recognized:</strong> {response.recognized}
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );
