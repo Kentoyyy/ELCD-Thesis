@@ -1,5 +1,6 @@
+// components/WordAttack.js
 "use client";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 
 const WordAttack = () => {
@@ -10,12 +11,30 @@ const WordAttack = () => {
   const [error, setError] = useState<string | null>(null);
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [wordToRead, setWordToRead] = useState<string>("");
+  const [wordList, setWordList] = useState<string[]>([]);
 
-  let mediaRecorder: MediaRecorder | null = null;
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
 
-  const wordList = ["apple", "banana", "cherry", "dog", "elephant", "giraffe", "house", "jungle"];
+  // Fetch words from API
+  useEffect(() => {
+    const fetchWords = async () => {
+      try {
+        const response = await axios.get("/api/words");
+        setWordList(response.data.data);
+      } catch (err) {
+        console.error("Error loading words from API:", err);
+        setError("Failed to load words. Please try again later.");
+      }
+    };
+
+    fetchWords();
+  }, []);
 
   const selectRandomWord = () => {
+    if (wordList.length === 0) {
+      setError("No words available to select.");
+      return;
+    }
     const randomIndex = Math.floor(Math.random() * wordList.length);
     setWordToRead(wordList[randomIndex]);
   };
@@ -24,7 +43,8 @@ const WordAttack = () => {
     try {
       setIsRecording(true);
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      mediaRecorder = new MediaRecorder(stream);
+      const mediaRecorder = new MediaRecorder(stream);
+      mediaRecorderRef.current = mediaRecorder;
 
       const audioChunks: Blob[] = [];
       mediaRecorder.ondataavailable = (event) => {
@@ -38,15 +58,16 @@ const WordAttack = () => {
       };
 
       mediaRecorder.start();
-    } catch (error) {
+    } catch (err) {
       setError("Unable to access microphone. Please check your permissions.");
       setIsRecording(false);
     }
   };
 
   const stopRecording = () => {
-    if (mediaRecorder) {
-      mediaRecorder.stop();
+    if (mediaRecorderRef.current) {
+      mediaRecorderRef.current.stop();
+      mediaRecorderRef.current = null;
     }
   };
 
@@ -70,8 +91,8 @@ const WordAttack = () => {
 
       setRecognizedWord(response.data.recognized_word);
       setPredictedClass(response.data.predicted_class);
-    } catch (error: any) {
-      setError(error?.response?.data?.detail || "An error occurred. Please try again.");
+    } catch (err: any) {
+      setError(err?.response?.data?.detail || "An error occurred. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -85,7 +106,7 @@ const WordAttack = () => {
         <div className="mb-4">
           {wordToRead ? (
             <p className="text-center text-lg font-medium text-gray-700">
-              <strong>Read this word aloud:</strong> <span className="text-blue-600">{wordToRead}</span>
+              Read this word aloud: <span className="text-blue-600 font-semibold">{wordToRead}</span>
             </p>
           ) : (
             <button
@@ -99,9 +120,7 @@ const WordAttack = () => {
 
         <div className="flex justify-center gap-4 mb-4">
           <button
-            className={`w-full py-2 px-4 rounded-lg focus:outline-none ${
-              isRecording ? "bg-red-500 hover:bg-red-600 text-white" : "bg-blue-500 hover:bg-blue-600 text-white"
-            }`}
+            className={`w-full py-2 px-4 rounded-lg focus:outline-none ${isRecording ? "bg-red-500 hover:bg-red-600 text-white" : "bg-blue-500 hover:bg-blue-600 text-white"}`}
             onClick={isRecording ? stopRecording : startRecording}
             disabled={isLoading || !wordToRead}
           >
@@ -122,12 +141,8 @@ const WordAttack = () => {
         {recognizedWord && (
           <div className="mt-6 p-4 bg-white rounded-lg shadow-md">
             <h3 className="text-lg font-semibold text-gray-700">Recognition Result</h3>
-            <p className="mt-2 text-gray-600">
-              <strong>Recognized Word:</strong> {recognizedWord}
-            </p>
-            <p className="mt-1 text-gray-600">
-              <strong>Predicted Class:</strong> {predictedClass !== null ? predictedClass : "No prediction yet"}
-            </p>
+            <p className="mt-2 text-gray-600">Recognized Word: {recognizedWord}</p>
+            <p className="mt-1 text-gray-600">Predicted Class: {predictedClass !== null ? predictedClass : "No prediction yet"}</p>
           </div>
         )}
       </div>
