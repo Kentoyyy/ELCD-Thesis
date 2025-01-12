@@ -28,14 +28,15 @@ const Dysgraphia: React.FC = () => {
     formData.append("file", selectedFile);
 
     try {
-      const response = await fetch("http://localhost:5000/classify", {
+      // Make the POST request to your backend (adjust URL if necessary)
+      const response = await fetch("http://localhost:8000/predict", {
         method: "POST",
         body: formData,
       });
 
       if (response.ok) {
         const result = await response.json();
-        setPrediction(result.prediction);
+        setPrediction(`${result.Prediction} (Confidence: ${result.Confidence.toFixed(2)})`);
       } else {
         setPrediction("Error in classification");
       }
