@@ -45,11 +45,23 @@ const PhonologicalTest = () => {
     const paddedAnswers = [...answers, ...new Array(15 - answers.length).fill(-1)];
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/predict/", {
+      const response = await axios.post("http://127.0.0.1:8000/phonological/", {
         answers: paddedAnswers,
         user_id: session.user.id,
       });
-      setResult(response.data.prediction);
+
+      const { prediction, confidence, severity } = response.data;
+
+      // Save the test result to the user's profile
+      await axios.post("/api/dyslexia-test", {
+        userId: session.user.id,
+        answers: paddedAnswers,
+        prediction,
+        confidence,
+        severity,
+      });
+
+      setResult(prediction);
     } catch (err) {
       setError("Failed to get prediction. Please try again.");
     } finally {
