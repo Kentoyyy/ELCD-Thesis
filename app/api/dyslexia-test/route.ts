@@ -1,24 +1,28 @@
-import { NextResponse } from 'next/server';
+import connect from "@/utils/db";
+import User from "@/models/User";
+import { NextResponse } from "next/server";
 
-export async function POST(request: Request) {
+export const POST = async (request: Request) => {
+  await connect();
+  const { userId, answers, prediction, confidence, severity } = await request.json();
+
   try {
-    const body = await request.json();
-
-    // Update the fetch URL to point to the FastAPI backend
-    const response = await fetch('http://localhost:8000/api/dyslexia-test', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    });
-
-    if (!response.ok) {
-      return NextResponse.json({ error: 'Failed to fetch from backend' }, { status: 500 });
+    const user = await User.findById(userId);
+    if (!user) {
+      return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
-    const data = await response.json();
-    return NextResponse.json(data);
+    user.testResults.push({
+      testType: "Dyslexia",
+      result: prediction,
+      severity,
+      confidence,
+    });
+
+    await user.save();
+    return NextResponse.json({ message: "Test result saved successfully" }, { status: 200 });
   } catch (error) {
-    console.error('Error in POST /api/dyslexia-test:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    console.error("Error saving test result:", error);
+    return new NextResponse("Failed to save test result", { status: 500 });
   }
-}
+};
