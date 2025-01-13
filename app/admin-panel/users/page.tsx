@@ -13,7 +13,8 @@ type User = {
   parentName?: string;
   childName?: string;
   childAge?: number;
-  dyslexiaRisk?: string; // Added dyslexiaRisk field
+  handwritingTest?: boolean;
+  phonologicalTest?: boolean;
   createdAt?: string;
 };
 
@@ -49,7 +50,6 @@ const UserManagement = () => {
     });
   };
 
-  // Updated filter logic to include dyslexiaRisk and handle undefined fields
   const filteredUsers = users.filter((user) => {
     const searchLower = searchQuery.toLowerCase();
 
@@ -57,8 +57,7 @@ const UserManagement = () => {
       (user.name?.toLowerCase().includes(searchLower) || "") ||
       (user.email?.toLowerCase().includes(searchLower) || "") ||
       (user.parentName?.toLowerCase().includes(searchLower) || "") ||
-      (user.childName?.toLowerCase().includes(searchLower) || "") ||
-      (user.dyslexiaRisk?.toLowerCase().includes(searchLower) || "")
+      (user.childName?.toLowerCase().includes(searchLower) || "")
     );
   });
 
@@ -97,7 +96,7 @@ const UserManagement = () => {
     }
   };
 
-  const handleUpdateUser = (user: User) => {
+  const handleViewTests = (user: User) => {
     setCurrentUser(user);
     setIsModalOpen(true);
   };
@@ -105,34 +104,6 @@ const UserManagement = () => {
   const handleModalClose = () => {
     setIsModalOpen(false);
     setCurrentUser(null);
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (currentUser) {
-      try {
-        const response = await fetch(`/api/admin/users/${currentUser._id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(currentUser),
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to update user");
-        }
-
-        const updatedUser = await response.json();
-        setUsers((prevUsers) =>
-          prevUsers.map((user) => (user._id === updatedUser._id ? updatedUser : user))
-        );
-        handleModalClose();
-      } catch (error) {
-        console.error("Error updating user:", error);
-        alert("Failed to update user. Please try again.");
-      }
-    }
   };
 
   return (
@@ -156,8 +127,7 @@ const UserManagement = () => {
               <th className="py-3 px-4">Parent Name</th>
               <th className="py-3 px-4">Child Name</th>
               <th className="py-3 px-4">Age</th>
-              <th className="py-3 px-4">Dyslexia Risk</th>
-              <th className="py-3 px-4">Access</th>
+              <th className="py-3 px-4">Tests</th>
               <th className="py-3 px-4">Last Active</th>
               <th className="py-3 px-4">Actions</th>
             </tr>
@@ -180,22 +150,18 @@ const UserManagement = () => {
                   <td className="py-4 px-4">{user.parentName || "N/A"}</td>
                   <td className="py-4 px-4">{user.childName || "N/A"}</td>
                   <td className="py-4 px-4">{user.childAge || "N/A"}</td>
-                  <td className="py-4 px-4">{user.dyslexiaRisk || "No test result"}</td>
                   <td className="py-4 px-4">
-                    <span
-                      className={`${
-                        user.role === "admin"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-blue-100 text-blue-700"
-                      } py-1 px-2 rounded-full`}
+                    <button
+                      onClick={() => handleViewTests(user)}
+                      className="text-blue-500 hover:text-blue-600 underline"
                     >
-                      {user.role}
-                    </span>
+                      View Tests
+                    </button>
                   </td>
                   <td className="py-4 px-4">{formatDate(user.lastActive)}</td>
                   <td className="py-4 px-4 space-x-2">
                     <button
-                      onClick={() => handleUpdateUser(user)}
+                      onClick={() => handleViewTests(user)}
                       className="text-blue-500 hover:text-blue-600"
                     >
                       <FaEdit />
@@ -211,7 +177,7 @@ const UserManagement = () => {
               ))
             ) : (
               <tr>
-                <td colSpan={8} className="py-4 px-4 text-center text-gray-500">
+                <td colSpan={7} className="py-4 px-4 text-center text-gray-500">
                   No users found.
                 </td>
               </tr>
@@ -223,20 +189,18 @@ const UserManagement = () => {
       <div className="flex justify-between mt-6">
         <button
           onClick={prevPage}
-          className={`${
-            currentPage === 1 ? "text-gray-400" : "text-blue-500 hover:text-blue-600"
-          } py-2 px-4`}
+          className={`${currentPage === 1 ? "text-gray-400" : "text-blue-500 hover:text-blue-600"
+            } py-2 px-4`}
           disabled={currentPage === 1}
         >
           Previous
         </button>
         <button
           onClick={nextPage}
-          className={`${
-            currentPage === Math.ceil(filteredUsers.length / usersPerPage)
+          className={`${currentPage === Math.ceil(filteredUsers.length / usersPerPage)
               ? "text-gray-400"
               : "text-blue-500 hover:text-blue-600"
-          } py-2 px-4`}
+            } py-2 px-4`}
           disabled={currentPage === Math.ceil(filteredUsers.length / usersPerPage)}
         >
           Next
@@ -244,55 +208,43 @@ const UserManagement = () => {
       </div>
 
       {isModalOpen && currentUser && (
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
-            <h2 className="text-xl font-semibold mb-4">Edit User</h2>
-            <form onSubmit={handleSubmit}>
-              <div className="mb-4">
-                <label className="block text-gray-700">User Name</label>
-                <input
-                  type="text"
-                  value={currentUser.name || ""}
-                  onChange={(e) =>
-                    setCurrentUser({ ...currentUser, name: e.target.value })
-                  }
-                  className="w-full px-4 py-2 border rounded-lg bg-transparent"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700">Dyslexia Risk</label>
-                <select
-                  value={currentUser.dyslexiaRisk || "No test result"}
-                  onChange={(e) =>
-                    setCurrentUser({ ...currentUser, dyslexiaRisk: e.target.value })
-                  }
-                  className="w-full px-4 py-2 border rounded-lg bg-transparent"
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-8 w-full max-w-lg shadow-lg transform transition-all scale-100">
+            <h2 className="text-xl font-semibold text-gray-800 mb-6">
+              User Tests - {currentUser.name || "N/A"}
+            </h2>
+            <ul className="space-y-4 text-gray-600">
+              <li className="flex items-center">
+                <span className="font-medium text-gray-800 w-48">Handwriting Test:</span>
+                <span
+                  className={`px-3 py-1 text-sm font-semibold rounded ${currentUser.handwritingTest ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
+                    }`}
                 >
-                  <option value="No test result">No test result</option>
-                  <option value="Low risk">Low risk</option>
-                  <option value="Medium risk">Medium risk</option>
-                  <option value="High risk">High risk</option>
-                </select>
-              </div>
-              <div className="flex justify-end space-x-4">
-                <button
-                  type="button"
-                  onClick={handleModalClose}
-                  className="py-2 px-4 text-gray-500 hover:text-gray-700"
+                  {currentUser.handwritingTest ? "Completed" : "Not Completed"}
+                </span>
+              </li>
+              <li className="flex items-center">
+                <span className="font-medium text-gray-800 w-48">Phonological Test:</span>
+                <span
+                  className={`px-3 py-1 text-sm font-semibold rounded ${currentUser.phonologicalTest ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
+                    }`}
                 >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-                >
-                  Save Changes
-                </button>
-              </div>
-            </form>
+                  {currentUser.phonologicalTest ? "Completed" : "Not Completed"}
+                </span>
+              </li>
+            </ul>
+            <div className="mt-6 flex justify-end">
+              <button
+                onClick={handleModalClose}
+                className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}
+
     </div>
   );
 };
