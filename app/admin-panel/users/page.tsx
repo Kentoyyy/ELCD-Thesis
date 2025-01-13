@@ -13,8 +13,13 @@ type User = {
   parentName?: string;
   childName?: string;
   childAge?: number;
-  handwritingTest?: boolean;
-  phonologicalTest?: boolean;
+  testResults?: {
+    testType: string;
+    result: string;
+    severity: string;
+    confidence: number;
+    dateTaken: string;
+  }[];
   createdAt?: string;
 };
 
@@ -214,24 +219,17 @@ const UserManagement = () => {
               User Tests - {currentUser.name || "N/A"}
             </h2>
             <ul className="space-y-4 text-gray-600">
-              <li className="flex items-center">
-                <span className="font-medium text-gray-800 w-48">Handwriting Test:</span>
-                <span
-                  className={`px-3 py-1 text-sm font-semibold rounded ${currentUser.handwritingTest ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
-                    }`}
-                >
-                  {currentUser.handwritingTest ? "Completed" : "Not Completed"}
-                </span>
-              </li>
-              <li className="flex items-center">
-                <span className="font-medium text-gray-800 w-48">Phonological Test:</span>
-                <span
-                  className={`px-3 py-1 text-sm font-semibold rounded ${currentUser.phonologicalTest ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
-                    }`}
-                >
-                  {currentUser.phonologicalTest ? "Completed" : "Not Completed"}
-                </span>
-              </li>
+              {currentUser.testResults?.map((test, index) => (
+                <li key={index} className="flex items-center">
+                  <span className="font-medium text-gray-800 w-48">{test.testType} Test:</span>
+                  <span
+                    className={`px-3 py-1 text-sm font-semibold rounded ${test.result ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
+                      }`}
+                  >
+                    {test.result ? "Completed" : "Not Completed"}
+                  </span>
+                </li>
+              ))}
             </ul>
             <div className="mt-6 flex justify-end">
               <button
