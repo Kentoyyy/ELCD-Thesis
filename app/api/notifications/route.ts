@@ -19,8 +19,8 @@ export const GET = async () => {
 export const POST = async (request: Request) => {
   await connect();
   try {
-    const { type, content, link } = await request.json();
-    const newNotification = new Notification({ type, content, link });
+    const { type, content, link, status } = await request.json();
+    const newNotification = new Notification({ type, content, link, status });
 
     await newNotification.save();
     return new NextResponse("Notification created successfully", { status: 201 });
